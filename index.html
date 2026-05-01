@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data IESB — Plataforma de Dados Públicos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --navy: #0f1b2d;
+            --navy-light: #1a2d4a;
+            --red: #e63946;
+            --red-dark: #c5303c;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+            --radius: 12px;
+            --radius-lg: 20px;
+            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+            --shadow-lg: 0 4px 24px rgba(0,0,0,.1);
+        }
+        body { font-family: 'Inter', sans-serif; color: var(--gray-900); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── NAV ── */
+        .navbar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-200); }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .navbar-logo img { height: 36px; width: auto; }
+        .navbar-links { display: flex; gap: 32px; }
+        .navbar-links a { font-size: .9rem; font-weight: 500; color: var(--gray-700); transition: color .2s; }
+        .navbar-links a:hover, .navbar-links a.active { color: var(--red); }
+        .menu-btn { display: none; background: none; border: none; cursor: pointer; }
+        .menu-btn span { display: block; width: 22px; height: 2px; background: var(--gray-900); margin: 5px 0; transition: .3s; }
+
+        /* ── HERO ── */
+        .hero { padding: 100px 0 80px; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: var(--white); overflow: hidden; position: relative; }
+        .hero::after { content: ''; position: absolute; top: -50%; right: -20%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(230,57,70,.15) 0%, transparent 70%); pointer-events: none; }
+        .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .hero-tag { display: inline-block; background: rgba(230,57,70,.15); color: var(--red); font-size: .8rem; font-weight: 600; padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; letter-spacing: .5px; text-transform: uppercase; }
+        .hero h1 { font-size: 3rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+        .hero h1 span { color: var(--red); }
+        .hero p { font-size: 1.1rem; color: rgba(255,255,255,.7); margin-bottom: 36px; max-width: 480px; }
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: .95rem; border: none; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary { background: var(--red); color: var(--white); }
+        .btn-primary:hover { background: var(--red-dark); box-shadow: 0 4px 16px rgba(230,57,70,.35); }
+        .btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,.3); }
+        .btn-outline:hover { border-color: var(--white); }
+        .hero-visual { position: relative; }
+        .hero-visual img { border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+        .hero-stats { display: flex; gap: 16px; margin-top: -40px; position: relative; z-index: 2; padding: 0 20px; }
+        .stat-box { flex: 1; background: var(--white); color: var(--gray-900); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-lg); text-align: center; }
+        .stat-box .num { font-size: 2rem; font-weight: 800; color: var(--red); }
+        .stat-box .label { font-size: .8rem; color: var(--gray-500); margin-top: 4px; }
+
+        /* ── REPORTS ── */
+        .reports { padding: 100px 0; }
+        .section-header { text-align: center; margin-bottom: 56px; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; }
+        .section-header p { color: var(--gray-500); font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+        .reports-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .report-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 28px; transition: transform .2s, box-shadow .2s; }
+        .report-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .report-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; color: var(--gray-900); }
+        .report-card p { font-size: .9rem; color: var(--gray-500); line-height: 1.6; margin-bottom: 16px; }
+        .report-card .meta { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; }
+        .report-card .author { color: var(--gray-500); }
+        .report-card .link { color: var(--red); font-weight: 600; }
+
+        /* ── APPS ── */
+        .apps { padding: 100px 0; background: var(--gray-50); }
+        .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .app-card { background: var(--white); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s; display: flex; flex-direction: column; }
+        .app-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .app-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+        .app-card p { font-size: .9rem; color: var(--gray-500); line-height: 1.6; margin-bottom: 8px; }
+        .app-card .app-author { font-size: .85rem; color: var(--gray-700); margin-bottom: 20px; }
+        .app-card .btn { margin-top: auto; align-self: flex-start; padding: 10px 20px; font-size: .85rem; }
+
+        /* ── CTA / NEWSLETTER ── */
+        .cta { padding: 40px 0 100px; }
+        .cta-box { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: var(--radius-lg); padding: 64px; display: flex; align-items: center; justify-content: space-between; gap: 40px; color: var(--white); }
+        .cta-box h2 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+        .cta-box p { color: rgba(255,255,255,.7); }
+        .cta-form { display: flex; gap: 10px; min-width: 380px; }
+        .cta-form input { flex: 1; padding: 14px 18px; border: none; border-radius: 8px; font-size: .95rem; font-family: inherit; }
+        .cta-form .btn-primary { white-space: nowrap; }
+
+        /* ── FOOTER ── */
+        footer { background: var(--gray-50); border-top: 1px solid var(--gray-200); padding: 28px 0; }
+        footer .container { display: flex; justify-content: space-between; align-items: center; font-size: .85rem; color: var(--gray-500); }
+        footer nav ul { display: flex; gap: 24px; }
+        footer nav a:hover { color: var(--gray-900); }
+
+        /* ── LOADING ── */
+        .loader { display: flex; justify-content: center; padding: 60px; }
+        .loader::after { content: ''; width: 36px; height: 36px; border: 3px solid var(--gray-200); border-top-color: var(--red); border-radius: 50%; animation: spin .7s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; }
+            .hero-visual { max-width: 520px; margin: 0 auto; }
+            .reports-grid, .apps-grid { grid-template-columns: repeat(2, 1fr); }
+            .cta-box { flex-direction: column; text-align: center; padding: 48px 32px; }
+            .cta-form { min-width: 0; width: 100%; max-width: 440px; }
+        }
+        @media (max-width: 640px) {
+            .navbar-links { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--white); flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 200; }
+            .navbar-links.open { display: flex; }
+            .navbar-links a { font-size: 1.2rem; }
+            .menu-btn { display: block; z-index: 201; }
+            .hero h1 { font-size: 2rem; }
+            .hero-stats { flex-direction: column; }
+            .reports-grid, .apps-grid { grid-template-columns: 1fr; }
+            .cta-form { flex-direction: column; }
+            footer .container { flex-direction: column; gap: 12px; text-align: center; }
+            footer nav ul { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="navbar">
+    <div class="container">
+        <a href="index.html" class="navbar-logo">
+            <img src="https://d28lvm9jkyfotx.cloudfront.net/logo.png" alt="Data IESB">
+        </a>
+        <nav class="navbar-links" id="nav-links">
+            <a class="active" href="index.html">Painéis e Estudos</a>
+            <a href="quem-somos.html">Quem somos</a>
+            <a href="parceiros.html">Parceiros</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <span class="hero-tag">Plataforma de Dados Públicos</span>
+            <h1>Dados abertos para <span>decisões</span> mais inteligentes</h1>
+            <p>Análises e painéis interativos sobre saúde, educação, segurança e políticas públicas no Brasil.</p>
+            <div class="hero-actions">
+                <a href="https://app.dataiesb.com/report/" class="btn btn-primary">Explorar painéis →</a>
+                <a href="quem-somos.html" class="btn btn-outline">Conheça o projeto</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="https://d28lvm9jkyfotx.cloudfront.net/img/meeting.png" alt="Equipe Data IESB trabalhando">
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <div class="num">78%</div>
+                    <div class="label">das cidades sem novos professores</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num">60%</div>
+                    <div class="label">da verba educacional reduzida</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REPORTS -->
+<section class="reports">
+    <div class="container">
+        <div class="section-header">
+            <h2>Painéis e Estudos</h2>
+            <p>Conheça nossos estudos sobre PIB, Segurança Pública, Infraestrutura e Saneamento Básico no Brasil.</p>
+        </div>
+        <div class="reports-grid" id="cards-container">
+            <div class="loader"></div>
+        </div>
+    </div>
+</section>
+
+<!-- STUDENT APPS -->
+<section class="apps">
+    <div class="container">
+        <div class="section-header">
+            <h2>Aplicações de Alunos</h2>
+            <p>Projetos desenvolvidos por nossos alunos para facilitar o acesso aos dados públicos brasileiros.</p>
+        </div>
+        <div class="apps-grid">
+            <div class="app-card">
+                <h3>Aurya</h3>
+                <p>Assistente virtual que permite consultar dados públicos brasileiros usando linguagem natural, sem necessidade de conhecimento técnico em SQL.</p>
+                <p class="app-author"><strong>Autor:</strong> Marcos Correia</p>
+                <a href="https://aurya.dataiesb.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Acessar</a>
+            </div>
+            <div class="app-card">
+                <h3>OSINTube-RealTimeGuard</h3>
+                <p>Sistema de detecção de ameaças em tempo real para conteúdo do YouTube, garantindo segurança online através de monitoramento contínuo.</p>
+                <p class="app-author"><strong>Autor:</strong> Roberto Moreira Diniz</p>
+                <a href="https://app.dataiesb.com/osintube" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Acessar</a>
+            </div>
+            <div class="app-card">
+                <h3>MatrixGym</h3>
+                <p>Aplicação web serverless para praticar cálculos de determinantes de matrizes 3x3 usando a regra de Sarrus.</p>
+                <p class="app-author"><strong>Autor:</strong> Roberto Moreira Diniz</p>
+                <a href="https://gym.dataiesb.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Acessar</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA / NEWSLETTER -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-box">
+            <div>
+                <h2>Não perca uma análise</h2>
+                <p>Cadastre seu e-mail e seja informado sempre que publicarmos um novo estudo.</p>
+            </div>
+            <form class="cta-form" onsubmit="return false;">
+                <input type="email" placeholder="Seu e-mail" required>
+                <button type="submit" class="btn btn-primary">Inscreva-se</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Data IESB. Todos os direitos reservados.</p>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quem-somos.html">Quem Somos</a></li>
+                <li><a href="parceiros.html">Parceiros</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>
+
+<script>
+// Mobile menu toggle
+const menuBtn = document.getElementById('menu-btn');
+const navLinks = document.getElementById('nav-links');
+menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// Load reports from DynamoDB API
+async function loadReports() {
+    const container = document.getElementById('cards-container');
+    const url = 'https://hewx1kjfxh.execute-api.us-east-1.amazonaws.com/prod/dataiesb-auth/public-reports';
+
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const reports = await res.json();
+        container.innerHTML = '';
+
+        if (typeof reports !== 'object' || reports === null || Array.isArray(reports)) {
+            container.innerHTML = '<p style="text-align:center;color:var(--gray-500);grid-column:1/-1;padding:40px">Erro ao carregar os dados dos relatórios.</p>';
+            return;
+        }
+
+        const ids = Object.keys(reports);
+        if (!ids.length) {
+            container.innerHTML = '<p style="text-align:center;color:var(--gray-500);grid-column:1/-1;padding:40px">Nenhum relatório disponível no momento.</p>';
+            return;
+        }
+
+        ids.sort((a, b) => {
+            const ra = reports[a], rb = reports[b];
+            if (ra.created_at && rb.created_at) return new Date(rb.created_at) - new Date(ra.created_at);
+            return ra.titulo.localeCompare(rb.titulo);
+        });
+
+        ids.forEach(id => {
+            const r = reports[id];
+            if (!r || !r.titulo || !r.descricao || !r.autor) return;
+            const card = document.createElement('a');
+            card.href = `http://app.dataiesb.com/report/?id=${id}`;
+            card.className = 'report-card';
+            card.innerHTML = `
+                <h3>${r.titulo}</h3>
+                <p>${r.descricao}</p>
+                <div class="meta">
+                    <span class="author">Autor: <strong>${r.autor}</strong></span>
+                    <span class="link">Ver relatório →</span>
+                </div>`;
+            container.appendChild(card);
+        });
+    } catch (e) {
+        console.error('Erro ao carregar relatórios:', e);
+        container.innerHTML = `
+            <div style="text-align:center;padding:40px;grid-column:1/-1">
+                <p style="color:var(--red);margin-bottom:12px">Erro ao carregar os relatórios.</p>
+                <button onclick="loadReports()" class="btn btn-primary" style="font-size:.85rem;padding:10px 20px">Tentar novamente</button>
+            </div>`;
+    }
+}
+
+window.onload = loadReports;
+</script>
+</body>
+</html>
