@@ -66,6 +66,8 @@
         .navbar-links a:hover { color: var(--color-accent); }
         .navbar-cta { background: var(--color-cta); color: #fff; padding: 10px 20px; border-radius: 6px; font-size: .875rem; font-weight: 600; transition: background .2s, transform .15s; }
         .navbar-cta:hover { background: var(--color-cta-hover); transform: translateY(-1px); }
+        .navbar-aurya { color: #ff4d5a !important; font-weight: 600; border: 1px solid rgba(227,6,19,.4); padding: 4px 12px; border-radius: 4px; font-size: .8rem; letter-spacing: .04em; }
+        .navbar-aurya:hover { background: rgba(227,6,19,.1); color: #fff !important; }
         .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
         .menu-btn span { display: block; width: 20px; height: 2px; background: #e0e0e0; margin: 4px 0; transition: .3s; }
 
@@ -132,12 +134,12 @@
         /* PROJECTS */
         .projects { padding: var(--space-section) 0; background: var(--color-surface); }
         .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
-        .project-card { background: var(--color-base); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-xl); transition: transform .2s var(--ease), border-color .2s, box-shadow .2s; display: flex; flex-direction: column; }
-        .project-card:hover { transform: translateY(-2px); border-color: var(--color-accent); box-shadow: 0 4px 12px rgba(0,0,0,.06); }
-        .project-card .tag { display: inline-block; font-size: .75rem; font-weight: 500; color: var(--color-accent); background: var(--color-highlight); padding: 4px 10px; border-radius: 4px; margin-bottom: var(--space-md); align-self: flex-start; }
-        .project-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: var(--space-sm); }
-        .project-card p { font-size: .85rem; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-md); flex: 1; }
-        .project-card .author { font-size: .8rem; color: var(--color-text-secondary); margin-bottom: var(--space-md); }
+        .project-card { background: #2e2e2e; border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: var(--space-xl); transition: transform .2s var(--ease), border-color .2s, box-shadow .2s; display: flex; flex-direction: column; color: #c8c8c8; }
+        .project-card:hover { transform: translateY(-2px); border-color: var(--color-accent); box-shadow: 0 4px 12px rgba(227,6,19,.1); }
+        .project-card .tag { display: inline-block; font-size: .75rem; font-weight: 500; color: #ff4d5a; background: rgba(227,6,19,.1); padding: 4px 10px; border-radius: 4px; margin-bottom: var(--space-md); align-self: flex-start; }
+        .project-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: var(--space-sm); color: #e0e0e0; }
+        .project-card p { font-size: .85rem; color: #999; line-height: 1.6; margin-bottom: var(--space-md); flex: 1; }
+        .project-card .author { font-size: .8rem; color: #888; margin-bottom: var(--space-md); }
         .project-card .btn-primary { align-self: flex-start; padding: 10px 20px; font-size: .85rem; }
 
         /* CONTACT */
@@ -232,6 +234,7 @@
     <div class="container">
         <a href="index.html" class="navbar-logo">Data<span>IESB</span></a>
         <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
+            <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Aurya</a>
             <a href="#projects">Painéis e Estudos</a>
             <a href="quem-somos.html">Quem somos</a>
             <a href="parceiros.html">Parceiros</a>
