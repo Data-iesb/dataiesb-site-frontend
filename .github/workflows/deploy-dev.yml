@@ -21,3 +21,4 @@ jobs:
           aws-region: us-east-1
 
       - run: aws s3 cp index.html s3://dev.dataiesb.com/index.html
+      - run: aws cloudfront create-invalidation --distribution-id E142Z1CPAKR8S8 --paths "/*"
