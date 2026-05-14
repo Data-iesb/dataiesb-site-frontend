@@ -1,9 +1,9 @@
-name: Deploy Dev to S3
+name: Deploy Prod to S3
 
 on:
   workflow_dispatch:
   push:
-    branches: [dev]
+    branches: [main]
 
 permissions:
   id-token: write
@@ -20,5 +20,5 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      - run: aws s3 sync . s3://dev.dataiesb.com --exclude ".git/*" --exclude ".github/*" --exclude "*.md" --delete
-      - run: aws cloudfront create-invalidation --distribution-id E142Z1CPAKR8S8 --paths "/*"
+      - run: aws s3 sync . s3://dataiesb --exclude ".git/*" --exclude ".github/*" --exclude "*.md" --delete
+      - run: aws cloudfront create-invalidation --distribution-id E371T2F886B5KI --paths "/*"
