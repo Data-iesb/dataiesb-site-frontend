@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato — DataIESB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --color-base: #ffffff;
+            --color-surface: #ffffff;
+            --color-base-dark: #2e2e2e;
+            --color-text-primary: #1f2937;
+            --color-text-secondary: #5C5C5C;
+            --color-accent: #E30613;
+            --color-accent-hover: #b8050f;
+            --color-highlight: rgba(227,6,19,.06);
+            --color-cta: #E30613;
+            --color-cta-hover: #b8050f;
+            --color-border: #e2e2e0;
+            --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px;
+            --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px; --space-4xl: 96px;
+            --space-section: 120px;
+            --radius: 8px; --radius-lg: 12px;
+            --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        [data-theme="dark"] {
+            --color-base: #1f1f1f;
+            --color-surface: rgba(255,255,255,.04);
+            --color-base-dark: #151515;
+            --color-text-primary: #c8c8c8;
+            --color-text-secondary: #888;
+            --color-accent: #ff4d5a;
+            --color-accent-hover: #E30613;
+            --color-highlight: rgba(227,6,19,.08);
+            --color-cta: #E30613;
+            --color-cta-hover: #ff4d5a;
+            --color-border: rgba(255,255,255,.08);
+        }
+        body { font-family: 'Inter', sans-serif; color: var(--color-text-primary); background: var(--color-base); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-3xl); }
+
+        /* NAV */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: #2e2e2e; border-bottom: 1px solid rgba(255,255,255,.08); }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .navbar-logo { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; letter-spacing: -0.02em; }
+        .navbar-logo span { color: var(--color-accent); }
+        .navbar-links { display: flex; gap: var(--space-xl); align-items: center; }
+        .navbar-links a { font-size: .875rem; font-weight: 500; color: #999; transition: color .2s; }
+        .navbar-links a:hover, .navbar-links a.active { color: var(--color-accent); }
+        .navbar-cta { background: var(--color-cta); color: #fff !important; padding: 10px 20px; border-radius: 6px; font-size: .875rem; font-weight: 600; transition: background .2s, transform .15s; }
+        .navbar-cta:hover { background: var(--color-cta-hover); transform: translateY(-1px); }
+        .navbar-aurya { color: #ff4d5a !important; font-weight: 600; border: 1px solid rgba(227,6,19,.4); padding: 4px 12px; border-radius: 4px; font-size: .8rem; letter-spacing: .04em; }
+        .navbar-aurya:hover { background: rgba(227,6,19,.1); color: #fff !important; }
+        .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .menu-btn span { display: block; width: 20px; height: 2px; background: #e0e0e0; margin: 4px 0; transition: .3s; }
+        .theme-toggle { background: none; border: 1px solid rgba(255,255,255,.15); border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 1rem; line-height: 1; transition: border-color .2s, background .2s; }
+        .theme-toggle:hover { border-color: var(--color-accent); background: rgba(227,6,19,.1); }
+
+        /* PAGE HERO */
+        .page-hero { padding: calc(64px + var(--space-4xl)) 0 var(--space-3xl); background: var(--color-base); position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0); background-size: 32px 32px; opacity: .5; pointer-events: none; }
+        .page-hero .container { position: relative; }
+        .page-hero h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: var(--space-sm); }
+        .page-hero h1 .accent { color: var(--color-accent); }
+        .page-hero p { color: var(--color-text-secondary); font-size: 1.05rem; max-width: 600px; }
+
+        /* CONTACT SECTION */
+        .contact-section { padding: var(--space-3xl) 0 var(--space-section); }
+        .contact-section .container { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: start; }
+
+        /* FORM */
+        .contact-form { display: flex; flex-direction: column; gap: var(--space-md); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+        .form-group { display: flex; flex-direction: column; gap: var(--space-xs); }
+        .form-group label { font-size: .85rem; font-weight: 500; color: var(--color-text-secondary); }
+        .form-group input, .form-group textarea { padding: 14px 16px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: .9rem; background: var(--color-surface); color: var(--color-text-primary); transition: border-color .2s; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--color-accent); }
+        .form-group textarea { resize: vertical; min-height: 140px; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--color-cta); color: #fff; border-radius: 6px; font-weight: 600; font-size: .95rem; border: none; cursor: pointer; transition: background .2s, transform .15s; align-self: flex-start; }
+        .btn-primary:hover { background: var(--color-cta-hover); transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+        /* CONTACT INFO */
+        .contact-info h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: var(--space-lg); }
+        .contact-details { display: flex; flex-direction: column; gap: var(--space-lg); }
+        .contact-detail { display: flex; gap: var(--space-md); align-items: flex-start; }
+        .contact-detail .icon { width: 40px; height: 40px; background: var(--color-highlight); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-size: 1.1rem; flex-shrink: 0; }
+        .contact-detail .info strong { display: block; font-size: .9rem; margin-bottom: 2px; }
+        .contact-detail .info span { font-size: .85rem; color: var(--color-text-secondary); }
+
+        /* SUCCESS MESSAGE */
+        .success-msg { display: none; padding: var(--space-lg); background: var(--color-highlight); border: 1px solid var(--color-accent); border-radius: var(--radius); text-align: center; }
+        .success-msg.show { display: block; }
+        .success-msg p { color: var(--color-accent); font-weight: 600; }
+
+        /* FOOTER */
+        footer { background: var(--color-base-dark); color: rgba(255,255,255,.6); padding: var(--space-2xl) 0; border-top: 1px solid rgba(255,255,255,.08); }
+        footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md); font-size: .8rem; }
+        footer nav ul { display: flex; gap: var(--space-lg); }
+        footer nav a { color: rgba(255,255,255,.6); transition: color .2s; }
+        footer nav a:hover { color: #fff; }
+        footer .credits { width: 100%; text-align: center; margin-top: var(--space-md); font-size: .75rem; }
+        footer .credits a { color: rgba(255,255,255,.5); text-decoration: underline; }
+
+        /* ANIMATIONS */
+        .fade-up { opacity: 0; transform: translateY(12px); transition: opacity .4s var(--ease), transform .4s var(--ease); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .container { padding: 0 var(--space-lg); }
+            .contact-section .container { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            :root { --space-section: 80px; }
+            .navbar-links { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #2e2e2e; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-xl); z-index: 200; }
+            .navbar-links.open { display: flex; }
+            .menu-btn { display: block; z-index: 201; }
+            .page-hero h1 { font-size: 1.8rem; }
+            .form-row { grid-template-columns: 1fr; }
+            footer .container { flex-direction: column; text-align: center; }
+            footer nav ul { justify-content: center; }
+        }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-accent); color: #fff; padding: 8px 16px; z-index: 1000; font-size: .85rem; transition: top .2s; }
+        .skip-link:focus { top: 0; }
+    </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Pular para conteúdo</a>
+
+<header class="navbar">
+    <div class="container">
+        <a href="index.html" class="navbar-logo">Data<span>IESB</span></a>
+        <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
+            <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Assistente IA</a>
+            <a href="index.html#projects">Painéis e Estudos</a>
+            <a href="quem-somos.html">Quem somos</a>
+            <a href="parceiros.html">Parceiros</a>
+            <a href="contato.html" class="navbar-cta active">Contato</a>
+        </nav>
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">🌙</button>
+    </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero">
+    <div class="container fade-up">
+        <h1>Entre em <span class="accent">Contato</span></h1>
+        <p>Tem um desafio de dados? Conte-nos sobre seu problema e entraremos em contato.</p>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container">
+        <div class="fade-up">
+            <form class="contact-form" id="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" id="cidade" name="cidade" placeholder="Sua cidade" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="voce@empresa.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="mensagem">Mensagem</label>
+                    <textarea id="mensagem" name="mensagem" placeholder="Descreva brevemente seu desafio ou necessidade" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" id="submit-btn">Enviar mensagem</button>
+            </form>
+            <div class="success-msg" id="success-msg">
+                <p>✓ Mensagem enviada com sucesso! Entraremos em contato em breve.</p>
+            </div>
+        </div>
+
+        <aside class="contact-info fade-up">
+            <h2>Nosso contato</h2>
+            <div class="contact-details">
+                <div class="contact-detail">
+                    <div class="icon">📍</div>
+                    <div class="info">
+                        <strong>IESB</strong>
+                        <span>Via L2 Sul - SGAS, Quadra 613/614, Brasília - DF, 70200-730</span>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="icon">📞</div>
+                    <div class="info">
+                        <strong>Telefone</strong>
+                        <span>(61) 1234-4567</span>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="icon">✉️</div>
+                    <div class="info">
+                        <strong>E-mail</strong>
+                        <span>email@email.com</span>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="icon">🕐</div>
+                    <div class="info">
+                        <strong>Horário</strong>
+                        <span>Atendimento em horário comercial</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 DataIESB. Todos os direitos reservados.</p>
+        <nav aria-label="Links do rodapé">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quem-somos.html">Quem Somos</a></li>
+                <li><a href="parceiros.html">Parceiros</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+        <p class="credits">Desenvolvido por <a href="https://levav.it" target="_blank">Levav-IT</a> · Patrocínio: <a href="https://www.instagram.com/pratikaiesb/" target="_blank">DataIESB</a> · <a href="https://aws.amazon.com" target="_blank">AWS</a></p>
+    </div>
+</footer>
+
+<script>
+// Mobile menu
+document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('nav-links').classList.toggle('open'));
+document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open')));
+
+// Theme toggle
+const themeToggle = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+themeToggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 100);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Form submission
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const nome = document.getElementById('nome').value;
+    const cidade = document.getElementById('cidade').value;
+    const email = document.getElementById('email').value;
+    const mensagem = document.getElementById('mensagem').value;
+
+    if (!nome || !cidade || !email || !mensagem) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    try {
+        const res = await fetch('https://pl1ecmd782.execute-api.us-east-1.amazonaws.com/default/dataiesb-contato', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, cidade, email, mensagem })
+        });
+        if (res.ok) {
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('success-msg').classList.add('show');
+        } else {
+            const result = await res.json();
+            alert('Erro ao enviar: ' + (result.message || 'Tente novamente.'));
+        }
+    } catch (err) {
+        alert('Erro na conexão: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Enviar mensagem';
+    }
+});
+</script>
+</body>
+</html>

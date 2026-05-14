@@ -234,7 +234,7 @@
     <div class="container">
         <a href="index.html" class="navbar-logo">Data<span>IESB</span></a>
         <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
-            <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Aurya</a>
+            <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Assistente IA</a>
             <a href="#projects">Painéis e Estudos</a>
             <a href="quem-somos.html">Quem somos</a>
             <a href="parceiros.html">Parceiros</a>
@@ -434,7 +434,7 @@ document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click
 
 // Theme toggle
 const themeToggle = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'light';
+const savedTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 themeToggle.addEventListener('click', () => {

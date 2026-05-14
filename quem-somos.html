@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quem Somos — DataIESB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --color-base: #ffffff;
+            --color-surface: #ffffff;
+            --color-base-dark: #2e2e2e;
+            --color-text-primary: #1f2937;
+            --color-text-secondary: #5C5C5C;
+            --color-accent: #E30613;
+            --color-accent-hover: #b8050f;
+            --color-highlight: rgba(227,6,19,.06);
+            --color-cta: #E30613;
+            --color-cta-hover: #b8050f;
+            --color-border: #e2e2e0;
+            --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px;
+            --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px; --space-4xl: 96px;
+            --space-section: 120px;
+            --radius: 8px; --radius-lg: 12px;
+            --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        [data-theme="dark"] {
+            --color-base: #1f1f1f;
+            --color-surface: rgba(255,255,255,.04);
+            --color-base-dark: #151515;
+            --color-text-primary: #c8c8c8;
+            --color-text-secondary: #888;
+            --color-accent: #ff4d5a;
+            --color-accent-hover: #E30613;
+            --color-highlight: rgba(227,6,19,.08);
+            --color-cta: #E30613;
+            --color-cta-hover: #ff4d5a;
+            --color-border: rgba(255,255,255,.08);
+        }
+        body { font-family: 'Inter', sans-serif; color: var(--color-text-primary); background: var(--color-base); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-3xl); }
+
+        /* NAV */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: #2e2e2e; border-bottom: 1px solid rgba(255,255,255,.08); }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .navbar-logo { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; letter-spacing: -0.02em; }
+        .navbar-logo span { color: var(--color-accent); }
+        .navbar-links { display: flex; gap: var(--space-xl); align-items: center; }
+        .navbar-links a { font-size: .875rem; font-weight: 500; color: #999; transition: color .2s; }
+        .navbar-links a:hover, .navbar-links a.active { color: var(--color-accent); }
+        .navbar-cta { background: var(--color-cta); color: #fff !important; padding: 10px 20px; border-radius: 6px; font-size: .875rem; font-weight: 600; transition: background .2s, transform .15s; }
+        .navbar-cta:hover { background: var(--color-cta-hover); transform: translateY(-1px); }
+        .navbar-aurya { color: #ff4d5a !important; font-weight: 600; border: 1px solid rgba(227,6,19,.4); padding: 4px 12px; border-radius: 4px; font-size: .8rem; letter-spacing: .04em; }
+        .navbar-aurya:hover { background: rgba(227,6,19,.1); color: #fff !important; }
+        .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .menu-btn span { display: block; width: 20px; height: 2px; background: #e0e0e0; margin: 4px 0; transition: .3s; }
+        .theme-toggle { background: none; border: 1px solid rgba(255,255,255,.15); border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 1rem; line-height: 1; transition: border-color .2s, background .2s; }
+        .theme-toggle:hover { border-color: var(--color-accent); background: rgba(227,6,19,.1); }
+
+        /* PAGE HERO */
+        .page-hero { padding: calc(64px + var(--space-4xl)) 0 var(--space-3xl); background: var(--color-base); position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0); background-size: 32px 32px; opacity: .5; pointer-events: none; }
+        .page-hero .container { position: relative; }
+        .page-hero h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: var(--space-sm); }
+        .page-hero h1 .accent { color: var(--color-accent); }
+        .page-hero p { color: var(--color-text-secondary); font-size: 1.05rem; max-width: 600px; }
+
+        /* PROJECT INTRO */
+        .project-intro { padding: var(--space-3xl) 0 var(--space-section); }
+        .project-intro .container { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: start; }
+        .project-text p { color: var(--color-text-secondary); margin-bottom: var(--space-md); font-size: .95rem; }
+        .project-media img { border-radius: var(--radius-lg); border: 1px solid var(--color-border); }
+        .project-media .btn-primary { margin-top: var(--space-lg); }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--color-cta); color: #fff; border-radius: 6px; font-weight: 600; font-size: .95rem; border: none; cursor: pointer; transition: background .2s, transform .15s; }
+        .btn-primary:hover { background: var(--color-cta-hover); transform: translateY(-1px); }
+
+        /* TEAM */
+        .team-section { padding: var(--space-section) 0; background: var(--color-base-dark); color: #e0e0e0; }
+        .team-section h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: var(--space-sm); color: #fff; }
+        .team-section > .container > p { color: rgba(255,255,255,.75); margin-bottom: var(--space-3xl); max-width: 700px; }
+        .team-grid { min-height: 200px; }
+        .team-category { margin-bottom: var(--space-2xl); }
+        .category-title { font-size: 1.1rem; font-weight: 600; margin-bottom: var(--space-lg); color: #e0e0e0; }
+        .category-title .member-count { color: var(--color-accent); font-weight: 400; font-size: .9rem; }
+        .team-members { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+        .team-member { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: var(--space-lg); transition: border-color .2s, transform .2s; }
+        .team-member:hover { border-color: var(--color-accent); transform: translateY(-2px); }
+        .team-member strong { display: block; font-size: .95rem; margin-bottom: var(--space-xs); color: #e0e0e0; }
+        .role-badge { display: inline-block; font-size: .75rem; font-weight: 500; color: #ff4d5a; background: rgba(227,6,19,.1); padding: 4px 10px; border-radius: 4px; margin-bottom: var(--space-sm); }
+        .team-member .email { font-size: .8rem; color: #888; margin-bottom: var(--space-sm); }
+        .social-link { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; color: var(--color-accent); font-weight: 500; transition: opacity .2s; }
+        .social-link:hover { opacity: .8; text-decoration: underline; }
+        .loading, .error { text-align: center; padding: var(--space-2xl); color: rgba(255,255,255,.6); }
+        .error h3 { color: var(--color-accent); margin-bottom: var(--space-sm); }
+
+        /* FOOTER */
+        footer { background: var(--color-base-dark); color: rgba(255,255,255,.6); padding: var(--space-2xl) 0; border-top: 1px solid rgba(255,255,255,.08); }
+        footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md); font-size: .8rem; }
+        footer nav ul { display: flex; gap: var(--space-lg); }
+        footer nav a { color: rgba(255,255,255,.6); transition: color .2s; }
+        footer nav a:hover { color: #fff; }
+        footer .credits { width: 100%; text-align: center; margin-top: var(--space-md); font-size: .75rem; }
+        footer .credits a { color: rgba(255,255,255,.5); text-decoration: underline; }
+
+        /* ANIMATIONS */
+        .fade-up { opacity: 0; transform: translateY(12px); transition: opacity .4s var(--ease), transform .4s var(--ease); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .container { padding: 0 var(--space-lg); }
+            .project-intro .container { grid-template-columns: 1fr; }
+            .team-members { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            :root { --space-section: 80px; }
+            .navbar-links { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #2e2e2e; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-xl); z-index: 200; }
+            .navbar-links.open { display: flex; }
+            .menu-btn { display: block; z-index: 201; }
+            .page-hero h1 { font-size: 1.8rem; }
+            .team-members { grid-template-columns: 1fr; }
+            footer .container { flex-direction: column; text-align: center; }
+            footer nav ul { justify-content: center; }
+        }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-accent); color: #fff; padding: 8px 16px; z-index: 1000; font-size: .85rem; transition: top .2s; }
+        .skip-link:focus { top: 0; }
+    </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Pular para conteúdo</a>
+
+<header class="navbar">
+    <div class="container">
+        <a href="index.html" class="navbar-logo">Data<span>IESB</span></a>
+        <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
+            <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Assistente IA</a>
+            <a href="index.html#projects">Painéis e Estudos</a>
+            <a href="quem-somos.html" class="active">Quem somos</a>
+            <a href="parceiros.html">Parceiros</a>
+            <a href="contato.html" class="navbar-cta">Contato</a>
+        </nav>
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">🌙</button>
+    </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero">
+    <div class="container fade-up">
+        <h1>Conheça o projeto <span class="accent">Big Data IESB</span></h1>
+        <p>Ciência de dados aplicada ao bem público, com rigor acadêmico e impacto mensurável.</p>
+    </div>
+</section>
+
+<section class="project-intro">
+    <div class="container">
+        <div class="project-text fade-up">
+            <p>O Projeto Big Data - IESB é uma iniciativa estratégica voltada à criação e manutenção de um banco de dados estruturado, composto por informações públicas e, quando aplicável, dados proprietários de organizações parceiras. O objetivo central é fornecer uma análise abrangente da conjuntura estadual, distrital e municipal na melhoria da tomada de decisões, na eficiência da gestão pública, na formulação de políticas baseadas em evidências e na oferta de serviços mais qualificados à população.</p>
+            <p>O projeto abrange múltiplas áreas de interesse social e governamental, incluindo saúde, educação, meio ambiente, segurança pública, direitos humanos, mercado de trabalho, finanças públicas, assistência social, habitação e desenvolvimento urbano. Ao integrar dados destas áreas, busca-se fomentar a geração de conhecimento, a inovação em políticas públicas e a construção de soluções analíticas voltadas ao bem comum.</p>
+            <p>Além disso, o projeto Big Data - IESB constitui um espaço de aprendizagem aplicada para os estudantes do IESB, que têm a oportunidade de aplicar ferramentas e metodologias de Ciência de Dados e Inteligência Artificial em projetos reais, ampliando sua formação técnica e seu compromisso com o desenvolvimento social e institucional do país.</p>
+        </div>
+        <div class="project-media fade-up">
+            <img src="https://d28lvm9jkyfotx.cloudfront.net/img/campus.jpeg" alt="Laboratório de computadores do IESB">
+            <a href="index.html#projects" class="btn-primary">Veja nossos estudos publicados →</a>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+        <h2 class="fade-up">Equipe Técnica</h2>
+        <p class="fade-up">A equipe técnica do Projeto Big Data - IESB é formada predominantemente por professores, pesquisadores e estudantes dos cursos de <strong>Bacharelado em Ciência de Dados e Inteligência Artificial</strong> e do <strong>Mestrado Profissional em Gestão Estratégica de Organizações</strong> que atuam na gestão, desenvolvimento e implementação das soluções analíticas e tecnologias previstas no projeto.</p>
+        <div class="team-grid" id="dynamic-team-data">
+            <div class="loading">Carregando dados da equipe...</div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 DataIESB. Todos os direitos reservados.</p>
+        <nav aria-label="Links do rodapé">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quem-somos.html">Quem Somos</a></li>
+                <li><a href="parceiros.html">Parceiros</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+        <p class="credits">Desenvolvido por <a href="https://levav.it" target="_blank">Levav-IT</a> · Patrocínio: <a href="https://www.instagram.com/pratikaiesb/" target="_blank">DataIESB</a> · <a href="https://aws.amazon.com" target="_blank">AWS</a></p>
+    </div>
+</footer>
+
+<script>
+// Mobile menu
+document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('nav-links').classList.toggle('open'));
+document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open')));
+
+// Theme toggle
+const themeToggle = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+themeToggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 100);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Team data loading
+class TeamDataManager {
+    constructor() {
+        const h = window.location.hostname;
+        this.apiEndpoint = (h === 'localhost' || h === '127.0.0.1')
+            ? 'http://localhost:5001/api/team'
+            : 'https://hewx1kjfxh.execute-api.us-east-1.amazonaws.com/prod/team';
+    }
+
+    async fetchTeamData() {
+        try {
+            const res = await fetch(this.apiEndpoint);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const result = await res.json();
+            if (result.success && result.data) return result.data;
+            throw new Error(result.message || 'Failed to load');
+        } catch (e) {
+            console.error('Team API error:', e);
+            return this.getFallbackData();
+        }
+    }
+
+    getFallbackData() {
+        return [
+            { name: 'Prof. Sérgio da Costa Côrtes', role: 'Coordenador Geral', category: 'Coordenação', email: 'sergio.cortes@iesb.edu.br', escavador: 'https://www.escavador.com/sobre/sergio-cortes', linkedin: null },
+            { name: 'Profa. Simone de Araújo Góes Assis', role: 'Coordenadora Acadêmica', category: 'Coordenação', email: 'simone.a.assis@iesb.edu.br', escavador: null, linkedin: null },
+            { name: 'Profa. Natália Ribeiro de Souza Evangelista', role: 'Coordenadora de Pesquisa', category: 'Coordenação', email: 'natalia.evangelista@iesb.edu.br', escavador: 'https://www.escavador.com/sobre/natalia-evangelista', linkedin: null },
+            { name: 'Roberto Moreira Diniz', role: 'Especialista DevOps', category: 'Equipe Técnica', email: 'roberto.diniz@iesb.edu.br', escavador: null, linkedin: 'https://linkedin.com/in/roberto-diniz' },
+            { name: 'Ilton Ferreira Mendes Neto', role: 'Administrador de Banco de Dados', category: 'Equipe Técnica', email: 'Ilton.ferreira@iesb.edu.com.br', escavador: null, linkedin: null },
+            { name: 'Marley Abe Silva', role: 'Desenvolvedor Full Stack', category: 'Equipe Técnica', email: 'marley.silva@iesb.edu.br', escavador: null, linkedin: 'https://linkedin.com/in/marley-silva' },
+            { name: 'Leonardo Araújo Pereira', role: 'Líder de Data Science', category: 'Equipe Técnica', email: 'leonardo.a.pereira@iesb.edu.br', escavador: null, linkedin: 'https://linkedin.com/in/leonardo-pereira' },
+            { name: 'Guilherme Rocha Duarte', role: 'Analista de Dados e IA', category: 'Equipe Técnica', email: 'guilherme.duarte@iesb.edu.br', escavador: null, linkedin: 'https://linkedin.com/in/guilherme-duarte' },
+            { name: 'Leonardo Borges Silva Braga', role: 'Analista de Dados e IA', category: 'Equipe Técnica', email: 'leonardo.braga@iesb.edu.br', escavador: null, linkedin: null },
+            { name: 'Pedro Martins Rodrigues', role: 'Analista de IA', category: 'Equipe Técnica', email: 'pedro.m.rodrigues@iesb.edu.br', escavador: null, linkedin: 'https://linkedin.com/in/pedro-rodrigues' },
+            { name: 'William Wallace Ribeiro Matos', role: 'Especialista em Machine Learning', category: 'Equipe Técnica', email: 'william.w.matos@iesb.edu.br', escavador: null, linkedin: 'https://linkedin.com/in/william-matos' }
+        ];
+    }
+
+    renderMember(m) {
+        let social = '';
+        if (m.linkedin && m.category === 'Equipe Técnica')
+            social = `<a href="${m.linkedin}" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>`;
+        if (m.escavador && m.category === 'Coordenação')
+            social = `<a href="${m.escavador}" target="_blank" rel="noopener noreferrer" class="social-link">Escavador</a>`;
+        return `<div class="team-member fade-up"><strong>${m.name}</strong><div class="role-badge">${m.role}</div><div class="email">${m.email}</div>${social}</div>`;
+    }
+
+    async render() {
+        const container = document.getElementById('dynamic-team-data');
+        if (!container) return;
+        const data = await this.fetchTeamData();
+        const grouped = {};
+        data.forEach(m => { (grouped[m.category || 'Outros'] = grouped[m.category || 'Outros'] || []).push(m); });
+
+        let html = '';
+        const order = ['Coordenação', 'Equipe Técnica'];
+        order.forEach(cat => {
+            const members = grouped[cat];
+            if (!members) return;
+            html += `<div class="team-category"><h3 class="category-title">${cat === 'Coordenação' ? '👥' : '🔧'} ${cat} <span class="member-count">(${members.length})</span></h3><div class="team-members">${members.map(m => this.renderMember(m)).join('')}</div></div>`;
+        });
+        container.innerHTML = html;
+        container.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    }
+}
+
+new TeamDataManager().render();
+</script>
+</body>
+</html>

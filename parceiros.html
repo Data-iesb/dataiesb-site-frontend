@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parceiros — DataIESB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --color-base: #ffffff;
+            --color-surface: #ffffff;
+            --color-base-dark: #2e2e2e;
+            --color-text-primary: #1f2937;
+            --color-text-secondary: #5C5C5C;
+            --color-accent: #E30613;
+            --color-accent-hover: #b8050f;
+            --color-highlight: rgba(227,6,19,.06);
+            --color-cta: #E30613;
+            --color-cta-hover: #b8050f;
+            --color-border: #e2e2e0;
+            --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px;
+            --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px; --space-4xl: 96px;
+            --space-section: 120px;
+            --radius: 8px; --radius-lg: 12px;
+            --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        [data-theme="dark"] {
+            --color-base: #1f1f1f;
+            --color-surface: rgba(255,255,255,.04);
+            --color-base-dark: #151515;
+            --color-text-primary: #c8c8c8;
+            --color-text-secondary: #888;
+            --color-accent: #ff4d5a;
+            --color-accent-hover: #E30613;
+            --color-highlight: rgba(227,6,19,.08);
+            --color-cta: #E30613;
+            --color-cta-hover: #ff4d5a;
+            --color-border: rgba(255,255,255,.08);
+        }
+        body { font-family: 'Inter', sans-serif; color: var(--color-text-primary); background: var(--color-base); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-3xl); }
+
+        /* NAV */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: #2e2e2e; border-bottom: 1px solid rgba(255,255,255,.08); }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .navbar-logo { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; letter-spacing: -0.02em; }
+        .navbar-logo span { color: var(--color-accent); }
+        .navbar-links { display: flex; gap: var(--space-xl); align-items: center; }
+        .navbar-links a { font-size: .875rem; font-weight: 500; color: #999; transition: color .2s; }
+        .navbar-links a:hover, .navbar-links a.active { color: var(--color-accent); }
+        .navbar-cta { background: var(--color-cta); color: #fff !important; padding: 10px 20px; border-radius: 6px; font-size: .875rem; font-weight: 600; transition: background .2s, transform .15s; }
+        .navbar-cta:hover { background: var(--color-cta-hover); transform: translateY(-1px); }
+        .navbar-aurya { color: #ff4d5a !important; font-weight: 600; border: 1px solid rgba(227,6,19,.4); padding: 4px 12px; border-radius: 4px; font-size: .8rem; letter-spacing: .04em; }
+        .navbar-aurya:hover { background: rgba(227,6,19,.1); color: #fff !important; }
+        .menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .menu-btn span { display: block; width: 20px; height: 2px; background: #e0e0e0; margin: 4px 0; transition: .3s; }
+        .theme-toggle { background: none; border: 1px solid rgba(255,255,255,.15); border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 1rem; line-height: 1; transition: border-color .2s, background .2s; }
+        .theme-toggle:hover { border-color: var(--color-accent); background: rgba(227,6,19,.1); }
+
+        /* PAGE HERO */
+        .page-hero { padding: calc(64px + var(--space-4xl)) 0 var(--space-3xl); background: var(--color-base); position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0); background-size: 32px 32px; opacity: .5; pointer-events: none; }
+        .page-hero .container { position: relative; }
+        .page-hero h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: var(--space-sm); }
+        .page-hero h1 .accent { color: var(--color-accent); }
+        .page-hero p { color: var(--color-text-secondary); font-size: 1.05rem; max-width: 600px; }
+
+        /* PARTNERS */
+        .partners { padding: var(--space-3xl) 0 var(--space-section); }
+        .partner-item { display: grid; grid-template-columns: 200px 1fr; gap: var(--space-3xl); align-items: start; padding: var(--space-2xl) 0; border-bottom: 1px solid var(--color-border); }
+        .partner-item:last-child { border-bottom: none; }
+        .partner-logo { display: flex; align-items: center; justify-content: center; }
+        .partner-logo img { max-width: 160px; max-height: 80px; object-fit: contain; }
+        .partner-description p { color: var(--color-text-secondary); font-size: .9rem; margin-bottom: var(--space-md); }
+        .partner-description p:last-child { margin-bottom: 0; }
+
+        /* FOOTER */
+        footer { background: var(--color-base-dark); color: rgba(255,255,255,.6); padding: var(--space-2xl) 0; border-top: 1px solid rgba(255,255,255,.08); }
+        footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md); font-size: .8rem; }
+        footer nav ul { display: flex; gap: var(--space-lg); }
+        footer nav a { color: rgba(255,255,255,.6); transition: color .2s; }
+        footer nav a:hover { color: #fff; }
+        footer .credits { width: 100%; text-align: center; margin-top: var(--space-md); font-size: .75rem; }
+        footer .credits a { color: rgba(255,255,255,.5); text-decoration: underline; }
+
+        /* ANIMATIONS */
+        .fade-up { opacity: 0; transform: translateY(12px); transition: opacity .4s var(--ease), transform .4s var(--ease); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .container { padding: 0 var(--space-lg); }
+            .partner-item { grid-template-columns: 1fr; gap: var(--space-lg); }
+            .partner-logo { justify-content: flex-start; }
+        }
+        @media (max-width: 640px) {
+            :root { --space-section: 80px; }
+            .navbar-links { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #2e2e2e; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-xl); z-index: 200; }
+            .navbar-links.open { display: flex; }
+            .menu-btn { display: block; z-index: 201; }
+            .page-hero h1 { font-size: 1.8rem; }
+            footer .container { flex-direction: column; text-align: center; }
+            footer nav ul { justify-content: center; }
+        }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-accent); color: #fff; padding: 8px 16px; z-index: 1000; font-size: .85rem; transition: top .2s; }
+        .skip-link:focus { top: 0; }
+    </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Pular para conteúdo</a>
+
+<header class="navbar">
+    <div class="container">
+        <a href="index.html" class="navbar-logo">Data<span>IESB</span></a>
+        <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
+            <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Assistente IA</a>
+            <a href="index.html#projects">Painéis e Estudos</a>
+            <a href="quem-somos.html">Quem somos</a>
+            <a href="parceiros.html" class="active">Parceiros</a>
+            <a href="contato.html" class="navbar-cta">Contato</a>
+        </nav>
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">🌙</button>
+    </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero">
+    <div class="container fade-up">
+        <h1>Nossos <span class="accent">Parceiros</span></h1>
+        <p>Instituições e empresas que viabilizam e fortalecem o Projeto Big Data IESB.</p>
+    </div>
+</section>
+
+<section class="partners">
+    <div class="container">
+
+        <article class="partner-item fade-up">
+            <div class="partner-logo">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/iesb.png" alt="Logo IESB Centro Universitário">
+            </div>
+            <div class="partner-description">
+                <p>O Instituto de Educação Superior de Brasília – IESB é a instituição idealizadora e principal apoiadora do Projeto Big Data – IESB. Com forte compromisso com a inovação, a pesquisa aplicada e a formação profissional de excelência, o IESB promove esta iniciativa como um recurso estratégico voltado à transformação digital no setor público e privado e à qualificação de seus estudantes.</p>
+                <p>Por meio de sua estrutura acadêmica, técnica e institucional, o IESB oferece suporte completo ao projeto, disponibilizando corpo docente especializado, laboratórios, coordenação de pesquisa e articulação com organizações públicas e privadas. A instituição tem como propósito o uso de dados e evidências para aprimorar o ciclo de políticas públicas nas áreas de saúde, segurança pública, previdência, trabalho, demografia e direitos humanos – com foco na construção de soluções analíticas e tecnológicas de vanguarda e livre acesso.</p>
+                <p>O Projeto Big Data – IESB também se integra diretamente às atividades acadêmicas da instituição, proporcionando aos estudantes a oportunidade de participar de projetos reais, com desafios concretos de análise de dados e desenvolvimento de soluções de base tecnológica. A iniciativa enriquece a aprendizagem, aliando a formação técnica, crítica e cidadã dos alunos, alinhando o ensino superior à realidade do mercado e da gestão pública.</p>
+                <p>Ao apoiar e manter este projeto, o IESB reafirma seu papel como agente transformador da sociedade, comprometido com a aplicação do conhecimento em benefício do desenvolvimento social, da inovação governamental e da qualificação profissional de alto nível.</p>
+            </div>
+        </article>
+
+        <article class="partner-item fade-up">
+            <div class="partner-logo">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/aws.png" alt="Logo AWS (Amazon Web Services)">
+            </div>
+            <div class="partner-description">
+                <p>A Amazon Web Services (AWS) é a plataforma de nuvem mais adotada e abrangente do mundo, oferecendo mais de 200 serviços completos de datacenters em todo o mundo. Milhões de clientes – incluindo as startups que crescem mais rápido, as maiores corporações e as principais agências governamentais – utilizam a AWS para reduzir custos, ganhar agilidade operacional e acelerar processos de inovação.</p>
+                <p>No contexto do Projeto Big Data - IESB, a AWS fornece a infraestrutura de nuvem que sustenta o armazenamento, processamento e análise de grandes volumes de dados. Esta parceria é fundamental para o desenvolvimento e a implantação de soluções avançadas de ciência de dados e inteligência artificial, viabilizando aplicações práticas em áreas como saúde, educação, segurança pública, desenvolvimento social e gestão governamental.</p>
+                <p>A AWS oferece uma ampla variedade de serviços, como tecnologias de infraestrutura, como computação, armazenamento e bancos de dados, até recursos de ponta como machine learning, inteligência artificial, data lakes, análise em tempo real e Internet das Coisas (IoT). Esta diversidade de ferramentas permite ao IESB criar soluções de forma rápida, segura e com alto desempenho, adaptando-se às necessidades específicas de cada projeto.</p>
+                <p>Além disso, a AWS disponibiliza a mais ampla gama de bancos de dados especializados, otimizados para diferentes tipos de cargas de trabalho e aplicações. Isso possibilita ao Projeto Big Data - IESB escolher sempre a ferramenta mais adequada para cada caso de uso, como melhor performance, o melhor custo-benefício e obter relatórios por requisições técnicas das instituições atendidas.</p>
+            </div>
+        </article>
+
+        <article class="partner-item fade-up">
+            <div class="partner-logo">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/sas.png" alt="Logo SAS">
+            </div>
+            <div class="partner-description">
+                <p>A parceria entre o Centro Universitário IESB e a SAS, líder global em soluções de analytics, representa um importante avanço na integração entre academia e mercado. Por meio do programa SAS Viya for Learning, o IESB oferece aos seus estudantes e professores acesso gratuito a uma plataforma tecnológica de ponta, amplamente utilizada por empresas, governos e centros de pesquisa em todo o mundo.</p>
+                <p>Além do SAS Viya, a parceria também incorpora o SAS Workswich, uma ferramenta inovadora e recente que permite o desenvolvimento de projetos em ambientes de ciência de dados diretamente no navegador, com suporte a múltiplas linguagens, como Python, R, SQL e a linguagem SAS. Este recurso é de extrema importância para os estudantes e pesquisadores que atuam em iniciativas como o Projeto Big Data – IESB, que utiliza soluções SAS para processar e analisar grandes volumes de dados públicos nas áreas de saúde, educação, demografia, entre tantas outras.</p>
+                <p>O domínio das soluções SAS aumenta significativamente a empregabilidade dos alunos do IESB, tanto no Brasil quanto no exterior, já que a proficiência nesta plataforma é um diferencial competitivo importante. A parceria com a SAS abre portas para os estudantes, ampliam suas possibilidades de inserção no mercado de trabalho, acessam oportunidades internacionais e se destacam por sua capacidade de aplicar conhecimentos analíticos em contextos reais, com tecnologias amplamente adotadas por organizações de alto desempenho.</p>
+            </div>
+        </article>
+
+        <article class="partner-item fade-up">
+            <div class="partner-logo">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/datai.png" alt="Logo DataI Empresa Júnior">
+            </div>
+            <div class="partner-description">
+                <p>A DataI – Empresa Júnior de Ciência de Dados e Inteligência Artificial do IESB é uma iniciativa estudantil vinculada aos cursos da área de tecnologia e inovação da instituição. Composta por alunos orientados por professores e profissionais do mercado, a DataI atua como um ambiente de aprendizagem empreendedora e prática, promovendo o desenvolvimento de projetos reais nas áreas de ciência de dados, inteligência artificial e transformação digital.</p>
+                <p>No contexto do Projeto Big Data – IESB, a DataI desempenha um papel fundamental ao integrar o conhecimento acadêmico com a aplicação prática em projetos voltados a instituições públicas e organizações parceiras. A empresa júnior participa ativamente da coleta, estruturação, análise e visualização de dados em diversas áreas temáticas, como saúde, educação, economia, meio ambiente, segurança pública, direitos humanos, previdência, trabalho e demografia.</p>
+                <p>Por meio do envolvimento da DataI, os estudantes têm a oportunidade de atuar em equipes multidisciplinares, vivenciar metodologias de projetos orientados por dados e desenvolver competências técnicas e profissionais alinhadas às demandas do setor público e do mercado. A participação da empresa júnior fortalece a cultura de inovação do IESB e contribui para a formação de lideranças jovens com consciência social, pensamento analítico e capacidade de gerar impacto positivo na sociedade.</p>
+                <p>Ao integrar a DataI ao Projeto Big Data – IESB, a instituição reafirma seu compromisso com a aprendizagem ativa, a extensão universitária e a preparação dos estudantes para os desafios contemporâneos da ciência de dados aplicada à gestão pública e à inovação social.</p>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 DataIESB. Todos os direitos reservados.</p>
+        <nav aria-label="Links do rodapé">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="quem-somos.html">Quem Somos</a></li>
+                <li><a href="parceiros.html">Parceiros</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+        <p class="credits">Desenvolvido por <a href="https://levav.it" target="_blank">Levav-IT</a> · Patrocínio: <a href="https://www.instagram.com/pratikaiesb/" target="_blank">DataIESB</a> · <a href="https://aws.amazon.com" target="_blank">AWS</a></p>
+    </div>
+</footer>
+
+<script>
+document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('nav-links').classList.toggle('open'));
+document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open')));
+
+const themeToggle = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+themeToggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+});
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 100);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
