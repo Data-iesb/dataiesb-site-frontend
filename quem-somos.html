@@ -77,6 +77,12 @@
         .project-text p { color: var(--color-text-secondary); margin-bottom: var(--space-md); font-size: .95rem; }
         .project-media img { border-radius: var(--radius-lg); border: 1px solid var(--color-border); }
         .project-media .btn-primary { margin-top: var(--space-lg); }
+        .carousel { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--color-border); }
+        .carousel-slide { width: 100%; display: none; border-radius: var(--radius-lg); object-fit: cover; aspect-ratio: 16/10; }
+        .carousel-slide.active { display: block; }
+        .carousel-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+        .carousel-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.4); cursor: pointer; transition: background .2s; }
+        .carousel-dots .dot.active { background: var(--color-accent); }
         .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--color-cta); color: #fff; border-radius: 6px; font-weight: 600; font-size: .95rem; border: none; cursor: pointer; transition: background .2s, transform .15s; }
         .btn-primary:hover { background: var(--color-cta-hover); transform: translateY(-1px); }
 
@@ -170,7 +176,13 @@
             <p>Além disso, o projeto Big Data - IESB constitui um espaço de aprendizagem aplicada para os estudantes do IESB, que têm a oportunidade de aplicar ferramentas e metodologias de Ciência de Dados e Inteligência Artificial em projetos reais, ampliando sua formação técnica e seu compromisso com o desenvolvimento social e institucional do país.</p>
         </div>
         <div class="project-media fade-up">
-            <img src="https://d28lvm9jkyfotx.cloudfront.net/img/iesb-labs.jpeg" alt="Laboratório de computadores do IESB">
+            <div class="carousel" id="carousel">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/quem-somos/iesb-labs.jpeg" alt="Laboratório de computadores do IESB" class="carousel-slide active">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/quem-somos/CAMPUS-SUL-min-1-scaled.jpeg" alt="Campus Sul IESB" class="carousel-slide">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/quem-somos/sul-2-Salas-de-aula-1-scaled.jpg" alt="Salas de aula IESB" class="carousel-slide">
+                <img src="https://d28lvm9jkyfotx.cloudfront.net/img/quem-somos/sul-5-biblioteca.jpg" alt="Biblioteca IESB" class="carousel-slide">
+                <div class="carousel-dots" id="carousel-dots"></div>
+            </div>
             <a href="index.html#projects" class="btn-primary">Veja nossos estudos publicados →</a>
         </div>
     </div>
@@ -298,6 +310,25 @@ class TeamDataManager {
 }
 
 new TeamDataManager().render();
+
+// Carousel
+const slides = document.querySelectorAll('.carousel-slide');
+const dotsContainer = document.getElementById('carousel-dots');
+let current = 0;
+slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsContainer.appendChild(dot);
+});
+function goTo(i) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = i;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+}
+setInterval(() => goTo((current + 1) % slides.length), 4000);
 </script>
 </body>
 </html>
