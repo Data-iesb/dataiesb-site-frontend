@@ -214,6 +214,9 @@
 </footer>
 
 <script>
+// Load dynamic colors
+fetch("https://d28lvm9jkyfotx.cloudfront.net/config/colors.json").then(r=>r.json()).then(c=>{const root=document.documentElement.style;root.setProperty("--color-accent",c.accent);root.setProperty("--color-accent-hover",c.accent_hover);root.setProperty("--color-cta",c.cta);root.setProperty("--color-cta-hover",c.cta_hover);}).catch(()=>{});
+
 document.getElementById('menu-btn').addEventListener('click', () => document.getElementById('nav-links').classList.toggle('open'));
 document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open')));
 
