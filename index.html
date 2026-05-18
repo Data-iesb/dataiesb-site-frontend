@@ -131,14 +131,15 @@
         /* PROJECTS */
         .projects { padding: var(--space-section) 0; background: var(--color-surface); }
         .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
-        .project-card { background: #2e2e2e; border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: var(--space-xl); transition: transform .25s var(--ease), border-color .2s, box-shadow .3s; display: flex; flex-direction: column; color: #c8c8c8; position: relative; overflow: hidden; }
-        .project-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--color-accent), transparent); opacity: 0; transition: opacity .3s; }
+        .project-card { background: #2e2e2e; border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: var(--space-xl) var(--space-xl) var(--space-lg); transition: transform .25s var(--ease), border-color .2s, box-shadow .3s; display: flex; flex-direction: column; color: #c8c8c8; position: relative; overflow: hidden; }
+        .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--color-accent), #ff4d5a); opacity: 0; transition: opacity .3s; }
         .project-card:hover { transform: translateY(-4px); border-color: var(--color-accent); box-shadow: 0 12px 32px rgba(227,6,19,.12), 0 4px 12px rgba(0,0,0,.2); }
-        .project-card:hover::after { opacity: 1; }
-        .project-card .tag { display: inline-block; font-size: .75rem; font-weight: 500; color: #ff4d5a; background: rgba(227,6,19,.12); padding: 4px 12px; border-radius: 20px; margin-bottom: var(--space-md); align-self: flex-start; }
-        .project-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: var(--space-sm); color: #e0e0e0; }
-        .project-card p { font-size: .85rem; color: #999; line-height: 1.6; margin-bottom: var(--space-md); flex: 1; }
-        .project-card .author { font-size: .8rem; color: #888; margin-bottom: var(--space-md); }
+        .project-card:hover::before { opacity: 1; }
+        .project-card .tag { display: inline-block; font-size: .7rem; font-weight: 600; color: #ff4d5a; background: rgba(227,6,19,.12); padding: 5px 12px; border-radius: 20px; margin-bottom: var(--space-md); align-self: flex-start; text-transform: uppercase; letter-spacing: .04em; }
+        .project-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: var(--space-sm); color: #fff; line-height: 1.4; }
+        .project-card p { font-size: .85rem; color: #aaa; line-height: 1.7; margin-bottom: var(--space-md); flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .project-card .author { font-size: .78rem; color: #777; margin-bottom: var(--space-md); display: flex; align-items: center; gap: 6px; }
+        .project-card .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: var(--space-md); border-top: 1px solid rgba(255,255,255,.06); }
         .project-card .btn-primary { align-self: flex-start; padding: 10px 20px; font-size: .85rem; }
 
         /* CONTACT */
@@ -481,11 +482,13 @@ async function loadReports() {
             if (r.url) { card.target = '_blank'; card.rel = 'noopener noreferrer'; }
             card.className = 'project-card fade-up';
             card.innerHTML = `
-                <span class="tag">Painel</span>
+                <span class="tag">${r.url ? 'Painel Interativo' : 'Estudo'}</span>
                 <h3>${r.titulo}</h3>
                 <p>${r.descricao}</p>
-                <p class="author">Autor: ${r.autor}</p>
-                <span class="link" style="color:var(--color-accent);font-weight:500;font-size:.85rem;">Ver relatório →</span>`;
+                <div class="card-footer">
+                    <span class="author">👤 ${r.autor}</span>
+                    <span class="link" style="color:var(--color-accent);font-weight:600;font-size:.8rem;">Acessar →</span>
+                </div>`;
             container.appendChild(card);
             observer.observe(card);
         });
