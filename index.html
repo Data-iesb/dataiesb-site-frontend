@@ -10,17 +10,17 @@
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --color-base: #ffffff;
-            --color-surface: #ffffff;
-            --color-base-dark: #2e2e2e;
-            --color-text-primary: #1f2937;
-            --color-text-secondary: #5C5C5C;
+            --color-base: #1f1f1f;
+            --color-surface: rgba(255,255,255,.04);
+            --color-base-dark: #151515;
+            --color-text-primary: #c8c8c8;
+            --color-text-secondary: #888;
             --color-accent: #E30613;
-            --color-accent-hover: #b8050f;
-            --color-highlight: rgba(227,6,19,.12);
+            --color-accent-hover: #ff4d5a;
+            --color-highlight: rgba(227,6,19,.08);
             --color-cta: #E30613;
-            --color-cta-hover: #e8434f;
-            --color-border: #e2e2e0;
+            --color-cta-hover: #ff4d5a;
+            --color-border: rgba(255,255,255,.08);
             --space-xs: 4px;
             --space-sm: 8px;
             --space-md: 16px;
@@ -33,19 +33,6 @@
             --radius: 8px;
             --radius-lg: 12px;
             --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        [data-theme="dark"] {
-            --color-base: #1f1f1f;
-            --color-surface: rgba(255,255,255,.04);
-            --color-base-dark: #151515;
-            --color-text-primary: #c8c8c8;
-            --color-text-secondary: #888;
-            --color-accent: #ff4d5a;
-            --color-accent-hover: #E30613;
-            --color-highlight: rgba(227,6,19,.08);
-            --color-cta: #E30613;
-            --color-cta-hover: #ff4d5a;
-            --color-border: rgba(255,255,255,.08);
         }
         body { font-family: 'Inter', sans-serif; color: var(--color-text-primary); background: var(--color-base); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         a { text-decoration: none; color: inherit; }
@@ -60,7 +47,7 @@
         .navbar .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
         .navbar-logo { font-size: 1.1rem; font-weight: 700; color: #e0e0e0; letter-spacing: -0.02em; }
         .navbar-logo span { color: var(--color-accent); }
-        [data-theme="dark"] .menu-btn span { background: var(--color-text-primary); }
+        .menu-btn span { background: var(--color-text-primary); }
         .navbar-links { display: flex; gap: var(--space-xl); align-items: center; }
         .navbar-links a { font-size: .875rem; font-weight: 500; color: #999; text-decoration: none; transition: color .2s; }
         .navbar-links a:hover { color: var(--color-accent); }
@@ -212,18 +199,13 @@
         .skip-link { position: absolute; top: -40px; left: 0; background: var(--color-accent); color: #fff; padding: 8px 16px; z-index: 1000; font-size: .85rem; transition: top .2s; }
         .skip-link:focus { top: 0; }
 
-        /* THEME TOGGLE */
-        .theme-toggle { background: none; border: 1px solid rgba(255,255,255,.15); border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 1rem; line-height: 1; transition: border-color .2s, background .2s; }
-        .theme-toggle:hover { border-color: var(--color-accent); background: rgba(227,6,19,.1); }
-
-        /* DARK MODE OVERRIDES */
-        [data-theme="dark"] .proof { background: #111; }
-        [data-theme="dark"] footer { background: #111; }
-        [data-theme="dark"] .navbar-links { background: #2e2e2e; }
-        [data-theme="dark"] .contact-form input, [data-theme="dark"] .contact-form textarea { background: rgba(255,255,255,.03); color: var(--color-text-primary); border-color: var(--color-border); }
-        [data-theme="dark"] .service-card, [data-theme="dark"] .project-card { background: rgba(255,255,255,.03); }
-        [data-theme="dark"] .hero-graphic { background: rgba(227,6,19,.08); border-color: var(--color-border); }
-        [data-theme="dark"] .trust-item h3 { color: #e0e0e0; }
+        /* DARK STYLES */
+        .proof { background: #111; }
+        footer { background: #111; }
+        .contact-form input, .contact-form textarea { background: rgba(255,255,255,.03); color: var(--color-text-primary); border-color: var(--color-border); }
+        .service-card, .project-card { background: rgba(255,255,255,.03); }
+        .hero-graphic { background: rgba(227,6,19,.08); border-color: var(--color-border); }
+        .trust-item h3 { color: #e0e0e0; }
     </style>
 </head>
 <body>
@@ -243,7 +225,6 @@
         <button class="menu-btn" id="menu-btn" aria-label="Abrir menu">
             <span></span><span></span><span></span>
         </button>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro">🌙</button>
     </div>
 </header>
 
@@ -398,18 +379,6 @@ const menuBtn = document.getElementById('menu-btn');
 const navLinks = document.getElementById('nav-links');
 menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
 document.querySelectorAll('#nav-links a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-// Theme toggle
-const themeToggle = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
-themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-themeToggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
-});
 
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
