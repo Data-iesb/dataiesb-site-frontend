@@ -20,5 +20,5 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      - run: aws s3 sync . s3://dataiesb --exclude ".git/*" --exclude ".github/*" --exclude "*.md" --delete
+      - run: aws s3 sync . s3://dataiesb --exclude ".git/*" --exclude ".github/*" --exclude "*.md"
       - run: aws cloudfront create-invalidation --distribution-id E371T2F886B5KI --paths "/*"
