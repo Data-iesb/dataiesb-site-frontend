@@ -21,4 +21,5 @@ jobs:
           aws-region: us-east-1
 
       - run: aws s3 sync . s3://dev.dataiesb.com --exclude ".git/*" --exclude ".github/*" --exclude "*.md"
+      - run: aws s3 sync ./img s3://dataiesb/img --size-only
       - run: aws cloudfront create-invalidation --distribution-id E142Z1CPAKR8S8 --paths "/*"
