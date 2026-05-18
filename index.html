@@ -272,17 +272,14 @@
 <section class="trust-bar" aria-label="Diferenciais">
     <div class="container">
         <div class="trust-item fade-up">
-            <div class="trust-icon">⬡</div>
             <h3>5 cursos integrados</h3>
             <p>Ciência de Dados, Ciência da Computação, Engenharia da Computação, Engenharia de Software e ADS.</p>
         </div>
         <div class="trust-item fade-up">
-            <div class="trust-icon">◈</div>
             <h3>Vínculo institucional IESB</h3>
             <p>Empresa júnior formalmente ligada ao Centro Universitário IESB, com orientação acadêmica.</p>
         </div>
         <div class="trust-item fade-up">
-            <div class="trust-icon">△</div>
             <h3>Projetos reais entregues</h3>
             <p>Soluções de dados aplicadas a problemas concretos de pessoas e empresas.</p>
         </div>
@@ -488,7 +485,7 @@ async function loadReports() {
                 <h3>${r.titulo}</h3>
                 <p>${r.descricao}</p>
                 <div class="card-footer">
-                    <span class="author">👤 ${r.autor}</span>
+                    <span class="author">${r.autor}</span>
                     <span class="link" style="color:var(--color-accent);font-weight:600;font-size:.8rem;">Acessar →</span>
                 </div>`;
             container.appendChild(card);
