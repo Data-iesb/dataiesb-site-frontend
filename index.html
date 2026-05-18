@@ -112,13 +112,6 @@
         .service-card .link:hover { text-decoration: underline; }
 
         /* TABS */
-        .tabs { display: flex; gap: var(--space-sm); margin-bottom: var(--space-xl); justify-content: center; }
-        .tab { padding: 10px 24px; border: 1px solid var(--color-border); border-radius: 6px; background: transparent; color: var(--color-text-secondary); font-size: .9rem; font-weight: 500; cursor: pointer; transition: all .2s; }
-        .tab.active { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
-        .tab:hover:not(.active) { border-color: var(--color-accent); color: var(--color-accent); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
         /* PROOF */
         .proof { padding: var(--space-section) 0; background: var(--color-base-dark); color: #fff; }
         .proof .container { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: center; }
@@ -354,10 +347,12 @@
 <!-- PROJECTS -->
 <section class="projects" id="projects">
     <div class="container">
-        <div class="tab-content active" id="tab-reports">
-            <div class="projects-grid" id="reports-container">
-                <div class="loader"></div>
-            </div>
+        <div class="section-header fade-up">
+            <h2>Painéis e Estudos</h2>
+            <p>Dashboards interativos sobre dados públicos brasileiros.</p>
+        </div>
+        <div class="projects-grid" id="reports-container">
+            <div class="loader"></div>
         </div>
     </div>
 </section>
@@ -413,16 +408,6 @@ themeToggle.addEventListener('click', () => {
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
     themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
-});
-
-// Tabs
-document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-    });
 });
 
 // Navbar scroll effect
