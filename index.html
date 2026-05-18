@@ -447,7 +447,7 @@ async function loadReports() {
             card.href = r.url || `https://app.dataiesb.com/report/?id=${id}`;
             if (r.url) { card.target = '_blank'; card.rel = 'noopener noreferrer'; }
             card.className = 'project-card fade-up';
-            const imgUrl = `https://d28lvm9jkyfotx.cloudfront.net/img/paineis/${id}.png`;
+            const imgUrl = r.image_url || `https://d28lvm9jkyfotx.cloudfront.net/img/paineis/${id}.png`;
             card.innerHTML = `
                 <img src="${imgUrl}" alt="${r.titulo}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none'">
                 <span class="tag">${r.url ? 'Painel Interativo' : 'Estudo'}</span>
