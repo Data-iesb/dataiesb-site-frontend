@@ -217,7 +217,7 @@
         <a href="index.html" class="navbar-logo"><img src="https://d28lvm9jkyfotx.cloudfront.net/logo.png" alt="DataIESB" style="height:32px;"></a>
         <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
             <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Assistente IA</a>
-            <a href="#projects">Painéis e Estudos</a>
+            <a href="#projects">Notícias</a>
             <a href="quem-somos.html">Quem somos</a>
             <a href="parceiros.html">Parceiros</a>
             <a href="contato.html" class="navbar-cta">Contato</a>
@@ -330,8 +330,8 @@
 <section class="projects" id="projects">
     <div class="container">
         <div class="section-header fade-up">
-            <h2>Painéis e Estudos</h2>
-            <p>Dashboards interativos sobre dados públicos brasileiros.</p>
+            <h2>Notícias</h2>
+            <p>Últimas novidades da DataIESB.</p>
         </div>
         <div class="projects-grid" id="reports-container">
             <div class="loader"></div>
@@ -417,56 +417,40 @@ const metricObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 document.querySelectorAll('.metric .number').forEach(el => metricObserver.observe(el));
 
-// Load reports from API
+// Load news from Ghost
 async function loadReports() {
     const container = document.getElementById('reports-container');
-    const url = 'https://hewx1kjfxh.execute-api.us-east-1.amazonaws.com/prod/dataiesb-auth/public-reports';
     try {
-        const res = await fetch(url);
+        const res = await fetch('https://ghost.dataiesb.com/ghost/api/content/posts/?key=ab90b35cb20435e9a0394ca1d1&limit=6&fields=title,slug,excerpt,published_at,feature_image');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const reports = await res.json();
+        const data = await res.json();
+        const posts = data.posts || [];
         container.innerHTML = '';
-        if (typeof reports !== 'object' || reports === null || Array.isArray(reports)) {
-            container.innerHTML = '<p style="text-align:center;color:var(--color-text-secondary);grid-column:1/-1;padding:40px">Erro ao carregar relatórios.</p>';
+        if (!posts.length) {
+            container.innerHTML = '<p style="text-align:center;color:var(--color-text-secondary);grid-column:1/-1;padding:40px">Nenhuma notícia disponível.</p>';
             return;
         }
-        const ids = Object.keys(reports);
-        if (!ids.length) {
-            container.innerHTML = '<p style="text-align:center;color:var(--color-text-secondary);grid-column:1/-1;padding:40px">Nenhum relatório disponível.</p>';
-            return;
-        }
-        ids.sort((a, b) => {
-            const ra = reports[a], rb = reports[b];
-            if (ra.created_at && rb.created_at) return new Date(rb.created_at) - new Date(ra.created_at);
-            return ra.titulo.localeCompare(rb.titulo);
-        });
-        ids.forEach(id => {
-            const r = reports[id];
-            if (!r || !r.titulo || !r.descricao || !r.autor) return;
+        posts.forEach(p => {
             const card = document.createElement('a');
-            card.href = r.url || `https://app.dataiesb.com/report/?id=${id}`;
-            if (r.url) { card.target = '_blank'; card.rel = 'noopener noreferrer'; }
+            card.href = `https://ghost.dataiesb.com/${p.slug}/`;
+            card.target = '_blank';
+            card.rel = 'noopener noreferrer';
             card.className = 'project-card fade-up';
-            const imgUrl = r.image_url || `https://d28lvm9jkyfotx.cloudfront.net/img/paineis/${id}.png`;
             card.innerHTML = `
-                <img src="${imgUrl}" alt="${r.titulo}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none'">
-                <span class="tag">${r.url ? 'Painel Interativo' : 'Estudo'}</span>
-                <h3>${r.titulo}</h3>
-                <p>${r.descricao}</p>
+                ${p.feature_image ? `<img src="${p.feature_image}" alt="${p.title}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none'">` : ''}
+                <span class="tag">Notícia</span>
+                <h3>${p.title}</h3>
+                <p>${p.excerpt || ''}</p>
                 <div class="card-footer">
-                    <span class="author">${r.autor}</span>
-                    <span class="link" style="color:var(--color-accent);font-weight:600;font-size:.8rem;">Acessar →</span>
+                    <span class="author">${new Date(p.published_at).toLocaleDateString('pt-BR')}</span>
+                    <span class="link" style="color:var(--color-accent);font-weight:600;font-size:.8rem;">Ler →</span>
                 </div>`;
             container.appendChild(card);
             observer.observe(card);
         });
     } catch (e) {
-        console.error('Erro ao carregar relatórios:', e);
-        container.innerHTML = `
-            <div style="text-align:center;padding:40px;grid-column:1/-1">
-                <p style="color:var(--color-cta);margin-bottom:12px">Erro ao carregar os relatórios.</p>
-                <button onclick="loadReports()" class="btn-primary" style="font-size:.85rem;padding:10px 20px">Tentar novamente</button>
-            </div>`;
+        console.error('Erro ao carregar notícias:', e);
+        container.innerHTML = '<p style="text-align:center;color:var(--color-text-secondary);grid-column:1/-1;padding:40px">Erro ao carregar notícias.</p>';
     }
 }
 document.querySelectorAll('.service-card video').forEach(v => v.playbackRate = 0.5);
