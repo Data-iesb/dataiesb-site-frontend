@@ -217,7 +217,7 @@
         <a href="index.html" class="navbar-logo"><img src="https://d28lvm9jkyfotx.cloudfront.net/logo.png" alt="DataIESB" style="height:32px;"></a>
         <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
             <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Assistente IA</a>
-            <a href="#projects">Notícias</a>
+            <a href="https://ghost.dataiesb.com" target="_blank">Notícias</a>
             <a href="quem-somos.html">Quem somos</a>
             <a href="parceiros.html">Parceiros</a>
             <a href="contato.html" class="navbar-cta">Contato</a>
@@ -234,12 +234,10 @@
 <section class="hero">
     <div class="container">
         <div class="hero-content fade-up">
+            <!-- HERO-CAROUSEL-START -->
             <h1>Soluções de dados construídas por <span class="accent">talento IESB</span></h1>
             <p>Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.</p>
-            <div class="hero-actions">
-                <a href="#projects" class="btn-primary">Conheça nossos projetos →</a>
-                <a href="#contact" class="btn-secondary">Fale conosco</a>
-            </div>
+            <!-- HERO-CAROUSEL-END -->
         </div>
         <div class="hero-visual fade-up">
             <div class="hero-graphic">
@@ -327,17 +325,6 @@
 </section>
 
 <!-- PROJECTS -->
-<section class="projects" id="projects">
-    <div class="container">
-        <div class="section-header fade-up">
-            <h2>Notícias</h2>
-            <p>Últimas novidades da DataIESB.</p>
-        </div>
-        <div class="projects-grid" id="reports-container">
-            <div class="loader"></div>
-        </div>
-    </div>
-</section>
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
@@ -418,43 +405,7 @@ const metricObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.metric .number').forEach(el => metricObserver.observe(el));
 
 // Load news from Ghost
-async function loadReports() {
-    const container = document.getElementById('reports-container');
-    try {
-        const res = await fetch('https://ghost.dataiesb.com/ghost/api/content/posts/?key=ab90b35cb20435e9a0394ca1d1&limit=6&fields=title,slug,excerpt,published_at,feature_image');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        const posts = data.posts || [];
-        container.innerHTML = '';
-        if (!posts.length) {
-            container.innerHTML = '<p style="text-align:center;color:var(--color-text-secondary);grid-column:1/-1;padding:40px">Nenhuma notícia disponível.</p>';
-            return;
-        }
-        posts.forEach(p => {
-            const card = document.createElement('a');
-            card.href = `https://ghost.dataiesb.com/${p.slug}/`;
-            card.target = '_blank';
-            card.rel = 'noopener noreferrer';
-            card.className = 'project-card fade-up';
-            card.innerHTML = `
-                ${p.feature_image ? `<img src="${p.feature_image}" alt="${p.title}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none'">` : ''}
-                <span class="tag">Notícia</span>
-                <h3>${p.title}</h3>
-                <p>${p.excerpt || ''}</p>
-                <div class="card-footer">
-                    <span class="author">${new Date(p.published_at).toLocaleDateString('pt-BR')}</span>
-                    <span class="link" style="color:var(--color-accent);font-weight:600;font-size:.8rem;">Ler →</span>
-                </div>`;
-            container.appendChild(card);
-            observer.observe(card);
-        });
-    } catch (e) {
-        console.error('Erro ao carregar notícias:', e);
-        container.innerHTML = '<p style="text-align:center;color:var(--color-text-secondary);grid-column:1/-1;padding:40px">Erro ao carregar notícias.</p>';
-    }
-}
 document.querySelectorAll('.service-card video').forEach(v => v.playbackRate = 0.5);
-loadReports();
 </script>
 </body>
 </html>
