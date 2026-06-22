@@ -35,6 +35,52 @@
             --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         body { font-family: 'Inter', sans-serif; color: var(--color-text-primary); background: var(--color-base); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        /* LIGHT MODE */
+        [data-theme="light"] {
+            --color-base: #F5F7FA;
+            --color-surface: rgba(0,0,0,.025);
+            --color-base-dark: #EDF0F5;
+            --color-text-primary: #171A21;
+            --color-text-secondary: #4B5263;
+            --color-highlight: rgba(227,6,19,.05);
+            --color-border: rgba(49,55,70,.08);
+        }
+        [data-theme="light"] .navbar { background: #fff; box-shadow: 0 1px 0 #D6DCE7; }
+        [data-theme="light"] .navbar::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent 10%,rgba(227,6,19,.15) 50%,transparent 90%); }
+        [data-theme="light"] .navbar-logo img { filter: brightness(0.2); }
+        [data-theme="light"] .navbar-links a { color: #313746; }
+        [data-theme="light"] .menu-btn span { background: #171A21; }
+        [data-theme="light"] .hero { background: #F5F7FA; }
+        [data-theme="light"] .hero::before { opacity:.3; background-image:radial-gradient(circle at 1px 1px,#C2C9D6 1px,transparent 0); }
+        [data-theme="light"] .hero h1 { color: #171A21; }
+        [data-theme="light"] .trust-bar { background: #313746; border-color: rgba(255,255,255,.06); color: #E3E7EF; }
+        [data-theme="light"] .trust-item { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.08); }
+        [data-theme="light"] .trust-item:hover { border-color: rgba(227,6,19,.4); }
+        [data-theme="light"] .trust-item h3 { color: #fff; }
+        [data-theme="light"] .trust-item p { color: rgba(255,255,255,.7); }
+        [data-theme="light"] .service-card { background: linear-gradient(180deg,#fff,#F8FAFC); border-color: #D6DCE7; color: #171A21; box-shadow: 0 2px 8px rgba(49,55,70,.05); }
+        [data-theme="light"] .service-card:hover { border-color: var(--color-accent); box-shadow: 0 12px 32px rgba(227,6,19,.1); }
+        [data-theme="light"] .service-card .icon { background: rgba(227,6,19,.08); }
+        [data-theme="light"] .proof { background: #171A21; color: #E3E7EF; }
+        [data-theme="light"] .proof-text h2 { color: #fff; }
+        [data-theme="light"] .proof-text p { color: rgba(255,255,255,.75); }
+        [data-theme="light"] .proof-text a { color: #ff4d5a; }
+        [data-theme="light"] .metric .label { color: rgba(255,255,255,.7); }
+        [data-theme="light"] .contact { background: #EDF0F5; border-color: #D6DCE7; color: #171A21; }
+        [data-theme="light"] .contact-text h2 { color: #171A21; }
+        [data-theme="light"] .contact-text p { color: #4B5263; }
+        [data-theme="light"] .contact-form input, [data-theme="light"] .contact-form textarea { background: #fff; color: #171A21; border-color: #C2C9D6; }
+        [data-theme="light"] .contact-form input:focus, [data-theme="light"] .contact-form textarea:focus { border-color: var(--color-accent); }
+        [data-theme="light"] footer { background: #313746; color: rgba(255,255,255,.6); }
+        [data-theme="light"] footer nav a { color: rgba(255,255,255,.6); }
+        [data-theme="light"] footer nav a:hover { color: #fff; }
+        [data-theme="light"] .hero-graphic { border-color: rgba(227,6,19,.15); box-shadow: 0 0 20px rgba(227,6,19,.08); }
+        [data-theme="light"] .section-header h2 { color: #171A21; }
+        [data-theme="light"] .navbar-links.open { background: #fff; }
+        [data-theme="light"] .navbar-aurya { color: var(--color-accent) !important; }
+        .theme-toggle { background:none; border:none; cursor:pointer; padding:4px; font-size:.75rem; line-height:1; display:flex; align-items:center; opacity:.5; transition:opacity .2s; color:inherit; }
+        .theme-toggle:hover { opacity:1; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
         img { display: block; max-width: 100%; }
@@ -220,6 +266,7 @@
             <a href="https://ghost.dataiesb.com" target="_blank">Notícias</a>
             <a href="quem-somos.html">Quem somos</a>
             <a href="parceiros.html">Parceiros</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
             <a href="contato.html" class="navbar-cta">Contato</a>
         </nav>
         <button class="menu-btn" id="menu-btn" aria-label="Abrir menu">
@@ -406,6 +453,23 @@ document.querySelectorAll('.metric .number').forEach(el => metricObserver.observ
 
 // Load news from Ghost
 document.querySelectorAll('.service-card video').forEach(v => v.playbackRate = 0.5);
+
+// Theme toggle
+(function(){
+    const btn = document.getElementById('theme-toggle');
+    if(!btn) return;
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    const sun = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+    const moon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+    btn.innerHTML = saved === 'light' ? sun : moon;
+    btn.addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        btn.innerHTML = next === 'light' ? sun : moon;
+    });
+})();
 </script>
 </body>
 </html>
