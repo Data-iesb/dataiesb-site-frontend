@@ -282,8 +282,10 @@
     <div class="container">
         <div class="hero-content fade-up">
             <!-- HERO-CAROUSEL-START -->
-            <h1>Soluções de dados construídas por <span class="accent">talento IESB</span></h1>
-            <p>Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.</p>
+            <div id="hero-carousel">
+                <h1>Soluções de dados construídas por <span class="accent">talento IESB</span></h1>
+                <p>Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.</p>
+            </div>
             <!-- HERO-CAROUSEL-END -->
         </div>
         <div class="hero-visual fade-up">
@@ -465,11 +467,37 @@ document.querySelectorAll('.metric .number').forEach(el => metricObserver.observ
 // Load news from Ghost
 async function loadReports() {
     const container = document.getElementById('reports-container');
+    const carousel = document.getElementById('hero-carousel');
     try {
         const res = await fetch('https://ghost.dataiesb.com/ghost/api/content/posts/?key=ab90b35cb20435e9a0394ca1d1&limit=6&fields=title,slug,excerpt,published_at,feature_image');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         const posts = data.posts || [];
+
+        // Hero carousel - rotate news as hero title
+        if (posts.length && carousel) {
+            const slides = [{
+                title: 'Soluções de dados construídas por <span class="accent">talento IESB</span>',
+                text: 'Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.'
+            }, ...posts.slice(0, 3).map(p => ({
+                title: `<span class="accent">${p.title}</span>`,
+                text: p.excerpt || ''
+            }))];
+            let idx = 0;
+            function showSlide() {
+                carousel.style.opacity = 0;
+                setTimeout(() => {
+                    carousel.innerHTML = `<h1>${slides[idx].title}</h1><p>${slides[idx].text}</p>`;
+                    carousel.style.opacity = 1;
+                    idx = (idx + 1) % slides.length;
+                }, 400);
+            }
+            carousel.style.transition = 'opacity .4s ease';
+            showSlide();
+            setInterval(showSlide, 6000);
+        }
+
+        // News grid
         container.innerHTML = '';
         if (!posts.length) {
             container.innerHTML = '<p style="text-align:center;color:var(--color-text-secondary);grid-column:1/-1;padding:40px">Nenhuma notícia disponível.</p>';
