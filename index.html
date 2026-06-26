@@ -465,7 +465,7 @@ const metricObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.metric .number').forEach(el => metricObserver.observe(el));
 
 // Load news from Ghost
-function mdTitle(t) { return t.replace(/\*([^*]+)\*/g, '<em>$1</em>'); }
+function mdTitle(t) { return t.replace(/\*([^*]+)\*/g, '<span class="accent">$1</span>'); }
 async function loadReports() {
     const container = document.getElementById('reports-container');
     const carousel = document.getElementById('hero-carousel');
@@ -485,7 +485,7 @@ async function loadReports() {
                 img: defaultImg,
                 link: ''
             }, ...posts.slice(0, 3).map(p => ({
-                title: `<span class="accent">${mdTitle(p.title)}</span>`,
+                title: mdTitle(p.title),
                 text: p.excerpt || '',
                 img: p.feature_image || defaultImg,
                 link: `https://ghost.dataiesb.com/${p.slug}/`
