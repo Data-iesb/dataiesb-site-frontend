@@ -482,18 +482,20 @@ async function loadReports() {
             const slides = [{
                 title: 'Soluções de dados construídas por <span class="accent">talento IESB</span>',
                 text: 'Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.',
-                img: defaultImg
+                img: defaultImg,
+                link: ''
             }, ...posts.slice(0, 3).map(p => ({
                 title: `<span class="accent">${mdTitle(p.title)}</span>`,
                 text: p.excerpt || '',
-                img: p.feature_image || defaultImg
+                img: p.feature_image || defaultImg,
+                link: `https://ghost.dataiesb.com/${p.slug}/`
             }))];
             let idx = 0;
             function showSlide() {
                 carousel.style.opacity = 0;
                 if (heroImg) heroImg.style.opacity = 0;
                 setTimeout(() => {
-                    carousel.innerHTML = `<h1>${slides[idx].title}</h1><p>${slides[idx].text}</p>`;
+                    carousel.innerHTML = `<h1>${slides[idx].title}</h1><p>${slides[idx].text}</p>${slides[idx].link ? `<a href="${slides[idx].link}" target="_blank" class="btn-primary" style="margin-top:1.5rem;display:inline-block">Ler mais →</a>` : ''}`;
                     carousel.style.opacity = 1;
                     if (heroImg) { heroImg.src = slides[idx].img; heroImg.style.opacity = 1; }
                     idx = (idx + 1) % slides.length;
