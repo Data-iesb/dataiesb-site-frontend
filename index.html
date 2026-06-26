@@ -548,7 +548,7 @@ function openNews(idx) {
     if (!overlay) {
         overlay = document.createElement('div');
         overlay.id = 'news-modal-overlay';
-        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;display:flex;align-items:center;justify-content:center;padding:2rem;overflow-y:auto';
+        overlay.style.cssText = 'position:fixed;inset:0;background:#0a0a1a;z-index:999;display:flex;align-items:center;justify-content:center;padding:2rem;overflow-y:auto';
         overlay.onclick = (e) => { if (e.target === overlay) overlay.style.display = 'none'; };
         document.body.appendChild(overlay);
     }
