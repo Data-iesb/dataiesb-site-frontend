@@ -283,8 +283,7 @@
         <div class="hero-content fade-up">
             <!-- HERO-CAROUSEL-START -->
             <div id="hero-carousel">
-                <h1>Soluções de dados construídas por <span class="accent">talento IESB</span></h1>
-                <p>Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.</p>
+                <h1>Carregando notícias...</h1>
             </div>
             <!-- HERO-CAROUSEL-END -->
         </div>
@@ -479,19 +478,13 @@ async function loadReports() {
         if (posts.length && carousel) {
             const heroImg = document.getElementById('hero-img');
             const defaultImg = 'https://d28lvm9jkyfotx.cloudfront.net/img/meeting.png';
-            const slides = [{
-                title: 'Soluções de dados construídas por <span class="accent">talento IESB</span>',
-                text: 'Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.',
-                img: defaultImg,
-                link: '',
-                idx: -1
-            }, ...posts.slice(0, 3).map((p, i) => ({
+            const slides = posts.slice(0, 3).map((p, i) => ({
                 title: mdTitle(p.title),
                 text: p.excerpt || '',
                 img: p.feature_image || defaultImg,
                 link: '#',
                 idx: i
-            }))];
+            }));
             let si = 0;
             function showSlide() {
                 carousel.style.opacity = 0;
