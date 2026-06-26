@@ -465,6 +465,7 @@ const metricObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.metric .number').forEach(el => metricObserver.observe(el));
 
 // Load news from Ghost
+function mdTitle(t) { return t.replace(/\*([^*]+)\*/g, '<em>$1</em>'); }
 async function loadReports() {
     const container = document.getElementById('reports-container');
     const carousel = document.getElementById('hero-carousel');
@@ -480,7 +481,7 @@ async function loadReports() {
                 title: 'Soluções de dados construídas por <span class="accent">talento IESB</span>',
                 text: 'Ciência de dados aplicada para decisões reais de negócio. Somos uma empresa júnior multidisciplinar que transforma dados em estratégia.'
             }, ...posts.slice(0, 3).map(p => ({
-                title: `<span class="accent">${p.title}</span>`,
+                title: `<span class="accent">${mdTitle(p.title)}</span>`,
                 text: p.excerpt || ''
             }))];
             let idx = 0;
@@ -510,9 +511,9 @@ async function loadReports() {
             card.rel = 'noopener noreferrer';
             card.className = 'project-card fade-up';
             card.innerHTML = `
-                ${p.feature_image ? `<img src="${p.feature_image}" alt="${p.title}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none'">` : ''}
+                ${p.feature_image ? `<img src="${p.feature_image}" alt="${mdTitle(p.title).replace(/<[^>]+>/g,'')}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:12px;" onerror="this.style.display='none'">` : ''}
                 <span class="tag">Notícia</span>
-                <h3>${p.title}</h3>
+                <h3>${mdTitle(p.title)}</h3>
                 <p>${p.excerpt || ''}</p>
                 <div class="card-footer">
                     <span class="author">${new Date(p.published_at).toLocaleDateString('pt-BR')}</span>
