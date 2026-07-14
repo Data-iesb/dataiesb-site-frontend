@@ -260,7 +260,7 @@
 <!-- NAV -->
 <header class="navbar" id="navbar">
     <div class="container">
-        <a href="index.html" class="navbar-logo"><img src="https://d28lvm9jkyfotx.cloudfront.net/logo.png" alt="DataIESB" style="height:32px;"></a>
+        <a href="index.html" class="navbar-logo"><span style="font-size:1.2rem;font-weight:800;letter-spacing:-0.5px;color:#fff;">Data<span style="color:var(--color-accent);">IESB</span></span></a>
         <nav class="navbar-links" id="nav-links" aria-label="Navegação principal">
             <a href="https://aurya.dataiesb.com" target="_blank" class="navbar-aurya">Assistente IA</a>
             <a href="#projects">Aplicações</a>
@@ -373,6 +373,35 @@
 </section>
 
 <!-- PROJECTS -->
+
+<!-- O PROJETO BIG DATA -->
+<section class="projects" style="padding-bottom:0;">
+    <div class="container">
+        <div class="section-header fade-up">
+            <h2>O Projeto Big Data — IESB</h2>
+            <p>Dados públicos a serviço da gestão inteligente.</p>
+        </div>
+        <div class="fade-up" style="max-width:780px;margin:0 auto 2rem;text-align:center;color:var(--color-text-secondary);line-height:1.8;font-size:0.95rem;">
+            <p>O <strong style="color:var(--color-text-primary);">Projeto Big Data — IESB</strong> é uma iniciativa estratégica voltada à criação e manutenção de um banco de dados estruturado, composto por informações públicas e, quando aplicável, dados proprietários de organizações parceiras.</p>
+            <p style="margin-top:1rem;">O objetivo central é fornecer uma <strong style="color:var(--color-accent);">análise abrangente da conjuntura estadual, distrital e municipal</strong> na melhoria da tomada de decisões, na eficiência da gestão pública, na formulação de políticas baseadas em evidências e na oferta de serviços mais qualificados à população.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-top:2rem;">
+            <a href="https://mgeo.dataiesb.com" target="_blank" class="service-card fade-up" style="text-decoration:none;max-width:320px;position:relative;overflow:hidden;">
+                <span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#000;font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:0.5px;">Em Fase de Implantação</span>
+                <h3 style="margin-top:0.5rem;">🎓 MGEO</h3>
+                <p>Mestrado Profissional em Gestão Estratégica de Organizações — programa reconhecido pela CAPES com foco em IA, dados e sustentabilidade.</p>
+                <span class="link">mgeo.dataiesb.com →</span>
+            </a>
+            <a href="https://aurya.dataiesb.com" target="_blank" class="service-card fade-up" style="text-decoration:none;max-width:320px;">
+                <h3>🤖 Aurya — Assistente IA</h3>
+                <p>Chatbot inteligente que responde perguntas sobre dados públicos, documentos e indicadores do projeto.</p>
+                <span class="link">aurya.dataiesb.com →</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- NOTÍCIAS -->
 <section class="projects" id="projects">
     <div class="container">
         <div class="section-header fade-up">
@@ -406,7 +435,8 @@
 <!-- FOOTER -->
 <footer>
     <div class="container">
-        <p class="credits">Desenvolvido por <a href="https://levav.it" target="_blank">Levav-IT</a> · Patrocínio: <a href="https://www.instagram.com/pratikaiesb/" target="_blank">DataIESB</a> · <a href="https://aws.amazon.com" target="_blank">AWS</a></p>
+        <p class="credits">Desenvolvido por <a href="https://levav.it" target="_blank">Levav-IT</a> · Patrocínio: <a href="https://datai.tec.br" target="_blank">DatAí</a></p>
+        <a href="https://aws.amazon.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;margin-top:0.5rem;opacity:0.7;text-decoration:none;font-size:0.7rem;color:#999;">Powered by <img src="https://d28lvm9jkyfotx.cloudfront.net/img/Amazon_Web_Services-Logo.wine.png" alt="AWS" style="height:28px;"></a>
     </div>
 </footer>
 
@@ -546,12 +576,22 @@ function openNews(idx) {
         document.body.appendChild(overlay);
     }
     overlay.style.display = 'flex';
+
+    // Extract app link from post HTML (looks for href containing app.dataiesb.com)
+    let appLinkHtml = '';
+    const content = p.html || p.excerpt || '';
+    const linkMatch = content.match(/<a[^>]+href="([^"]*app\.dataiesb\.com[^"]*)"[^>]*>([^<]*)<\/a>/i);
+    if (linkMatch) {
+        appLinkHtml = `<a href="${linkMatch[1]}" target="_blank" rel="noopener" style="display:block;background:#E30613;color:#fff;text-align:center;padding:12px 20px;border-radius:8px;font-weight:700;font-size:1rem;text-decoration:none;margin-bottom:1.5rem;transition:background .2s" onmouseover="this.style.background='#b8050f'" onmouseout="this.style.background='#E30613'">🚀 Acessar aplicação →</a>`;
+    }
+
     overlay.innerHTML = `<div style="background:var(--color-surface,#1a1a2e);border:1px solid rgba(255,255,255,.1);border-radius:16px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:2.5rem;position:relative">
         <button onclick="document.getElementById('news-modal-overlay').style.display='none'" style="position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem">✕</button>
         ${p.feature_image ? `<img src="${p.feature_image}" style="width:100%;border-radius:12px;margin-bottom:1.5rem;max-height:300px;object-fit:cover">` : ''}
         <h2 style="font-size:1.5rem;color:#fff;margin-bottom:.5rem">${mdTitle(p.title)}</h2>
         <p style="font-size:.8rem;color:#888;margin-bottom:1.5rem">${new Date(p.published_at).toLocaleDateString('pt-BR')}</p>
-        <div style="color:#ccc;line-height:1.8;font-size:.95rem" class="news-content">${p.html || p.excerpt}</div>
+        ${appLinkHtml}
+        <div style="color:#ccc;line-height:1.8;font-size:.95rem" class="news-content">${content}</div>
     </div>`;
 }
 
