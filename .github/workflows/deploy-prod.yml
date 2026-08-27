@@ -1,4 +1,4 @@
-name: Deploy Prod to S3
+name: Validate and deploy Prod to S3
 
 on:
   workflow_dispatch:
@@ -10,15 +10,33 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  validate-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      - run: aws s3 sync . s3://dataiesb --exclude ".git/*" --exclude ".github/*" --exclude "*.md"
+      - run: aws s3 sync ./out s3://dataiesb
+      - name: Publish clean route objects for the current CloudFront origin
+        env:
+          BUCKET: dataiesb
+        shell: bash
+        run: |
+          node scripts/static-route-objects.mjs out |
+          while IFS=$'\t' read -r file key; do
+            aws s3api put-object --bucket "$BUCKET" --key "$key" --body "$file" --content-type 'text/html; charset=utf-8' --cache-control 'no-cache' >/dev/null
+          done
       - run: aws cloudfront create-invalidation --distribution-id E371T2F886B5KI --paths "/*"
