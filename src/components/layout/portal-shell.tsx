@@ -20,7 +20,7 @@ import {
 } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { navigationGroups } from '@/config/navigation'
 
@@ -50,6 +50,19 @@ export function PortalShell({ children, immersive = false }: Props) {
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const drawerRef = useRef<HTMLElement>(null)
+  const drawerCloseRef = useRef<HTMLButtonElement>(null)
+  const mobileOpenerRef = useRef<HTMLElement | null>(null)
+
+  const openMobileMenu = useCallback(() => {
+    mobileOpenerRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : menuButtonRef.current
+    setMobileOpen(true)
+  }, [])
+
+  const closeMobileMenu = useCallback(() => setMobileOpen(false), [])
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -69,12 +82,38 @@ export function PortalShell({ children, immersive = false }: Props) {
 
   useEffect(() => {
     if (!mobileOpen) return
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileOpen(false)
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const frame = window.requestAnimationFrame(() => drawerCloseRef.current?.focus())
+    const handleKeyboard = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        closeMobileMenu()
+        return
+      }
+      if (event.key !== 'Tab' || !drawerRef.current) return
+      const focusable = [...drawerRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )]
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
-    document.addEventListener('keydown', closeOnEscape)
-    return () => document.removeEventListener('keydown', closeOnEscape)
-  }, [mobileOpen])
+    document.addEventListener('keydown', handleKeyboard)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      document.removeEventListener('keydown', handleKeyboard)
+      document.body.style.overflow = previousOverflow
+      mobileOpenerRef.current?.focus()
+    }
+  }, [closeMobileMenu, mobileOpen])
 
   const toggleCollapsed = () => {
     setCollapsed((current) => {
@@ -153,9 +192,10 @@ export function PortalShell({ children, immersive = false }: Props) {
             {theme === 'dark' ? <Sun size={19} /> : <Moon size={19} />}
           </button>
           <button
+            ref={menuButtonRef}
             className="icon-button mobile-menu-button"
             type="button"
-            onClick={() => setMobileOpen((current) => !current)}
+            onClick={mobileOpen ? closeMobileMenu : openMobileMenu}
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
           >
@@ -184,21 +224,36 @@ export function PortalShell({ children, immersive = false }: Props) {
             className="drawer-backdrop"
             type="button"
             aria-label="Fechar menu ao clicar fora"
-            onClick={() => setMobileOpen(false)}
+            tabIndex={-1}
+            onClick={closeMobileMenu}
           />
-          <aside className="mobile-drawer" aria-label="Menu móvel">{navigation}</aside>
+          <aside ref={drawerRef} className="mobile-drawer" role="dialog" aria-modal="true" aria-label="Menu móvel">
+            <div className="mobile-drawer-header">
+              <strong>Menu</strong>
+              <button ref={drawerCloseRef} className="icon-button" type="button" aria-label="Fechar menu" onClick={closeMobileMenu}><X size={20} /></button>
+            </div>
+            {navigation}
+          </aside>
         </div>
       )}
 
-      <main id="conteudo-principal" className="portal-main" tabIndex={-1}>{children}</main>
+      <main id="conteudo-principal" className="portal-main" tabIndex={-1} inert={mobileOpen ? true : undefined}>
+        {children}
+        {!immersive && (
+          <footer className="portal-credits">
+            <span>Desenvolvido por <a href="https://levav.it" target="_blank" rel="noopener noreferrer">Levav-IT</a> · Patrocínio: <a href="https://datai.tec.br" target="_blank" rel="noopener noreferrer">DatAí</a></span>
+            <a className="aws-credit" href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer"><span>Powered by</span><img src="/img/Amazon_Web_Services-Logo.wine.png" alt="AWS" /></a>
+          </footer>
+        )}
+      </main>
 
-      <nav className="mobile-bottom-nav" aria-label="Atalhos móveis">
+      <nav className="mobile-bottom-nav" aria-label="Atalhos móveis" inert={mobileOpen ? true : undefined}>
         <a href="/"><Home size={18} /><span>Início</span></a>
         <a href="/aplicacoes/"><BarChart3 size={18} /><span>Aplicações</span></a>
         <a href="https://aurya.dataiesb.com" target="_blank" rel="noopener noreferrer">
           <Bot size={18} /><span>Aurya</span>
         </a>
-        <button type="button" onClick={() => setMobileOpen(true)}>
+        <button type="button" onClick={openMobileMenu}>
           <Menu size={18} /><span>Menu</span>
         </button>
       </nav>

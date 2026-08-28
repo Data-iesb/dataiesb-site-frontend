@@ -36,11 +36,12 @@ export function parseReportsResponse(input: unknown): PublicReport[] {
   if (!isRecord(input)) throw new Error('Resposta inválida do serviço de aplicações')
 
   const entries = Object.values(input)
-  if (entries.length > 0 && !entries.some(isRecord)) {
+  const reportEntries = entries.filter((entry) => isRecord(entry) && 'id_s3' in entry)
+  if (entries.length > 0 && reportEntries.length === 0) {
     throw new Error('Resposta inválida do serviço de aplicações')
   }
 
-  return entries
+  return reportEntries
     .flatMap((entry) => {
       if (!isRecord(entry) || entry.deletado === true) return []
       const id = Number(entry.id_s3)

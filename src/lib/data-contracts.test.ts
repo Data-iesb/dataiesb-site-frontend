@@ -40,6 +40,13 @@ describe('parseReportsResponse', () => {
     expect(() => parseReportsResponse({ message: 'upstream error' })).toThrow('aplicações')
   })
 
+  it('rejects an error envelope that includes nested request metadata', () => {
+    expect(() => parseReportsResponse({
+      message: 'upstream error',
+      context: { requestId: 'request-123' },
+    })).toThrow('aplicações')
+  })
+
   it('maps the keyed API object and excludes deleted or malformed reports', () => {
     const result = parseReportsResponse({
       '32': {

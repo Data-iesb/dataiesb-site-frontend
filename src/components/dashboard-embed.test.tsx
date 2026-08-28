@@ -10,16 +10,24 @@ afterEach(() => {
 })
 
 describe('DashboardEmbed', () => {
-  it('shows a loading state and reveals the approved iframe after load', () => {
+  it('keeps a warm-up state after document load and always offers safe contingencies', () => {
+    vi.useFakeTimers()
     const dashboard = getDashboardBySlug('sus-aih')!
     render(<DashboardEmbed dashboard={dashboard} />)
 
     expect(screen.getByRole('status')).toHaveTextContent('Carregando painel')
     const frame = screen.getByTitle(`Painel interativo: ${dashboard.title}`)
     expect(frame).toHaveAttribute('src', dashboard.sourceUrl)
+    expect(frame).toHaveAttribute('tabindex', '-1')
+    expect(screen.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute('href', dashboard.sourceUrl)
+    expect(screen.getByRole('button', { name: 'Recarregar painel' })).toBeInTheDocument()
 
     fireEvent.load(frame)
+    expect(screen.getByRole('status')).toHaveTextContent('Preparando dados do painel')
+
+    act(() => vi.advanceTimersByTime(15_000))
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Abrir painel' })).toBeInTheDocument()
   })
 
   it('offers retry and external access after the load timeout', () => {
@@ -34,7 +42,7 @@ describe('DashboardEmbed', () => {
       dashboard.sourceUrl,
     )
 
-    fireEvent.click(screen.getByRole('button', { name: 'Tentar novamente' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Recarregar painel' }))
     expect(screen.getByRole('status')).toHaveTextContent('Carregando painel')
   })
 

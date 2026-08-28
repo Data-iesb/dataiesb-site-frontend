@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -38,7 +38,7 @@ describe('PortalShell', () => {
     expect(screen.getByRole('button', { name: 'Ativar tema escuro' })).toBeInTheDocument()
   })
 
-  it('opens and closes the mobile navigation drawer', async () => {
+  it('traps focus inside the mobile drawer and restores it when closed', async () => {
     const user = userEvent.setup()
     render(<PortalShell><p>Portal</p></PortalShell>)
 
@@ -46,9 +46,18 @@ describe('PortalShell', () => {
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
 
     await user.click(trigger)
-    expect(screen.getByRole('button', { name: 'Fechar menu' })).toHaveAttribute(
-      'aria-expanded',
-      'true',
-    )
+    const dialog = screen.getByRole('dialog', { name: 'Menu móvel' })
+    const close = within(dialog).getByRole('button', { name: 'Fechar menu' })
+    await waitFor(() => expect(close).toHaveFocus())
+    expect(screen.getByRole('main')).toHaveAttribute('inert')
+
+    const links = within(dialog).getAllByRole('link')
+    links.at(-1)!.focus()
+    await user.tab()
+    expect(close).toHaveFocus()
+
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog', { name: 'Menu móvel' })).not.toBeInTheDocument()
+    expect(trigger).toHaveFocus()
   })
 })

@@ -77,4 +77,32 @@ describe('ContactForm', () => {
       { fetcher },
     )).rejects.toThrow('Resposta inválida')
   })
+
+  it('rejects a 2xx response whose envelope explicitly reports failure', async () => {
+    const fetcher: typeof fetch = vi.fn(async () => new Response(JSON.stringify({
+      success: false,
+      message: 'Erro ao persistir a mensagem',
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    }))
+
+    await expect(submitContact(
+      { nome: 'Pessoa', cidade: 'Brasília', email: 'pessoa@example.com', mensagem: 'Olá' },
+      { fetcher },
+    )).rejects.toThrow('Erro ao persistir')
+  })
+
+  it('rejects a message-only response that says the message was not sent', async () => {
+    const fetcher = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ message: 'Mensagem não enviada' }),
+    }) as unknown as typeof fetch
+
+    await expect(submitContact(
+      { nome: 'Pessoa', cidade: 'Brasília', email: 'pessoa@example.com', mensagem: 'Olá' },
+      { fetcher },
+    )).rejects.toThrow('Resposta inválida')
+  })
 })

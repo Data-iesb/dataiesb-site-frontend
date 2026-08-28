@@ -37,10 +37,21 @@ export async function submitContact(
         : `Falha no envio (HTTP ${response.status})`
       throw new Error(message)
     }
-    const validSuccess = typeof responseBody === 'object' && responseBody !== null && (
+    const isObject = typeof responseBody === 'object' && responseBody !== null
+    const message = isObject && 'message' in responseBody && typeof responseBody.message === 'string'
+      ? responseBody.message.trim()
+      : ''
+    if (isObject && 'success' in responseBody && responseBody.success !== true) {
+      throw new Error(message || 'O serviço de contato recusou o envio')
+    }
+    if (isObject && 'ok' in responseBody && responseBody.ok !== true) {
+      throw new Error(message || 'O serviço de contato recusou o envio')
+    }
+    const hasExplicitFlag = isObject && ('success' in responseBody || 'ok' in responseBody)
+    const validSuccess = isObject && (
       ('success' in responseBody && responseBody.success === true) ||
       ('ok' in responseBody && responseBody.ok === true) ||
-      ('message' in responseBody && typeof responseBody.message === 'string' && responseBody.message.trim().length > 0)
+      (!hasExplicitFlag && /^(?:(?:mensagem|e-?mail)\s+)?(?:foi\s+)?enviad[ao]\b|^sucesso\b/i.test(message))
     )
     if (!validSuccess) throw new Error('Resposta inválida do serviço de contato')
   } catch (error) {

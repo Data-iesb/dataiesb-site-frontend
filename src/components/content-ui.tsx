@@ -1,6 +1,7 @@
 import { ArrowRight, RefreshCw } from 'lucide-react'
 import type { ReactNode } from 'react'
 
+import { siteConfig } from '@/config/site'
 import type { ApplicationCatalogItem, NewsPost } from '@/types/content'
 
 export function PageIntro({ eyebrow, title, description, actions }: Readonly<{
@@ -41,6 +42,8 @@ export function ResourceState({ status, error, retry, emptyMessage }: Readonly<{
 export function ApplicationCard({ item }: Readonly<{ item: ApplicationCatalogItem }>) {
   return (
     <article className="content-card application-card">
+      {item.imageUrl && <img className="application-card-image" src={item.imageUrl} alt={`Capa de ${item.title}`} loading="lazy" />}
+      <div className="application-card-body">
       <span className="card-eyebrow">{item.eyebrow}</span>
       <h3>{item.title}</h3>
       <p>{item.description || 'Explore esta análise interativa do DATA IESB.'}</p>
@@ -50,6 +53,7 @@ export function ApplicationCard({ item }: Readonly<{ item: ApplicationCatalogIte
           Visualizar <ArrowRight size={15} />
         </a>
       </footer>
+      </div>
     </article>
   )
 }
@@ -62,7 +66,7 @@ const formatDate = (value: string) => {
 }
 
 export function NewsCard({ post, featured = false }: Readonly<{ post: NewsPost; featured?: boolean }>) {
-  const href = `https://ghost.dataiesb.com/${post.slug}/`
+  const href = new URL(`${post.slug.replace(/^\/+|\/+$/g, '')}/`, `${siteConfig.ghostSiteUrl}/`).toString()
   return (
     <article className={`content-card news-card${featured ? ' is-featured' : ''}`}>
       {post.featureImage && <img src={post.featureImage} alt="" loading="lazy" />}
