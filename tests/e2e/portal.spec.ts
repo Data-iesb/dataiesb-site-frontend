@@ -47,6 +47,19 @@ test('all public routes render from the static export', async ({ page }) => {
   }
 })
 
+test('each SUS dashboard exposes a descriptive browser title', async ({ page }) => {
+  const dashboards = [
+    ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
+    ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
+    ['/paineis/sinan-doencas-agravos/', 'SINAN — Doenças e Agravos — DATA IESB'],
+  ] as const
+
+  for (const [route, title] of dashboards) {
+    await page.goto(route)
+    await expect(page).toHaveTitle(title)
+  }
+})
+
 test('keyboard navigation and theme preference remain available', async ({ page }) => {
   await page.goto('/')
   await page.keyboard.press('Tab')
@@ -100,9 +113,33 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
   const dialog = page.getByRole('dialog', { name: 'Menu móvel' })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Fechar menu' })).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toHaveCount(1)
+  await expect(page.locator('.portal-header .mobile-menu-button')).toBeHidden()
   await dialog.getByRole('button', { name: 'Fechar menu' }).click()
   await expect(dialog).toBeHidden()
-  await expect(page.getByRole('navigation', { name: 'Atalhos móveis' })).toBeVisible()
+  const shortcuts = page.getByRole('navigation', { name: 'Atalhos móveis' })
+  await expect(shortcuts).toBeVisible()
+  await expect(shortcuts.getByRole('link', { name: 'Início' })).toHaveAttribute('aria-current', 'page')
+})
+
+test('partner logos remain contained inside their visual frames', async ({ page }) => {
+  await page.goto('/parceiros/')
+
+  await page.getByRole('button', { name: 'Ativar tema claro' }).click()
+  await expect(page.locator('.partner-logo.is-iesb')).toHaveCSS('background-color', 'rgb(46, 46, 46)')
+
+  const logos = page.locator('.partner-logo')
+  await expect(logos).toHaveCount(4)
+  for (let index = 0; index < await logos.count(); index += 1) {
+    const frameBox = await logos.nth(index).boundingBox()
+    const imageBox = await logos.nth(index).locator('img').boundingBox()
+    expect(frameBox).not.toBeNull()
+    expect(imageBox).not.toBeNull()
+    expect(imageBox!.x).toBeGreaterThanOrEqual(frameBox!.x)
+    expect(imageBox!.y).toBeGreaterThanOrEqual(frameBox!.y)
+    expect(imageBox!.x + imageBox!.width).toBeLessThanOrEqual(frameBox!.x + frameBox!.width)
+    expect(imageBox!.y + imageBox!.height).toBeLessThanOrEqual(frameBox!.y + frameBox!.height)
+  }
 })
 
 test('dashboard crop follows the iframe width at tablet size', async ({ page }, testInfo) => {
@@ -128,6 +165,7 @@ test('contact flow is validated without sending a real message', async ({ page }
   await page.goto('/contato/')
   await page.getByRole('button', { name: 'Enviar mensagem' }).click()
   await expect(page.locator('.form-error')).toContainText('Preencha nome')
+  await expect(page.getByLabel('Nome')).toBeFocused()
   await page.getByLabel('Nome').fill('Pessoa Teste')
   await page.getByLabel('Cidade').fill('Brasília')
   await page.getByLabel('E-mail').fill('teste@example.com')

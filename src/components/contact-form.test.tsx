@@ -14,6 +14,7 @@ describe('ContactForm', () => {
     await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
 
     expect(screen.getByRole('alert')).toHaveTextContent('Preencha nome, cidade, e-mail e mensagem')
+    expect(screen.getByLabelText('Nome')).toHaveFocus()
   })
 
   it('rejects an invalid email address before submission', async () => {
@@ -28,6 +29,7 @@ describe('ContactForm', () => {
     await user.click(screen.getByRole('button', { name: 'Enviar mensagem' }))
 
     expect(screen.getByRole('alert')).toHaveTextContent('Informe um e-mail válido')
+    expect(screen.getByLabelText('E-mail')).toHaveFocus()
     expect(submitted).toBe(false)
   })
 

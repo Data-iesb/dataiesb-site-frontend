@@ -198,6 +198,8 @@ export function PortalShell({ children, immersive = false }: Props) {
             onClick={mobileOpen ? closeMobileMenu : openMobileMenu}
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-hidden={mobileOpen || undefined}
+            tabIndex={mobileOpen ? -1 : undefined}
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -248,8 +250,8 @@ export function PortalShell({ children, immersive = false }: Props) {
       </main>
 
       <nav className="mobile-bottom-nav" aria-label="Atalhos móveis" inert={mobileOpen ? true : undefined}>
-        <a href="/"><Home size={18} /><span>Início</span></a>
-        <a href="/aplicacoes/"><BarChart3 size={18} /><span>Aplicações</span></a>
+        <a className={isActive(pathname, '/') ? 'is-active' : undefined} href="/" aria-current={isActive(pathname, '/') ? 'page' : undefined}><Home size={18} /><span>Início</span></a>
+        <a className={isActive(pathname, '/aplicacoes/') ? 'is-active' : undefined} href="/aplicacoes/" aria-current={isActive(pathname, '/aplicacoes/') ? 'page' : undefined}><BarChart3 size={18} /><span>Aplicações</span></a>
         <a href="https://aurya.dataiesb.com" target="_blank" rel="noopener noreferrer">
           <Bot size={18} /><span>Aurya</span>
         </a>

@@ -71,7 +71,8 @@ export function ContactForm({ submit = submitContact }: Readonly<{ submit?: Subm
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const data = new FormData(form)
     const payload: ContactPayload = {
       nome: String(data.get('nome') ?? '').trim(),
       cidade: String(data.get('cidade') ?? '').trim(),
@@ -81,10 +82,18 @@ export function ContactForm({ submit = submitContact }: Readonly<{ submit?: Subm
 
     if (!payload.nome || !payload.cidade || !payload.email || !payload.mensagem) {
       setError('Preencha nome, cidade, e-mail e mensagem antes de continuar.')
+      const firstMissing = (['nome', 'cidade', 'email', 'mensagem'] as const)
+        .find((field) => !payload[field])
+      if (firstMissing) {
+        const field = form.elements.namedItem(firstMissing)
+        if (field instanceof HTMLElement) field.focus()
+      }
       return
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
       setError('Informe um e-mail válido antes de continuar.')
+      const emailField = form.elements.namedItem('email')
+      if (emailField instanceof HTMLElement) emailField.focus()
       return
     }
 
@@ -93,7 +102,7 @@ export function ContactForm({ submit = submitContact }: Readonly<{ submit?: Subm
     try {
       await submit(payload)
       setSent(true)
-      event.currentTarget.reset()
+      form.reset()
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : 'Não foi possível enviar a mensagem.')
     } finally {

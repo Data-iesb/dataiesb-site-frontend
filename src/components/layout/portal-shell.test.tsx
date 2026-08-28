@@ -4,12 +4,15 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { PortalShell } from './portal-shell'
 
+const navigationMock = vi.hoisted(() => ({ pathname: '/' }))
+
 vi.mock('next/navigation', () => ({
-  usePathname: () => '/',
+  usePathname: () => navigationMock.pathname,
 }))
 
 describe('PortalShell', () => {
   beforeEach(() => {
+    navigationMock.pathname = '/'
     document.documentElement.dataset.theme = 'dark'
     window.localStorage.clear()
   })
@@ -49,6 +52,7 @@ describe('PortalShell', () => {
     const dialog = screen.getByRole('dialog', { name: 'Menu móvel' })
     const close = within(dialog).getByRole('button', { name: 'Fechar menu' })
     await waitFor(() => expect(close).toHaveFocus())
+    expect(screen.getAllByRole('button', { name: 'Fechar menu' })).toHaveLength(1)
     expect(screen.getByRole('main')).toHaveAttribute('inert')
 
     const links = within(dialog).getAllByRole('link')
@@ -59,5 +63,14 @@ describe('PortalShell', () => {
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('dialog', { name: 'Menu móvel' })).not.toBeInTheDocument()
     expect(trigger).toHaveFocus()
+  })
+
+  it('identifies the current page in the mobile shortcuts', () => {
+    navigationMock.pathname = '/aplicacoes/'
+    render(<PortalShell><p>Portal</p></PortalShell>)
+
+    const shortcuts = screen.getByRole('navigation', { name: 'Atalhos móveis' })
+    expect(within(shortcuts).getByRole('link', { name: 'Aplicações' })).toHaveAttribute('aria-current', 'page')
+    expect(within(shortcuts).getByRole('link', { name: 'Início' })).not.toHaveAttribute('aria-current')
   })
 })
