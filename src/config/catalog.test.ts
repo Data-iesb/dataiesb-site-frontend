@@ -51,7 +51,7 @@ describe('resolveReportEmbed', () => {
 })
 
 describe('buildApplicationCatalog', () => {
-  it('keeps the existing reports, maps national AIH to SUS, and adds the two missing SUS panels', () => {
+  it('keeps existing reports, deduplicates national AIH, and adds every professor-requested panel', () => {
     const result = buildApplicationCatalog(reports)
 
     expect(result.map((item) => item.key)).toEqual([
@@ -59,12 +59,17 @@ describe('buildApplicationCatalog', () => {
       'sus-aih',
       'sus-ambulatorial',
       'sus-sinan',
+      'educacao-escolas',
+      'municipio-pib',
+      'municipio-setores',
+      'municipio-prefeituras',
+      'estudos-clusters-lisa',
     ])
     expect(new Set(result.map((item) => item.href)).size).toBe(result.length)
     expect(result.find((item) => item.key === 'sus-aih')?.title).toBe('SUS – AIH – Brasil')
   })
 
-  it('features the three newest general reports together with all SUS dashboards', () => {
+  it('features the three newest general reports together with one item from each requested theme', () => {
     const manyReports: PublicReport[] = Array.from({ length: 7 }, (_, index) => ({
       id: index + 1,
       title: `Relatório ${index + 1}`,
@@ -74,7 +79,13 @@ describe('buildApplicationCatalog', () => {
     }))
 
     expect(getFeaturedApplications(manyReports).map((item) => item.key)).toEqual([
-      'report-7', 'report-6', 'report-5', 'sus-aih', 'sus-ambulatorial', 'sus-sinan',
+      'report-7',
+      'report-6',
+      'report-5',
+      'sus-aih',
+      'educacao-escolas',
+      'municipio-pib',
+      'estudos-clusters-lisa',
     ])
   })
 })
@@ -89,5 +100,24 @@ describe('dashboard registry', () => {
       desktop: { top: 64, left: 56, bottom: 0 },
       mobile: { top: 64, left: 0, bottom: 64 },
     })
+    expect(getDashboardBySlug('iara-sus')).toMatchObject({
+      sourceUrl: 'https://funasa.dataiesb.com/chatbot',
+      crop: {
+        desktop: { top: 64, left: 56, bottom: 0 },
+        mobile: { top: 64, left: 0, bottom: 64 },
+      },
+    })
+    expect(getDashboardBySlug('inep')?.crop).toEqual({
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    })
+    expect(getDashboardBySlug('setores-censitarios')?.sourceUrl).toBe(
+      'https://funasa.dataiesb.com/setores-censitarios/',
+    )
+    expect(getDashboardBySlug('setores-censitarios')?.crop).toEqual({
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    })
+    expect(getDashboardBySlug('prefeituras')?.crop.desktop.left).toBe(52)
   })
 })

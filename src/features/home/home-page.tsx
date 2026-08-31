@@ -3,17 +3,42 @@
 import { ArrowRight, BarChart3, Bot, Database, GraduationCap, HeartPulse, Landmark, ShieldCheck } from 'lucide-react'
 
 import { ApplicationCard, NewsCard, PageIntro, ResourceState } from '@/components/content-ui'
+import { BrazilMap } from '@/components/brazil-map'
 import { buildApplicationCatalog, getFeaturedApplications } from '@/config/catalog'
 import { siteConfig } from '@/config/site'
 import { useRemoteResource } from '@/hooks/use-remote-resource'
 import { loadNews, loadReports, loadTeam } from '@/lib/content-api'
 
 const areas = [
-  { icon: HeartPulse, title: 'Saúde pública', text: 'Internações, produção ambulatorial e vigilância epidemiológica.' },
-  { icon: Landmark, title: 'Gestão e políticas', text: 'Evidências para decisões públicas, institucionais e territoriais.' },
-  { icon: GraduationCap, title: 'Educação aplicada', text: 'Pesquisa, formação e projetos reais com estudantes do IESB.' },
-  { icon: ShieldCheck, title: 'Dados responsáveis', text: 'Fontes públicas, rastreabilidade e comunicação acessível.' },
+  { icon: HeartPulse, title: 'SUS Assistência à Saúde', text: 'Internações, produção ambulatorial e vigilância epidemiológica.' },
+  { icon: GraduationCap, title: 'Panorama da Educação', text: 'Escolas, matrículas e condições ambientais em todo o Brasil.' },
+  { icon: Landmark, title: 'Conheça o seu Município', text: 'PIB, setores censitários e informações das prefeituras.' },
+  { icon: ShieldCheck, title: 'Estudos e Publicações', text: 'Análises espaciais, relatórios e conhecimento baseado em evidências.' },
 ]
+
+const nationalIndicators = [
+  {
+    value: '214,2 milhões',
+    label: 'População do Brasil em 2026',
+    detail: 'Projeção da população · revisão 2024',
+    source: 'IBGE',
+    sourceUrl: 'https://ftp.ibge.gov.br/Projecao_da_Populacao/Projecao_da_Populacao_2024/projecoes_2024_tab1_idade_simples.xlsx',
+  },
+  {
+    value: '178,8 mil',
+    label: 'Total de escolas',
+    detail: 'Censo Escolar da Educação Básica 2025',
+    source: 'INEP',
+    sourceUrl: 'https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/censo-escolar/brasil-atingiu-maior-percentual-de-estudantes-em-tempo-integral',
+  },
+  {
+    value: '25,8 milhões',
+    label: 'Matrículas no Ensino Fundamental',
+    detail: 'Censo Escolar da Educação Básica 2025',
+    source: 'INEP',
+    sourceUrl: 'https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/censo-escolar/brasil-atingiu-maior-percentual-de-estudantes-em-tempo-integral',
+  },
+] as const
 
 const differentiators = [
   { value: '05', title: '5 cursos integrados', text: 'Ciência de Dados, Ciência da Computação, Engenharia da Computação, Engenharia de Software e ADS.' },
@@ -52,12 +77,39 @@ export function HomePage() {
             )}
           />
         </div>
-        <div className="signal-visual">
-          <img src="/img/meeting.png" alt="Equipe DataIESB em sessão de trabalho colaborativo" />
-          <div className="signal-grid" />
-          <Database size={44} aria-hidden="true" />
-          <strong>DATA / EVIDÊNCIA / IMPACTO</strong>
-          <span>IESB · Brasília</span>
+        <div className="national-map-card">
+          <div className="map-card-heading"><span>Panorama nacional</span><strong>Brasil em dados</strong></div>
+          <BrazilMap />
+          <div className="map-card-footer">
+            <span>5 regiões · 26 estados · Distrito Federal</span>
+            <a href="https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?formato=application/vnd.geo%2Bjson&amp;qualidade=minima" target="_blank" rel="noopener noreferrer">Malha: IBGE</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="national-overview" aria-labelledby="panorama-heading">
+        <div className="section-heading national-overview-heading">
+          <div><span className="eyebrow">Brasil · recorte nacional</span><h2 id="panorama-heading">Indicadores em perspectiva</h2></div>
+          <p>Uma leitura rápida de população, educação e assistência ambulatorial a partir de fontes públicas.</p>
+        </div>
+        <div className="national-indicators">
+          {nationalIndicators.map((indicator) => (
+            <article className="national-indicator" key={indicator.label}>
+              <strong>{indicator.value}</strong>
+              <h3>{indicator.label}</h3>
+              <p>{indicator.detail}</p>
+              <a href={indicator.sourceUrl} target="_blank" rel="noopener noreferrer">Fonte: {indicator.source}</a>
+            </article>
+          ))}
+          <article className="national-indicator investment-indicator">
+            <h3>Investimentos do SUS em procedimentos ambulatoriais</h3>
+            <div className="investment-values">
+              <div><strong>R$ 23,8 bi</strong><span>2025</span></div>
+              <div><strong>R$ 10,4 bi</strong><span>2026 · parcial até maio</span></div>
+            </div>
+            <p>Valores aprovados na produção ambulatorial.</p>
+            <a href="https://funasa.dataiesb.com/ambulatorio/" target="_blank" rel="noopener noreferrer">Fonte: DATA IESB / DATASUS</a>
+          </article>
         </div>
       </section>
 
@@ -65,7 +117,7 @@ export function HomePage() {
         <div><strong>{reports.status === 'error' ? '3+' : applications.length}</strong><span>aplicações e estudos</span></div>
         <div><strong>{news.status === 'ready' ? news.data.length : '—'}</strong><span>publicações recentes</span></div>
         <div><strong>{team.status === 'ready' ? team.data.length : '—'}</strong><span>integrantes ativos</span></div>
-        <div><strong>03</strong><span>painéis SUS</span></div>
+        <div><strong>08</strong><span>painéis temáticos</span></div>
       </section>
 
       <section className="institutional-highlights" aria-label="Diferenciais do projeto">
@@ -92,10 +144,16 @@ export function HomePage() {
       </section>
 
       <section className="project-context" aria-labelledby="projeto-big-data-heading">
-        <span className="eyebrow">Iniciativa estratégica</span>
-        <h2 id="projeto-big-data-heading">O Projeto Big Data — IESB</h2>
-        <p>O <strong>Projeto Big Data — IESB</strong> é uma iniciativa estratégica voltada à criação e manutenção de um banco de dados estruturado, composto por informações públicas e, quando aplicável, dados proprietários de organizações parceiras.</p>
-        <p>O objetivo central é fornecer uma <strong>análise abrangente da conjuntura estadual, distrital e municipal</strong> na melhoria da tomada de decisões, na eficiência da gestão pública, na formulação de políticas baseadas em evidências e na oferta de serviços mais qualificados à população.</p>
+        <div className="project-context-copy">
+          <span className="eyebrow">Iniciativa estratégica</span>
+          <h2 id="projeto-big-data-heading">O Projeto Big Data — IESB</h2>
+          <p>O <strong>Projeto Big Data — IESB</strong> é uma iniciativa estratégica voltada à criação e manutenção de um banco de dados estruturado, composto por informações públicas e, quando aplicável, dados proprietários de organizações parceiras.</p>
+          <p>O objetivo central é fornecer uma <strong>análise abrangente da conjuntura estadual, distrital e municipal</strong> na melhoria da tomada de decisões, na eficiência da gestão pública, na formulação de políticas baseadas em evidências e na oferta de serviços mais qualificados à população.</p>
+        </div>
+        <figure className="project-context-image">
+          <img src="/img/meeting.png" alt="Equipe DataIESB em sessão de trabalho colaborativo" />
+          <figcaption>Pesquisa aplicada, colaboração e formação interdisciplinar.</figcaption>
+        </figure>
       </section>
 
       <section className="page-section" aria-labelledby="destaques-heading">

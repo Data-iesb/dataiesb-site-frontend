@@ -41,17 +41,35 @@ test('all public routes render from the static export', async ({ page }) => {
     await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible()
   }
 
-  for (const route of ['/paineis/sus-aih/', '/paineis/producao-ambulatorial/', '/paineis/sinan-doencas-agravos/']) {
+  const embeddedRoutes = [
+    '/assistentes/iara-sus/',
+    '/paineis/sus-aih/',
+    '/paineis/producao-ambulatorial/',
+    '/paineis/sinan-doencas-agravos/',
+    '/paineis/inep/',
+    '/paineis/pib/',
+    '/paineis/setores-censitarios/',
+    '/paineis/prefeituras/',
+    '/paineis/clusters-lisa/',
+  ]
+  for (const route of embeddedRoutes) {
     await page.goto(route)
     await expect(page.locator('iframe')).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute('target', '_blank')
   }
 })
 
-test('each SUS dashboard exposes a descriptive browser title', async ({ page }) => {
+test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
   const dashboards = [
+    ['/assistentes/iara-sus/', 'IARA-SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
     ['/paineis/sinan-doencas-agravos/', 'SINAN — Doenças e Agravos — DATA IESB'],
+    ['/paineis/inep/', 'Saúde Ambiental nas Escolas — DATA IESB'],
+    ['/paineis/pib/', 'PIB dos Municípios — DATA IESB'],
+    ['/paineis/setores-censitarios/', 'Setores Censitários 2022 — DATA IESB'],
+    ['/paineis/prefeituras/', 'Painel das Prefeituras — DATA IESB'],
+    ['/paineis/clusters-lisa/', 'Clusters LISA — DATA IESB'],
   ] as const
 
   for (const [route, title] of dashboards) {
@@ -76,6 +94,12 @@ test('keyboard navigation and theme preference remain available', async ({ page 
 test('home preserves the institutional, service and recent-publication content', async ({ page }) => {
   await page.goto('/')
 
+  await expect(page.getByRole('img', { name: 'Mapa do Brasil' })).toBeVisible()
+  await expect(page.getByText('214,2 milhões')).toBeVisible()
+  await expect(page.getByText('178,8 mil')).toBeVisible()
+  await expect(page.getByText('25,8 milhões')).toBeVisible()
+  await expect(page.getByText('R$ 23,8 bi')).toBeVisible()
+  await expect(page.getByText('R$ 10,4 bi')).toBeVisible()
   await expect(page.getByRole('heading', { name: '5 cursos integrados' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'O que entregamos' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Análise de Dados' })).toBeVisible()
@@ -113,6 +137,8 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
   const dialog = page.getByRole('dialog', { name: 'Menu móvel' })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Fechar menu' })).toBeFocused()
+  await expect(dialog.getByRole('link', { name: 'Aurya' })).toHaveAttribute('target', '_blank')
+  await expect(dialog.getByRole('link', { name: 'IARA-SUS' })).toHaveAttribute('href', '/assistentes/iara-sus/')
   await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toHaveCount(1)
   await expect(page.locator('.portal-header .mobile-menu-button')).toBeHidden()
   await dialog.getByRole('button', { name: 'Fechar menu' }).click()

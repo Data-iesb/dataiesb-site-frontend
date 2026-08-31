@@ -22,8 +22,17 @@ describe('PortalShell', () => {
     render(<PortalShell><h1>Conteúdo da página</h1></PortalShell>)
 
     expect(screen.getByRole('banner')).toBeInTheDocument()
-    expect(screen.getByRole('navigation', { name: 'Navegação principal' })).toBeInTheDocument()
+    const primaryNavigation = screen.getByRole('navigation', { name: 'Navegação principal' })
+    expect(primaryNavigation).toBeInTheDocument()
     expect(screen.getByRole('main')).toHaveAttribute('id', 'conteudo-principal')
+    expect(within(primaryNavigation).getByRole('link', { name: 'Aurya' })).toHaveAttribute(
+      'href',
+      'https://aurya.dataiesb.com',
+    )
+    expect(within(primaryNavigation).getByRole('link', { name: 'IARA-SUS' })).toHaveAttribute(
+      'href',
+      '/assistentes/iara-sus/',
+    )
 
     await user.click(screen.getByRole('button', { name: 'Recolher menu lateral' }))
     expect(screen.getByRole('button', { name: 'Expandir menu lateral' })).toBeInTheDocument()

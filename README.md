@@ -28,15 +28,21 @@ Como a distribuição atual não resolve automaticamente `rota/index.html`, os w
 
 Copie `.env.example` para `.env.local` apenas quando precisar substituir uma URL. Todas as variáveis `NEXT_PUBLIC_*` são incorporadas ao bundle e jamais devem conter credenciais, chaves privadas ou segredos AWS.
 
-O portal consome as APIs públicas de notícias, aplicações e equipe, mantém a Aurya como destino externo e envia o formulário de contato para a API Gateway existente. As respostas são validadas antes de entrarem na interface, com timeout, estados de erro/vazio e nova tentativa. A página inicial também preserva os diferenciais, serviços, resultados, publicações e créditos institucionais exibidos no portal oficial anterior.
+O portal consome as APIs públicas de notícias, aplicações e equipe, mantém a Aurya como destino externo e integra a IARA-SUS publicada pelo portal FUNASA. O formulário de contato continua usando a API Gateway existente. As respostas são validadas antes de entrarem na interface, com timeout, estados de erro/vazio e nova tentativa. A página inicial preserva os diferenciais, serviços, resultados, publicações e créditos institucionais exibidos no portal oficial anterior e apresenta um panorama nacional com fontes públicas do IBGE, INEP e DATASUS.
 
 ## Painéis incorporados
 
-Somente URLs HTTPS de `app.dataiesb.com` e `funasa.dataiesb.com` podem ser abertas em iframe. Os painéis preservados são:
+Somente URLs HTTPS de `app.dataiesb.com` e `funasa.dataiesb.com` podem ser abertas em iframe. As experiências incorporadas são:
 
+- IARA-SUS
 - SUS — Autorizações de Internação Hospitalar (AIH)
 - SUS — Produção Ambulatorial
 - SUS — SINAN: Doenças e Agravos
+- Saúde Ambiental nas Escolas
+- PIB dos Municípios
+- Setores Censitários 2022
+- Painel das Prefeituras
+- Análise de Clusters LISA
 
 O recorte do iframe remove o shell duplicado dos portais de origem e segue a largura real do conteúdo para funcionar também em tablets. Como o portal não pode inspecionar o estado interno de uma origem diferente, o evento de abertura do documento inicia um período adicional de preparação, mas não garante que todas as consultas do dashboard tenham terminado. Por isso, “Recarregar painel” e “Abrir painel” permanecem sempre visíveis.
 
