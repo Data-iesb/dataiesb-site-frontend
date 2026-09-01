@@ -28,13 +28,13 @@ Como a distribuição atual não resolve automaticamente `rota/index.html`, os w
 
 Copie `.env.example` para `.env.local` apenas quando precisar substituir uma URL. Todas as variáveis `NEXT_PUBLIC_*` são incorporadas ao bundle e jamais devem conter credenciais, chaves privadas ou segredos AWS.
 
-O portal consome as APIs públicas de notícias, aplicações e equipe, mantém a Aurya como destino externo e integra a IARA-SUS publicada pelo portal FUNASA. O formulário de contato continua usando a API Gateway existente. As respostas são validadas antes de entrarem na interface, com timeout, estados de erro/vazio e nova tentativa. A página inicial preserva os diferenciais, serviços, resultados, publicações e créditos institucionais exibidos no portal oficial anterior e apresenta um panorama nacional com fontes públicas do IBGE, INEP e DATASUS.
+O portal consome as APIs públicas de notícias, aplicações e equipe, mantém a Aurya como destino externo e integra a IARA — Assistente de Inteligência Artificial publicada pelo portal FUNASA. O formulário de contato continua usando a API Gateway existente. As respostas são validadas antes de entrarem na interface, com timeout, estados de erro/vazio e nova tentativa. A página inicial preserva os diferenciais, serviços, resultados, publicações e créditos institucionais exibidos no portal oficial anterior e apresenta um panorama nacional com fontes públicas do IBGE, INEP e DATASUS.
 
 ## Painéis incorporados
 
 Somente URLs HTTPS de `app.dataiesb.com` e `funasa.dataiesb.com` podem ser abertas em iframe. As experiências incorporadas são:
 
-- IARA-SUS
+- IARA — Assistente de Inteligência Artificial
 - SUS — Autorizações de Internação Hospitalar (AIH)
 - SUS — Produção Ambulatorial
 - SUS — SINAN: Doenças e Agravos

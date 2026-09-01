@@ -21,9 +21,14 @@ export function BrazilMap() {
         </filter>
       </defs>
       <path className="brazil-map-outline" d={BRAZIL_OUTLINE} />
-      {markers.map((marker) => (
-        <g className="map-signal" key={marker.label} transform={`translate(${marker.x} ${marker.y})`}>
-          <circle className="map-signal-glow" r="10" filter="url(#map-glow)" />
+      {markers.map((marker, index) => (
+        <g key={marker.label} transform={`translate(${marker.x} ${marker.y})`}>
+          <circle
+            className="map-signal map-signal-glow"
+            r="10"
+            filter="url(#map-glow)"
+            style={{ animationDelay: `${index * 0.35}s` }}
+          />
           <circle r="4" />
           <title>{marker.label}</title>
         </g>

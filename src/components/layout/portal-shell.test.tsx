@@ -29,7 +29,7 @@ describe('PortalShell', () => {
       'href',
       'https://aurya.dataiesb.com',
     )
-    expect(within(primaryNavigation).getByRole('link', { name: 'IARA-SUS' })).toHaveAttribute(
+    expect(within(primaryNavigation).getByRole('link', { name: 'IARA — Assistente de Inteligência Artificial' })).toHaveAttribute(
       'href',
       '/assistentes/iara-sus/',
     )

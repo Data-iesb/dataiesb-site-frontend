@@ -86,11 +86,6 @@ export function PortalShell({ children, immersive = false }: Props) {
   }, [])
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setMobileOpen(false))
-    return () => window.cancelAnimationFrame(frame)
-  }, [pathname])
-
-  useEffect(() => {
     if (!mobileOpen) return
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'

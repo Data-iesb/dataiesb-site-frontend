@@ -12,7 +12,7 @@ type Props = Readonly<{
   timeoutMs?: number
 }>
 
-type EmbedState = 'loading' | 'warming' | 'ready' | 'error'
+type EmbedState = 'loading' | 'warming' | 'unverified' | 'error'
 const READINESS_DELAY_MS = 12_000
 
 export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
@@ -23,7 +23,7 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   useEffect(() => {
     if (!allowed || (state !== 'loading' && state !== 'warming')) return
     const timer = window.setTimeout(
-      () => setState(state === 'loading' ? 'error' : 'ready'),
+      () => setState(state === 'loading' ? 'error' : 'unverified'),
       state === 'loading' ? timeoutMs : READINESS_DELAY_MS,
     )
     return () => window.clearTimeout(timer)
@@ -57,7 +57,11 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
     <section className="dashboard-embed" aria-label={`Visualização: ${dashboard.title}`}>
       <h1 className="sr-only">{dashboard.title}</h1>
       <div className="dashboard-toolbar">
-        <span>Visualização incorporada</span>
+        <span>
+          {state === 'unverified'
+            ? 'Conteúdo externo · disponibilidade não confirmada'
+            : 'Visualização incorporada'}
+        </span>
         <div>
           <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
           <a href={dashboard.sourceUrl} target="_blank" rel="noopener noreferrer">

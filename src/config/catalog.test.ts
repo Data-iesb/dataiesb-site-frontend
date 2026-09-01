@@ -101,6 +101,8 @@ describe('dashboard registry', () => {
       mobile: { top: 64, left: 0, bottom: 64 },
     })
     expect(getDashboardBySlug('iara-sus')).toMatchObject({
+      title: 'IARA — Assistente de Inteligência Artificial',
+      shortTitle: 'IARA — Assistente de Inteligência Artificial',
       sourceUrl: 'https://funasa.dataiesb.com/chatbot',
       crop: {
         desktop: { top: 64, left: 56, bottom: 0 },

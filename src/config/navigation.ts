@@ -17,7 +17,11 @@ export const navigationGroups: readonly NavigationGroup[] = [
         href: 'https://aurya.dataiesb.com',
         external: true,
       },
-      { id: 'iara-sus', label: 'IARA-SUS', href: '/assistentes/iara-sus/' },
+      {
+        id: 'iara-sus',
+        label: 'IARA — Assistente de Inteligência Artificial',
+        href: '/assistentes/iara-sus/',
+      },
     ],
   },
   {

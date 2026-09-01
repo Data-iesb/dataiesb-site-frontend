@@ -1,13 +1,19 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { render, screen, within } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { HomePage } from './home-page'
 
+const resourceMock = vi.hoisted(() => ({ status: 'empty' }))
+
 vi.mock('@/hooks/use-remote-resource', () => ({
-  useRemoteResource: () => ({ data: [], status: 'empty', error: '', retry: vi.fn() }),
+  useRemoteResource: () => ({ data: [], status: resourceMock.status, error: '', retry: vi.fn() }),
 }))
 
 describe('HomePage national overview', () => {
+  beforeEach(() => {
+    resourceMock.status = 'empty'
+  })
+
   it('shows the Brazil map and the four source-backed indicators requested by the professor', () => {
     render(<HomePage />)
 
@@ -25,5 +31,14 @@ describe('HomePage national overview', () => {
       'href',
       expect.stringContaining('ftp.ibge.gov.br'),
     )
+  })
+
+  it('keeps the static application total when the reports API is unavailable', () => {
+    resourceMock.status = 'error'
+    render(<HomePage />)
+
+    const portalMetrics = screen.getByLabelText('Indicadores do portal')
+    expect(within(portalMetrics).getByText('8')).toBeInTheDocument()
+    expect(within(portalMetrics).queryByText('3+')).not.toBeInTheDocument()
   })
 })

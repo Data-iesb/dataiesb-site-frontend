@@ -53,9 +53,9 @@ export const dashboards: readonly DashboardDefinition[] = [
   },
   {
     slug: 'iara-sus',
-    title: 'IARA-SUS',
-    shortTitle: 'IARA-SUS',
-    description: 'Assistente especializado em internações, procedimentos e gastos hospitalares do SUS.',
+    title: 'IARA — Assistente de Inteligência Artificial',
+    shortTitle: 'IARA — Assistente de Inteligência Artificial',
+    description: 'Assistente de inteligência artificial para consulta às bases de dados oficiais disponibilizadas pela FUNASA.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_IARA_SUS_URL,
       'https://funasa.dataiesb.com/chatbot',

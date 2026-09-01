@@ -27,6 +27,8 @@ describe('DashboardEmbed', () => {
 
     act(() => vi.advanceTimersByTime(15_000))
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(frame).toHaveClass('is-unverified')
+    expect(screen.getByText('Conteúdo externo · disponibilidade não confirmada')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Abrir painel' })).toBeInTheDocument()
   })
 
