@@ -61,7 +61,7 @@ test('all public routes render from the static export', async ({ page }) => {
 
 test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
   const dashboards = [
-    ['/assistentes/iara-sus/', 'IARA — Assistente de Inteligência Artificial — DATA IESB'],
+    ['/assistentes/iara-sus/', 'Aurya — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
     ['/paineis/sinan-doencas-agravos/', 'SINAN — Doenças e Agravos — DATA IESB'],
@@ -137,8 +137,10 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
   const dialog = page.getByRole('dialog', { name: 'Menu móvel' })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Fechar menu' })).toBeFocused()
-  await expect(dialog.getByRole('link', { name: 'Aurya' })).toHaveAttribute('target', '_blank')
-  await expect(dialog.getByRole('link', { name: 'IARA — Assistente de Inteligência Artificial' })).toHaveAttribute('href', '/assistentes/iara-sus/')
+  const auryaLinks = dialog.getByRole('link', { name: 'Aurya' })
+  await expect(auryaLinks).toHaveCount(2)
+  await expect(auryaLinks.nth(0)).toHaveAttribute('target', '_blank')
+  await expect(auryaLinks.nth(1)).toHaveAttribute('href', '/assistentes/iara-sus/')
   await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toHaveCount(1)
   await expect(page.locator('.portal-header .mobile-menu-button')).toBeHidden()
   await dialog.getByRole('button', { name: 'Fechar menu' }).click()

@@ -16,7 +16,7 @@ describe('navigationGroups', () => {
 
     const labels = navigationGroups.flatMap((group) => group.items.map((item) => item.label))
     expect(labels).toContain('Aurya')
-    expect(labels).toContain('IARA — Assistente de Inteligência Artificial')
+    expect(labels.filter((label) => label === 'Aurya')).toHaveLength(2)
     expect(labels).toContain('Saúde Ambiental nas Escolas')
     expect(labels).toContain('PIB dos Municípios')
     expect(labels).toContain('Setores Censitários 2022')
@@ -26,7 +26,7 @@ describe('navigationGroups', () => {
     expect(labels).not.toContain('Gestão de Convênios')
   })
 
-  it('keeps Aurya external and opens IARA inside the DATA IESB portal', () => {
+  it('keeps the official Aurya external and the temporary Aurya integration inside the portal', () => {
     const items = navigationGroups.flatMap((group) => group.items)
     expect(items.find((item) => item.id === 'aurya')).toMatchObject({
       href: 'https://aurya.dataiesb.com',
