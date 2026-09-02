@@ -78,6 +78,30 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
   }
 })
 
+test('AIH uses the healthy official dashboard and becomes visible as soon as its document loads', async ({ page }) => {
+  await page.goto('/paineis/sus-aih/')
+
+  const frame = page.locator('iframe')
+  await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/base-sus/')
+  await expect(frame).toHaveClass(/is-unverified/)
+  await expect(page.getByRole('status')).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute(
+    'href',
+    'https://funasa.dataiesb.com/base-sus/',
+  )
+})
+
+test('technical team always includes Joel with his verified LinkedIn profile', async ({ page }) => {
+  await page.goto('/quem-somos/')
+
+  const card = page.locator('.team-card').filter({ hasText: 'Joel Carolino Farias' })
+  await expect(card).toContainText('Analista de Dados e IA')
+  await expect(card.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
+    'href',
+    'https://www.linkedin.com/in/joel-carolinof/',
+  )
+})
+
 test('keyboard navigation and theme preference remain available', async ({ page }) => {
   await page.goto('/')
   await page.keyboard.press('Tab')

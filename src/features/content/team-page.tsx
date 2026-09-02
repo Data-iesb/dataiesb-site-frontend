@@ -3,12 +3,14 @@
 import { ExternalLink } from 'lucide-react'
 
 import { PageIntro, ResourceState } from '@/components/content-ui'
+import { mergeTeamMembers } from '@/config/team'
 import { useRemoteResource } from '@/hooks/use-remote-resource'
 import { loadTeam } from '@/lib/content-api'
 
 export function TeamPage() {
   const team = useRemoteResource(loadTeam)
-  const categories = [...new Set(team.data.map((member) => member.category))]
+  const visibleTeam = mergeTeamMembers(team.data)
+  const categories = [...new Set(visibleTeam.map((member) => member.category))]
 
   return (
     <div className="page-content">
@@ -25,8 +27,8 @@ export function TeamPage() {
       <section className="page-section" aria-labelledby="equipe-heading">
         <div className="section-heading"><div><span className="eyebrow">Pessoas</span><h2 id="equipe-heading">Equipe técnica</h2></div></div>
         <ResourceState status={team.status} error={team.error} retry={team.retry} emptyMessage="A equipe será publicada em breve." />
-        {team.status === 'ready' && categories.map((category) => (
-          <div className="team-category" key={category}><h3>{category}</h3><div className="team-grid">{team.data.filter((member) => member.category === category).map((member) => (
+        {categories.map((category) => (
+          <div className="team-category" key={category}><h3>{category}</h3><div className="team-grid">{visibleTeam.filter((member) => member.category === category).map((member) => (
             <article className="team-card" key={member.id}><span className="member-mark">{member.name.split(' ').slice(0, 2).map((part) => part[0]).join('')}</span><div><h4>{member.name}</h4><p>{member.role}</p><div className="member-links">{member.linkedin && <a href={member.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ExternalLink size={13} /></a>}{member.escavador && <a href={member.escavador} target="_blank" rel="noopener noreferrer">Escavador <ExternalLink size={13} /></a>}</div></div></article>
           ))}</div></div>
         ))}

@@ -2,7 +2,7 @@
 
 import { ExternalLink, RefreshCw } from 'lucide-react'
 import type { CSSProperties } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 
 import { isAllowedEmbedUrl } from '@/config/catalog'
 import type { DashboardDefinition } from '@/types/content'
@@ -12,22 +12,20 @@ type Props = Readonly<{
   timeoutMs?: number
 }>
 
-type EmbedState = 'loading' | 'warming' | 'unverified' | 'error'
-const READINESS_DELAY_MS = 12_000
+type EmbedState = 'loading' | 'unverified' | 'error'
+const subscribeToClient = () => () => undefined
 
 export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
+  const mounted = useSyncExternalStore(subscribeToClient, () => true, () => false)
   const [attempt, setAttempt] = useState(0)
   const [state, setState] = useState<EmbedState>('loading')
   const allowed = isAllowedEmbedUrl(dashboard.sourceUrl)
 
   useEffect(() => {
-    if (!allowed || (state !== 'loading' && state !== 'warming')) return
-    const timer = window.setTimeout(
-      () => setState(state === 'loading' ? 'error' : 'unverified'),
-      state === 'loading' ? timeoutMs : READINESS_DELAY_MS,
-    )
+    if (!mounted || !allowed || state !== 'loading') return
+    const timer = window.setTimeout(() => setState('error'), timeoutMs)
     return () => window.clearTimeout(timer)
-  }, [allowed, attempt, state, timeoutMs])
+  }, [allowed, attempt, mounted, state, timeoutMs])
 
   const reload = () => {
     setAttempt((value) => value + 1)
@@ -78,14 +76,6 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
           </div>
         )}
 
-        {state === 'warming' && (
-          <div className="embed-status" role="status" aria-live="polite">
-            <span className="loading-orbit" aria-hidden="true" />
-            <strong>Preparando dados do painel</strong>
-            <span>A estrutura abriu; os gráficos ainda podem estar processando.</span>
-          </div>
-        )}
-
         {state === 'error' && (
           <div className="embed-status" role="alert">
             <strong>Não foi possível confirmar o carregamento</strong>
@@ -97,13 +87,13 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
         <iframe
           key={attempt}
           className={`dashboard-frame is-${state}`}
-          src={dashboard.sourceUrl}
+          src={mounted ? dashboard.sourceUrl : undefined}
           title={`Painel interativo: ${dashboard.title}`}
           allow="clipboard-read; clipboard-write; fullscreen"
           referrerPolicy="strict-origin-when-cross-origin"
           sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
           tabIndex={-1}
-          onLoad={() => setState('warming')}
+          onLoad={() => setState('unverified')}
           onError={() => setState('error')}
         />
       </div>

@@ -10,7 +10,7 @@ afterEach(() => {
 })
 
 describe('DashboardEmbed', () => {
-  it('keeps a warm-up state after document load and always offers safe contingencies', () => {
+  it('shows the dashboard immediately after document load and keeps safe contingencies', () => {
     vi.useFakeTimers()
     const dashboard = getDashboardBySlug('sus-aih')!
     render(<DashboardEmbed dashboard={dashboard} />)
@@ -23,9 +23,6 @@ describe('DashboardEmbed', () => {
     expect(screen.getByRole('button', { name: 'Recarregar painel' })).toBeInTheDocument()
 
     fireEvent.load(frame)
-    expect(screen.getByRole('status')).toHaveTextContent('Preparando dados do painel')
-
-    act(() => vi.advanceTimersByTime(15_000))
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
     expect(frame).toHaveClass('is-unverified')
     expect(screen.getByText('Conteúdo externo · disponibilidade não confirmada')).toBeInTheDocument()

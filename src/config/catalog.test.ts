@@ -92,9 +92,12 @@ describe('buildApplicationCatalog', () => {
 
 describe('dashboard registry', () => {
   it('exposes the approved crop contract for each SUS dashboard', () => {
-    expect(getDashboardBySlug('sus-aih')?.crop).toEqual({
-      desktop: { top: 64, left: 0, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 0 },
+    expect(getDashboardBySlug('sus-aih')).toMatchObject({
+      sourceUrl: 'https://funasa.dataiesb.com/base-sus/',
+      crop: {
+        desktop: { top: 64, left: 0, bottom: 0 },
+        mobile: { top: 64, left: 0, bottom: 0 },
+      },
     })
     expect(getDashboardBySlug('producao-ambulatorial')?.crop).toEqual({
       desktop: { top: 64, left: 56, bottom: 0 },

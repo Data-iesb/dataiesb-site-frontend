@@ -16,7 +16,7 @@ export const dashboards: readonly DashboardDefinition[] = [
     description: 'Gastos, procedimentos e tendências das internações hospitalares no Brasil.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_SUS_AIH_URL,
-      'https://app.dataiesb.com/sus-aih/',
+      'https://funasa.dataiesb.com/base-sus/',
     ),
     crop: {
       desktop: { top: 64, left: 0, bottom: 0 },
