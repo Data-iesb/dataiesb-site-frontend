@@ -12,7 +12,7 @@ type Props = Readonly<{
   timeoutMs?: number
 }>
 
-type EmbedState = 'loading' | 'unverified' | 'error'
+type EmbedState = 'loading' | 'preparing' | 'revealed' | 'error'
 const subscribeToClient = () => () => undefined
 
 export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
@@ -22,10 +22,19 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   const allowed = isAllowedEmbedUrl(dashboard.sourceUrl)
 
   useEffect(() => {
-    if (!mounted || !allowed || state !== 'loading') return
-    const timer = window.setTimeout(() => setState('error'), timeoutMs)
+    if (!mounted || !allowed) return
+    const delay = state === 'loading'
+      ? timeoutMs
+      : state === 'preparing'
+        ? dashboard.revealDelayMs ?? 0
+        : null
+    if (delay === null) return
+    const timer = window.setTimeout(
+      () => setState(state === 'loading' ? 'error' : 'revealed'),
+      delay,
+    )
     return () => window.clearTimeout(timer)
-  }, [allowed, attempt, mounted, state, timeoutMs])
+  }, [allowed, attempt, dashboard.revealDelayMs, mounted, state, timeoutMs])
 
   const reload = () => {
     setAttempt((value) => value + 1)
@@ -42,6 +51,8 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   }
 
   const crop = dashboard.crop
+  const mobileScale = dashboard.mobileScale ?? 1
+  const mobileSize = 100 / mobileScale
   const cropStyle = {
     '--crop-top-desktop': `${crop.desktop.top}px`,
     '--crop-left-desktop': `${crop.desktop.left}px`,
@@ -49,6 +60,11 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
     '--crop-top-mobile': `${crop.mobile.top}px`,
     '--crop-left-mobile': `${crop.mobile.left}px`,
     '--crop-bottom-mobile': `${crop.mobile.bottom}px`,
+    '--frame-scale-mobile': `${mobileScale}`,
+    '--frame-top-mobile': `${crop.mobile.top * mobileScale}px`,
+    '--frame-left-mobile': `${crop.mobile.left * mobileScale}px`,
+    '--frame-width-mobile': `calc(${mobileSize}% + ${crop.mobile.left}px)`,
+    '--frame-height-mobile': `calc(${mobileSize}% + ${crop.mobile.top + crop.mobile.bottom}px)`,
   } as CSSProperties
 
   return (
@@ -56,9 +72,11 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
       <h1 className="sr-only">{dashboard.title}</h1>
       <div className="dashboard-toolbar">
         <span>
-          {state === 'unverified'
-            ? 'Conteúdo externo · disponibilidade não confirmada'
-            : 'Visualização incorporada'}
+          {state === 'revealed'
+            ? 'Painel exibido · disponibilidade externa não confirmada'
+            : state === 'preparing'
+              ? 'Preparando painel DATA IESB'
+              : 'Visualização incorporada'}
         </span>
         <div>
           <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
@@ -73,6 +91,16 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
             <span className="loading-orbit" aria-hidden="true" />
             <strong>Carregando painel</strong>
             <span>Os dados podem levar alguns instantes para aparecer.</span>
+          </div>
+        )}
+
+        {state === 'preparing' && (
+          <div className="embed-status is-preparing" role="status" aria-live="polite">
+            <span className="embed-brand" aria-hidden="true">Data<strong>IESB</strong></span>
+            <span className="loading-orbit" aria-hidden="true" />
+            <strong>Preparando dados do painel</strong>
+            <span>Estamos organizando indicadores, mapas e gráficos para você.</span>
+            <button type="button" onClick={() => setState('revealed')}>Exibir agora</button>
           </div>
         )}
 
@@ -93,7 +121,7 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
           referrerPolicy="strict-origin-when-cross-origin"
           sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
           tabIndex={-1}
-          onLoad={() => setState('unverified')}
+          onLoad={() => setState((dashboard.revealDelayMs ?? 0) > 0 ? 'preparing' : 'revealed')}
           onError={() => setState('error')}
         />
       </div>

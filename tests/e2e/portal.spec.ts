@@ -54,6 +54,9 @@ test('all public routes render from the static export', async ({ page }) => {
   ]
   for (const route of embeddedRoutes) {
     await page.goto(route)
+    await expect(page.locator('iframe')).toBeHidden()
+    await page.getByRole('button', { name: 'Exibir agora' }).click()
+    await expect(page.locator('iframe')).toHaveClass(/is-revealed/)
     await expect(page.locator('iframe')).toBeVisible()
     await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute('target', '_blank')
   }
@@ -78,12 +81,18 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
   }
 })
 
-test('AIH uses the healthy official dashboard and becomes visible as soon as its document loads', async ({ page }) => {
+test('AIH uses the healthy official dashboard behind the branded preparation screen', async ({ page }) => {
   await page.goto('/paineis/sus-aih/')
 
   const frame = page.locator('iframe')
   await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/base-sus/')
-  await expect(frame).toHaveClass(/is-unverified/)
+  await expect(frame).toHaveClass(/is-preparing/)
+  await expect(page.getByRole('status')).toContainText('Preparando dados do painel')
+  await page.getByRole('button', { name: 'Exibir agora' }).click()
+  await expect(frame).toHaveClass(/is-revealed/)
+  await expect(page.locator('.dashboard-toolbar')).toContainText(
+    'Painel exibido · disponibilidade externa não confirmada',
+  )
   await expect(page.getByRole('status')).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute(
     'href',
@@ -205,7 +214,46 @@ test('dashboard crop follows the iframe width at tablet size', async ({ page }, 
   expect(frameBox).not.toBeNull()
   expect(Math.round(frameBox!.x)).toBe(Math.round(canvasBox!.x))
   expect(Math.round(frameBox!.width)).toBe(Math.round(canvasBox!.width))
-  expect(Math.round(frameBox!.height - canvasBox!.height)).toBe(128)
+  expect(Math.round(frameBox!.height - canvasBox!.height)).toBe(150)
+})
+
+test('the short Aurya delay reveals automatically without claiming verified readiness', async ({ page }) => {
+  await page.goto('/assistentes/iara-sus/')
+
+  const frame = page.locator('iframe')
+  await expect(frame).toHaveClass(/is-preparing/)
+  await expect(frame).toHaveClass(/is-revealed/, { timeout: 5_000 })
+  await expect(frame).toBeVisible()
+  await expect(page.locator('.dashboard-toolbar')).toContainText(
+    'Painel exibido · disponibilidade externa não confirmada',
+  )
+})
+
+test('mobile dashboard geometry preserves Setores scale and Ambulatorial native width', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Geometria exclusiva da visualização móvel')
+
+  await page.goto('/paineis/setores-censitarios/')
+  await page.getByRole('button', { name: 'Exibir agora' }).click()
+  const sectorsCanvas = await page.getByTestId('dashboard-canvas').boundingBox()
+  const sectorsFrameLocator = page.locator('iframe')
+  const sectorsFrame = await sectorsFrameLocator.boundingBox()
+  const sectorsStyle = await sectorsFrameLocator.evaluate((element) => ({
+    transform: getComputedStyle(element).transform,
+    width: Number.parseFloat(getComputedStyle(element).width),
+  }))
+  expect(sectorsCanvas).not.toBeNull()
+  expect(sectorsFrame).not.toBeNull()
+  expect(Math.round(sectorsStyle.width)).toBe(Math.round(sectorsCanvas!.width * 1.25))
+  expect(sectorsStyle.transform).toBe('matrix(0.8, 0, 0, 0.8, 0, 0)')
+  expect(Math.round(sectorsFrame!.width)).toBe(Math.round(sectorsCanvas!.width))
+
+  await page.goto('/paineis/producao-ambulatorial/')
+  await page.getByRole('button', { name: 'Exibir agora' }).click()
+  const outpatientCanvas = await page.getByTestId('dashboard-canvas').boundingBox()
+  const outpatientFrame = await page.locator('iframe').boundingBox()
+  expect(outpatientCanvas).not.toBeNull()
+  expect(outpatientFrame).not.toBeNull()
+  expect(Math.round(outpatientFrame!.width)).toBe(Math.round(outpatientCanvas!.width))
 })
 
 test('contact flow is validated without sending a real message', async ({ page }) => {

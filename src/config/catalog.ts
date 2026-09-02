@@ -18,9 +18,10 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_SUS_AIH_URL,
       'https://funasa.dataiesb.com/base-sus/',
     ),
+    revealDelayMs: 11_000,
     crop: {
-      desktop: { top: 64, left: 0, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 0 },
+      desktop: { top: 68, left: 0, bottom: 0 },
+      mobile: { top: 130, left: 0, bottom: 0 },
     },
   },
   {
@@ -32,9 +33,10 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_SUS_AMBULATORIAL_URL,
       'https://funasa.dataiesb.com/ambulatorio/',
     ),
+    revealDelayMs: 15_000,
     crop: {
-      desktop: { top: 64, left: 56, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 64 },
+      desktop: { top: 71, left: 0, bottom: 0 },
+      mobile: { top: 150, left: 0, bottom: 0 },
     },
   },
   {
@@ -46,9 +48,10 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_SUS_SINAN_URL,
       'https://funasa.dataiesb.com/doencas-agravos/',
     ),
+    revealDelayMs: 7_000,
     crop: {
-      desktop: { top: 64, left: 56, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 64 },
+      desktop: { top: 121, left: 0, bottom: 0 },
+      mobile: { top: 85, left: 0, bottom: 0 },
     },
   },
   {
@@ -60,9 +63,10 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_IARA_SUS_URL,
       'https://funasa.dataiesb.com/chatbot',
     ),
+    revealDelayMs: 2_000,
     crop: {
       desktop: { top: 64, left: 56, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 64 },
+      mobile: { top: 60, left: 0, bottom: 64 },
     },
   },
   {
@@ -74,6 +78,7 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_EDUCACAO_ESCOLAS_URL,
       'https://funasa.dataiesb.com/inep/',
     ),
+    revealDelayMs: 6_000,
     crop: {
       desktop: { top: 0, left: 0, bottom: 0 },
       mobile: { top: 0, left: 0, bottom: 0 },
@@ -88,9 +93,10 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_PIB_MUNICIPIOS_URL,
       'https://funasa.dataiesb.com/pib/',
     ),
+    revealDelayMs: 6_000,
     crop: {
-      desktop: { top: 64, left: 56, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 64 },
+      desktop: { top: 121, left: 0, bottom: 0 },
+      mobile: { top: 85, left: 0, bottom: 0 },
     },
   },
   {
@@ -102,6 +108,8 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_SETORES_CENSITARIOS_URL,
       'https://funasa.dataiesb.com/setores-censitarios/',
     ),
+    revealDelayMs: 8_000,
+    mobileScale: 0.8,
     crop: {
       desktop: { top: 0, left: 0, bottom: 0 },
       mobile: { top: 0, left: 0, bottom: 0 },
@@ -116,9 +124,10 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_PREFEITURAS_URL,
       'https://funasa.dataiesb.com/prefeituras/',
     ),
+    revealDelayMs: 9_000,
     crop: {
-      desktop: { top: 64, left: 52, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 64 },
+      desktop: { top: 96, left: 0, bottom: 0 },
+      mobile: { top: 112, left: 0, bottom: 0 },
     },
   },
   {
@@ -130,9 +139,10 @@ export const dashboards: readonly DashboardDefinition[] = [
       process.env.NEXT_PUBLIC_CLUSTERS_LISA_URL,
       'https://funasa.dataiesb.com/clusters-lisa/',
     ),
+    revealDelayMs: 9_000,
     crop: {
-      desktop: { top: 64, left: 56, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 64 },
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
     },
   },
 ]

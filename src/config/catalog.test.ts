@@ -91,38 +91,37 @@ describe('buildApplicationCatalog', () => {
 })
 
 describe('dashboard registry', () => {
-  it('exposes the approved crop contract for each SUS dashboard', () => {
-    expect(getDashboardBySlug('sus-aih')).toMatchObject({
-      sourceUrl: 'https://funasa.dataiesb.com/base-sus/',
-      crop: {
-        desktop: { top: 64, left: 0, bottom: 0 },
-        mobile: { top: 64, left: 0, bottom: 0 },
-      },
-    })
-    expect(getDashboardBySlug('producao-ambulatorial')?.crop).toEqual({
-      desktop: { top: 64, left: 56, bottom: 0 },
-      mobile: { top: 64, left: 0, bottom: 64 },
-    })
+  it('locks the full reveal, crop, and mobile-scale contract for all nine embeds', () => {
+    const zeroCrop = {
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    }
+    const contracts = [
+      ['sus-aih', 11_000, undefined, { desktop: { top: 68, left: 0, bottom: 0 }, mobile: { top: 130, left: 0, bottom: 0 } }],
+      ['producao-ambulatorial', 15_000, undefined, { desktop: { top: 71, left: 0, bottom: 0 }, mobile: { top: 150, left: 0, bottom: 0 } }],
+      ['sinan-doencas-agravos', 7_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
+      ['iara-sus', 2_000, undefined, { desktop: { top: 64, left: 56, bottom: 0 }, mobile: { top: 60, left: 0, bottom: 64 } }],
+      ['inep', 6_000, undefined, zeroCrop],
+      ['pib', 6_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
+      ['setores-censitarios', 8_000, 0.8, zeroCrop],
+      ['prefeituras', 9_000, undefined, { desktop: { top: 96, left: 0, bottom: 0 }, mobile: { top: 112, left: 0, bottom: 0 } }],
+      ['clusters-lisa', 9_000, undefined, zeroCrop],
+    ] as const
+
+    for (const [slug, revealDelayMs, mobileScale, crop] of contracts) {
+      const dashboard = getDashboardBySlug(slug)
+      expect(dashboard, slug).toBeDefined()
+      expect({
+        revealDelayMs: dashboard?.revealDelayMs,
+        mobileScale: dashboard?.mobileScale,
+        crop: dashboard?.crop,
+      }, slug).toEqual({ revealDelayMs, mobileScale, crop })
+    }
+
     expect(getDashboardBySlug('iara-sus')).toMatchObject({
       title: 'Aurya',
       shortTitle: 'Aurya',
       sourceUrl: 'https://funasa.dataiesb.com/chatbot',
-      crop: {
-        desktop: { top: 64, left: 56, bottom: 0 },
-        mobile: { top: 64, left: 0, bottom: 64 },
-      },
     })
-    expect(getDashboardBySlug('inep')?.crop).toEqual({
-      desktop: { top: 0, left: 0, bottom: 0 },
-      mobile: { top: 0, left: 0, bottom: 0 },
-    })
-    expect(getDashboardBySlug('setores-censitarios')?.sourceUrl).toBe(
-      'https://funasa.dataiesb.com/setores-censitarios/',
-    )
-    expect(getDashboardBySlug('setores-censitarios')?.crop).toEqual({
-      desktop: { top: 0, left: 0, bottom: 0 },
-      mobile: { top: 0, left: 0, bottom: 0 },
-    })
-    expect(getDashboardBySlug('prefeituras')?.crop.desktop.left).toBe(52)
   })
 })
