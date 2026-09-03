@@ -51,6 +51,9 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   }
 
   const crop = dashboard.crop
+  const externalActionLabel = dashboard.slug === 'iara-sus'
+    ? 'Abrir chat em nova aba'
+    : 'Abrir painel'
   const mobileScale = dashboard.mobileScale ?? 1
   const mobileSize = 100 / mobileScale
   const cropStyle = {
@@ -65,6 +68,10 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
     '--frame-left-mobile': `${crop.mobile.left * mobileScale}px`,
     '--frame-width-mobile': `calc(${mobileSize}% + ${crop.mobile.left}px)`,
     '--frame-height-mobile': `calc(${mobileSize}% + ${crop.mobile.top + crop.mobile.bottom}px)`,
+    '--mask-bottom-desktop': `${dashboard.mask?.desktopBottom ?? 0}px`,
+    '--mask-bottom-mobile': `${dashboard.mask?.mobileBottom ?? 0}px`,
+    '--mask-top-left-width-desktop': `${dashboard.mask?.desktopTopLeft?.width ?? 0}px`,
+    '--mask-top-left-height-desktop': `${dashboard.mask?.desktopTopLeft?.height ?? 0}px`,
   } as CSSProperties
 
   return (
@@ -81,7 +88,7 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
         <div>
           <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
           <a href={dashboard.sourceUrl} target="_blank" rel="noopener noreferrer">
-            <ExternalLink size={15} /> Abrir painel
+            <ExternalLink size={15} /> {externalActionLabel}
           </a>
         </div>
       </div>
@@ -124,6 +131,20 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
           onLoad={() => setState((dashboard.revealDelayMs ?? 0) > 0 ? 'preparing' : 'revealed')}
           onError={() => setState('error')}
         />
+        {dashboard.mask && (
+          <div
+            className="dashboard-frame-mask is-bottom"
+            data-testid="dashboard-mask-bottom"
+            aria-hidden="true"
+          />
+        )}
+        {dashboard.mask?.desktopTopLeft && (
+          <div
+            className="dashboard-frame-mask is-top-left"
+            data-testid="dashboard-mask-top-left"
+            aria-hidden="true"
+          />
+        )}
       </div>
     </section>
   )

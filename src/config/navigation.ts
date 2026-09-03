@@ -19,7 +19,7 @@ export const navigationGroups: readonly NavigationGroup[] = [
       },
       {
         id: 'iara-sus',
-        label: 'Aurya',
+        label: 'Aurya — SUS',
         href: '/assistentes/iara-sus/',
       },
     ],

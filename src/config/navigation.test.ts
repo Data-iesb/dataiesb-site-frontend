@@ -16,7 +16,8 @@ describe('navigationGroups', () => {
 
     const labels = navigationGroups.flatMap((group) => group.items.map((item) => item.label))
     expect(labels).toContain('Aurya')
-    expect(labels.filter((label) => label === 'Aurya')).toHaveLength(2)
+    expect(labels).toContain('Aurya — SUS')
+    expect(labels.filter((label) => label === 'Aurya')).toHaveLength(1)
     expect(labels).toContain('Saúde Ambiental nas Escolas')
     expect(labels).toContain('PIB dos Municípios')
     expect(labels).toContain('Setores Censitários 2022')
@@ -33,6 +34,7 @@ describe('navigationGroups', () => {
       external: true,
     })
     expect(items.find((item) => item.id === 'iara-sus')).toMatchObject({
+      label: 'Aurya — SUS',
       href: '/assistentes/iara-sus/',
     })
   })

@@ -57,16 +57,21 @@ export const dashboards: readonly DashboardDefinition[] = [
   {
     slug: 'iara-sus',
     title: 'Aurya',
-    shortTitle: 'Aurya',
+    shortTitle: 'Aurya — SUS',
     description: 'Assistente de inteligência artificial para consulta às bases de dados oficiais.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_IARA_SUS_URL,
-      'https://funasa.dataiesb.com/chatbot',
+      'https://funasa.dataiesb.com/chatbot?agent=sus',
     ),
     revealDelayMs: 2_000,
+    mask: {
+      desktopBottom: 50,
+      mobileBottom: 0,
+      desktopTopLeft: { width: 280, height: 43 },
+    },
     crop: {
       desktop: { top: 64, left: 56, bottom: 0 },
-      mobile: { top: 60, left: 0, bottom: 64 },
+      mobile: { top: 60, left: 0, bottom: 0 },
     },
   },
   {

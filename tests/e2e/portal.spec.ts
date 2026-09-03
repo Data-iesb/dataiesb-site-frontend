@@ -58,7 +58,10 @@ test('all public routes render from the static export', async ({ page }) => {
     await page.getByRole('button', { name: 'Exibir agora' }).click()
     await expect(page.locator('iframe')).toHaveClass(/is-revealed/)
     await expect(page.locator('iframe')).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute('target', '_blank')
+    const externalAction = route === '/assistentes/iara-sus/'
+      ? 'Abrir chat em nova aba'
+      : 'Abrir painel'
+    await expect(page.getByRole('link', { name: externalAction })).toHaveAttribute('target', '_blank')
   }
 })
 
@@ -172,10 +175,8 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
   const dialog = page.getByRole('dialog', { name: 'Menu móvel' })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Fechar menu' })).toBeFocused()
-  const auryaLinks = dialog.getByRole('link', { name: 'Aurya' })
-  await expect(auryaLinks).toHaveCount(2)
-  await expect(auryaLinks.nth(0)).toHaveAttribute('target', '_blank')
-  await expect(auryaLinks.nth(1)).toHaveAttribute('href', '/assistentes/iara-sus/')
+  await expect(dialog.getByRole('link', { name: 'Aurya', exact: true })).toHaveAttribute('target', '_blank')
+  await expect(dialog.getByRole('link', { name: 'Aurya — SUS' })).toHaveAttribute('href', '/assistentes/iara-sus/')
   await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toHaveCount(1)
   await expect(page.locator('.portal-header .mobile-menu-button')).toBeHidden()
   await dialog.getByRole('button', { name: 'Fechar menu' }).click()
@@ -218,16 +219,33 @@ test('dashboard crop follows the iframe width at tablet size', async ({ page }, 
   expect(Math.round(frameBox!.height - canvasBox!.height)).toBe(150)
 })
 
-test('the short Aurya delay reveals automatically without claiming verified readiness', async ({ page }) => {
+test('the short Aurya delay reveals automatically and masks external navigation', async ({ page }, testInfo) => {
   await page.goto('/assistentes/iara-sus/')
 
   const frame = page.locator('iframe')
+  await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/chatbot?agent=sus')
   await expect(frame).toHaveClass(/is-preparing/)
   await expect(frame).toHaveClass(/is-revealed/, { timeout: 5_000 })
   await expect(frame).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Abrir chat em nova aba' })).toHaveAttribute(
+    'href',
+    'https://funasa.dataiesb.com/chatbot?agent=sus',
+  )
   await expect(page.locator('.dashboard-toolbar')).toContainText(
     'Painel exibido · disponibilidade externa não confirmada',
   )
+
+  const bottomMask = page.getByTestId('dashboard-mask-bottom')
+  const topLeftMask = page.getByTestId('dashboard-mask-top-left')
+  if (testInfo.project.name === 'desktop') {
+    await expect(bottomMask).toHaveCSS('height', '50px')
+    await expect(topLeftMask).toHaveCSS('width', '280px')
+    await expect(topLeftMask).toHaveCSS('height', '43px')
+    await expect(topLeftMask).toHaveCSS('pointer-events', 'auto')
+  } else {
+    await expect(bottomMask).toHaveCSS('height', '0px')
+    await expect(topLeftMask).toBeHidden()
+  }
 })
 
 test('mobile dashboard geometry preserves Setores scale and Ambulatorial native width', async ({ page }, testInfo) => {
