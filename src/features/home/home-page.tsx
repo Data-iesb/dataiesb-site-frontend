@@ -129,7 +129,7 @@ export function HomePage() {
       <section className="page-section" aria-labelledby="servicos-heading">
         <div className="section-heading"><div><span className="eyebrow">Ciência de dados aplicada</span><h2 id="servicos-heading">O que entregamos</h2><p>Soluções estratégicas de dados, do diagnóstico à implementação.</p></div></div>
         <div className="services-grid">{services.map(({ icon: Icon, media, title, text }) => (
-          <article key={title}><video className="service-card-media" muted loop playsInline controls preload="metadata" aria-label={`Demonstração visual: ${title}`}><source src={media} type="video/mp4" /></video><Icon aria-hidden="true" /><h3>{title}</h3><p>{text}</p></article>
+          <article key={title}><video className="service-card-media" autoPlay muted loop playsInline controls preload="metadata" aria-label={`Demonstração visual: ${title}`}><source src={media} type="video/mp4" /></video><Icon aria-hidden="true" /><h3>{title}</h3><p>{text}</p></article>
         ))}</div>
       </section>
 

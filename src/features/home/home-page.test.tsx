@@ -41,4 +41,18 @@ describe('HomePage national overview', () => {
     expect(within(portalMetrics).getByText('8')).toBeInTheDocument()
     expect(within(portalMetrics).queryByText('3+')).not.toBeInTheDocument()
   })
+
+  it('starts every service video automatically in a muted continuous loop', () => {
+    render(<HomePage />)
+
+    const videos = screen.getAllByLabelText(/^Demonstração visual:/)
+    expect(videos).toHaveLength(3)
+
+    for (const video of videos) {
+      expect(video).toHaveProperty('autoplay', true)
+      expect(video).toHaveProperty('muted', true)
+      expect(video).toHaveProperty('loop', true)
+      expect(video).toHaveProperty('playsInline', true)
+    }
+  })
 })
