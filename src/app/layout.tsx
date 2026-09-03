@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.svg' },
 }
 
-const themeScript = `try{document.documentElement.dataset.theme=localStorage.getItem('dataiesb-theme')==='light'?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}`
+const themeScript = `try{document.documentElement.dataset.theme=localStorage.getItem('dataiesb-theme')==='dark'?'dark':'light'}catch(e){document.documentElement.dataset.theme='light'}`
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="pt-BR" data-theme="dark" suppressHydrationWarning>
+    <html lang="pt-BR" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

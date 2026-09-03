@@ -59,7 +59,7 @@ export function PortalShell({ children, immersive = false }: Props) {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [theme, setTheme] = useState<'dark' | 'light'>('light')
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const drawerRef = useRef<HTMLElement>(null)
   const drawerCloseRef = useRef<HTMLButtonElement>(null)
@@ -78,7 +78,7 @@ export function PortalShell({ children, immersive = false }: Props) {
     const frame = window.requestAnimationFrame(() => {
       setCollapsed(window.localStorage.getItem(SIDEBAR_KEY) === 'true')
       const savedTheme = window.localStorage.getItem(THEME_KEY)
-      const nextTheme = savedTheme === 'light' ? 'light' : 'dark'
+      const nextTheme = savedTheme === 'dark' ? 'dark' : 'light'
       setTheme(nextTheme)
       document.documentElement.dataset.theme = nextTheme
     })

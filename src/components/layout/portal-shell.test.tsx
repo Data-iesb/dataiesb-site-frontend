@@ -13,7 +13,7 @@ vi.mock('next/navigation', () => ({
 describe('PortalShell', () => {
   beforeEach(() => {
     navigationMock.pathname = '/'
-    document.documentElement.dataset.theme = 'dark'
+    document.documentElement.dataset.theme = 'light'
     window.localStorage.clear()
   })
 
@@ -35,15 +35,30 @@ describe('PortalShell', () => {
     expect(window.localStorage.getItem('dataiesb-sidebar-collapsed')).toBe('true')
   })
 
-  it('persists the selected color theme', async () => {
+  it('uses the light theme when there is no saved preference', async () => {
+    render(<PortalShell><p>Portal</p></PortalShell>)
+
+    await waitFor(() => expect(document.documentElement.dataset.theme).toBe('light'))
+    expect(screen.getByRole('button', { name: 'Ativar tema escuro' })).toBeInTheDocument()
+  })
+
+  it('persists the selected dark theme', async () => {
     const user = userEvent.setup()
     render(<PortalShell><p>Portal</p></PortalShell>)
 
-    await user.click(screen.getByRole('button', { name: 'Ativar tema claro' }))
+    await user.click(screen.getByRole('button', { name: 'Ativar tema escuro' }))
 
-    expect(document.documentElement.dataset.theme).toBe('light')
-    expect(window.localStorage.getItem('dataiesb-theme')).toBe('light')
-    expect(screen.getByRole('button', { name: 'Ativar tema escuro' })).toBeInTheDocument()
+    expect(document.documentElement.dataset.theme).toBe('dark')
+    expect(window.localStorage.getItem('dataiesb-theme')).toBe('dark')
+    expect(screen.getByRole('button', { name: 'Ativar tema claro' })).toBeInTheDocument()
+  })
+
+  it('restores a previously saved dark theme', async () => {
+    window.localStorage.setItem('dataiesb-theme', 'dark')
+    render(<PortalShell><p>Portal</p></PortalShell>)
+
+    await waitFor(() => expect(document.documentElement.dataset.theme).toBe('dark'))
+    expect(screen.getByRole('button', { name: 'Ativar tema claro' })).toBeInTheDocument()
   })
 
   it('traps focus inside the mobile drawer and restores it when closed', async () => {

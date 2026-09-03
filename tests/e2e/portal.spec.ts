@@ -113,15 +113,17 @@ test('technical team always includes Joel with his verified LinkedIn profile', a
 
 test('keyboard navigation and theme preference remain available', async ({ page }) => {
   await page.goto('/')
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)')
   await page.keyboard.press('Tab')
   await expect(page.getByRole('link', { name: 'Pular para o conteúdo' })).toBeFocused()
   await page.keyboard.press('Enter')
   await expect(page.getByRole('main')).toBeFocused()
 
-  await page.getByRole('button', { name: 'Ativar tema claro' }).click()
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  await page.getByRole('button', { name: 'Ativar tema escuro' }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
   await page.reload()
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
 })
 
 test('home preserves the institutional, service and recent-publication content', async ({ page }) => {
@@ -186,7 +188,6 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
 test('partner logos remain contained inside their visual frames', async ({ page }) => {
   await page.goto('/parceiros/')
 
-  await page.getByRole('button', { name: 'Ativar tema claro' }).click()
   await expect(page.locator('.partner-logo.is-iesb')).toHaveCSS('background-color', 'rgb(46, 46, 46)')
 
   const logos = page.locator('.partner-logo')
