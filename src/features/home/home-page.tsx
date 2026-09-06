@@ -11,7 +11,7 @@ import { loadNews, loadReports, loadTeam } from '@/lib/content-api'
 
 const areas = [
   { icon: HeartPulse, title: 'SUS Assistência à Saúde', text: 'Internações, produção ambulatorial e vigilância epidemiológica.' },
-  { icon: GraduationCap, title: 'Panorama da Educação', text: 'Escolas, matrículas e condições ambientais em todo o Brasil.' },
+  { icon: GraduationCap, title: 'Educação', text: 'Censo Escolar: escolas, matrículas e infraestrutura do Ensino Médio e Fundamental.' },
   { icon: Landmark, title: 'Conheça o seu Município', text: 'PIB, setores censitários e informações das prefeituras.' },
   { icon: ShieldCheck, title: 'Estudos e Publicações', text: 'Análises espaciais, relatórios e conhecimento baseado em evidências.' },
 ]
@@ -69,9 +69,9 @@ export function HomePage() {
             description="Um portal de ciência de dados e inteligência artificial para compreender cenários, apoiar decisões e aproximar pesquisa acadêmica de desafios reais."
             actions={(
               <>
-                <a className="primary-button" href="/aplicacoes/">Explorar aplicações <ArrowRight size={17} /></a>
-                <a className="secondary-button" href={siteConfig.auryaUrl} target="_blank" rel="noopener noreferrer">
-                  <Bot size={17} /> Conversar com a Aurya
+                <a className="primary-button" href="#projects">Explore os dados <ArrowRight size={17} /></a>
+                <a className="secondary-button" href={siteConfig.auryaSusPath}>
+                  <Bot size={17} /> Conversar com a Aurya SUS
                 </a>
               </>
             )}
@@ -172,7 +172,6 @@ export function HomePage() {
       <section className="page-section" id="projects" aria-labelledby="aplicacoes-heading">
         <div className="section-heading">
           <div><span className="eyebrow">Aplicações destacadas</span><h2 id="aplicacoes-heading">Explore os dados</h2></div>
-          <a href="/aplicacoes/">Ver catálogo <ArrowRight size={16} /></a>
         </div>
         <ResourceState status={reports.status} error={reports.error} retry={reports.retry} emptyMessage="Ainda não há outras aplicações publicadas." />
         {featuredApplications.length > 0 && <div className="card-grid">{featuredApplications.map((item) => <ApplicationCard item={item} key={item.key} />)}</div>}

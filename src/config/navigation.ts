@@ -12,15 +12,9 @@ export const navigationGroups: readonly NavigationGroup[] = [
     label: 'Inteligência Artificial',
     items: [
       {
-        id: 'aurya',
-        label: 'Aurya',
-        href: 'https://aurya.dataiesb.com',
-        external: true,
-      },
-      {
         id: 'iara-sus',
-        label: 'Aurya — SUS',
-        href: '/assistentes/iara-sus/',
+        label: 'Aurya SUS',
+        href: '/assistentes/aurya-sus/',
       },
     ],
   },
@@ -41,11 +35,11 @@ export const navigationGroups: readonly NavigationGroup[] = [
     ],
   },
   {
-    label: 'Panorama da Educação no Brasil',
+    label: 'Educação',
     items: [
       {
         id: 'educacao-escolas',
-        label: 'Saúde Ambiental nas Escolas',
+        label: 'Censo Escolar — Ensino Médio e Fundamental',
         href: '/paineis/inep/',
       },
     ],
@@ -69,7 +63,6 @@ export const navigationGroups: readonly NavigationGroup[] = [
   {
     label: 'Estudos e Publicações',
     items: [
-      { id: 'aplicacoes', label: 'Explorar catálogo', href: '/aplicacoes/' },
       {
         id: 'estudos-clusters-lisa',
         label: 'Clusters LISA',

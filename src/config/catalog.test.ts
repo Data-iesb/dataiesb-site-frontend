@@ -71,22 +71,22 @@ describe('buildApplicationCatalog', () => {
     expect(result.find((item) => item.key === 'sus-aih')?.title).toBe('SUS – AIH – Brasil')
   })
 
-  it('features the three newest general reports together with one item from each requested theme', () => {
-    const manyReports: PublicReport[] = Array.from({ length: 7 }, (_, index) => ({
-      id: index + 1,
-      title: `Relatório ${index + 1}`,
-      author: 'DATA IESB',
-      description: 'Estudo',
-      createdAt: `2026-08-${String(index + 1).padStart(2, '0')}T12:00:00Z`,
-    }))
+  it('features Como Votei and every integrated panel without unrelated reports', () => {
+    const manyReports: PublicReport[] = [
+      ...reports,
+      { id: 33, title: 'Como Votei', author: 'DATA IESB', description: 'Eleições na RIDE-DF' },
+      { id: 34, title: 'Outro estudo', author: 'DATA IESB', description: 'Estudo mais recente' },
+    ]
 
     expect(getFeaturedApplications(manyReports).map((item) => item.key)).toEqual([
-      'report-7',
-      'report-6',
-      'report-5',
+      'report-33',
       'sus-aih',
+      'sus-ambulatorial',
+      'sus-sinan',
       'educacao-escolas',
       'municipio-pib',
+      'municipio-setores',
+      'municipio-prefeituras',
       'estudos-clusters-lisa',
     ])
   })
@@ -127,8 +127,8 @@ describe('dashboard registry', () => {
     }
 
     expect(getDashboardBySlug('iara-sus')).toMatchObject({
-      title: 'Aurya',
-      shortTitle: 'Aurya — SUS',
+      title: 'Aurya SUS',
+      shortTitle: 'Aurya SUS',
       sourceUrl: 'https://funasa.dataiesb.com/chatbot?agent=sus',
       mask: {
         desktopBottom: 50,

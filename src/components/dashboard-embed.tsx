@@ -51,7 +51,8 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   }
 
   const crop = dashboard.crop
-  const externalActionLabel = dashboard.slug === 'iara-sus'
+  const isAssistant = dashboard.slug === 'iara-sus'
+  const externalActionLabel = isAssistant
     ? 'Abrir chat em nova aba'
     : 'Abrir painel'
   const mobileScale = dashboard.mobileScale ?? 1
@@ -75,18 +76,23 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   } as CSSProperties
 
   return (
-    <section className="dashboard-embed" aria-label={`Visualização: ${dashboard.title}`}>
-      <h1 className="sr-only">{dashboard.title}</h1>
+    <section className={`dashboard-embed${isAssistant ? ' assistant-environment' : ''}`} aria-label={`Visualização: ${dashboard.title}`}>
+      {!isAssistant && <h1 className="sr-only">{dashboard.title}</h1>}
       <div className="dashboard-toolbar">
-        <span>
+        {isAssistant ? (
+          <div className="assistant-heading">
+            <h1>{dashboard.title}</h1>
+            <p>Converse sobre os dados do SUS.</p>
+          </div>
+        ) : <span>
           {state === 'revealed'
             ? 'Painel exibido · disponibilidade externa não confirmada'
             : state === 'preparing'
               ? 'Preparando painel DATA IESB'
               : 'Visualização incorporada'}
-        </span>
+        </span>}
         <div>
-          <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
+          <button type="button" onClick={reload}><RefreshCw size={15} /> {isAssistant ? 'Recarregar chat' : 'Recarregar painel'}</button>
           <a href={dashboard.sourceUrl} target="_blank" rel="noopener noreferrer">
             <ExternalLink size={15} /> {externalActionLabel}
           </a>
@@ -96,8 +102,8 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
         {state === 'loading' && (
           <div className="embed-status" role="status" aria-live="polite">
             <span className="loading-orbit" aria-hidden="true" />
-            <strong>Carregando painel</strong>
-            <span>Os dados podem levar alguns instantes para aparecer.</span>
+            <strong>{isAssistant ? 'Abrindo a Aurya SUS' : 'Carregando painel'}</strong>
+            <span>{isAssistant ? 'Aguarde enquanto o ambiente de conversa carrega.' : 'Os dados podem levar alguns instantes para aparecer.'}</span>
           </div>
         )}
 
@@ -105,8 +111,8 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
           <div className="embed-status is-preparing" role="status" aria-live="polite">
             <span className="embed-brand" aria-hidden="true">Data<strong>IESB</strong></span>
             <span className="loading-orbit" aria-hidden="true" />
-            <strong>Preparando dados do painel</strong>
-            <span>Estamos organizando indicadores, mapas e gráficos para você.</span>
+            <strong>{isAssistant ? 'Preparando sua conversa' : 'Preparando dados do painel'}</strong>
+            <span>{isAssistant ? 'Você já vai poder consultar os dados do SUS.' : 'Estamos organizando indicadores, mapas e gráficos para você.'}</span>
             <button type="button" onClick={() => setState('revealed')}>Exibir agora</button>
           </div>
         )}

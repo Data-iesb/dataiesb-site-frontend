@@ -28,17 +28,17 @@ Como a distribuição atual não resolve automaticamente `rota/index.html`, os w
 
 Copie `.env.example` para `.env.local` apenas quando precisar substituir uma URL. Todas as variáveis `NEXT_PUBLIC_*` são incorporadas ao bundle e jamais devem conter credenciais, chaves privadas ou segredos AWS.
 
-O portal consome as APIs públicas de notícias, aplicações e equipe, mantém a Aurya como destino externo e oferece também uma visualização incorporada da Aurya. O formulário de contato continua usando a API Gateway existente. As respostas são validadas antes de entrarem na interface, com timeout, estados de erro/vazio e nova tentativa. A página inicial preserva os diferenciais, serviços, resultados, publicações e créditos institucionais exibidos no portal oficial anterior e apresenta um panorama nacional com fontes públicas do IBGE, INEP e DATASUS.
+O portal consome as APIs públicas de notícias, aplicações e equipe, oferece o ambiente Aurya SUS em `/assistentes/aurya-sus/`, conectado ao chat SUS da FUNASA. O formulário de contato continua usando a API Gateway existente. As respostas são validadas antes de entrarem na interface, com timeout, estados de erro/vazio e nova tentativa. A página inicial preserva os diferenciais, serviços, resultados, publicações e créditos institucionais exibidos no portal oficial anterior e apresenta um panorama nacional com fontes públicas do IBGE, INEP e DATASUS.
 
 ## Painéis incorporados
 
 Somente URLs HTTPS de `app.dataiesb.com` e `funasa.dataiesb.com` podem ser abertas em iframe. As experiências incorporadas são:
 
-- Aurya
+- Aurya SUS
 - SUS — Autorizações de Internação Hospitalar (AIH)
 - SUS — Produção Ambulatorial
 - SUS — SINAN: Doenças e Agravos
-- Saúde Ambiental nas Escolas
+- Censo Escolar — Ensino Médio e Fundamental
 - PIB dos Municípios
 - Setores Censitários 2022
 - Painel das Prefeituras

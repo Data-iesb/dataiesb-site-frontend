@@ -33,7 +33,7 @@ describe('ApplicationsPage', () => {
     expect(screen.getByRole('link', { name: /Visualizar Internações hospitalares/ })).toHaveAttribute('href', '/paineis/sus-aih/')
     expect(screen.getByRole('link', { name: /Visualizar Produção ambulatorial/ })).toHaveAttribute('href', '/paineis/producao-ambulatorial/')
     expect(screen.getByRole('link', { name: /Visualizar SINAN/ })).toHaveAttribute('href', '/paineis/sinan-doencas-agravos/')
-    expect(screen.getByRole('link', { name: /Visualizar Saúde Ambiental nas Escolas/ })).toHaveAttribute('href', '/paineis/inep/')
+    expect(screen.getByRole('link', { name: /Visualizar Censo Escolar/ })).toHaveAttribute('href', '/paineis/inep/')
     expect(screen.getByRole('link', { name: /Visualizar PIB dos Municípios/ })).toHaveAttribute('href', '/paineis/pib/')
     expect(screen.getByRole('link', { name: /Visualizar Setores Censitários 2022/ })).toHaveAttribute('href', '/paineis/setores-censitarios/')
     expect(screen.getByRole('link', { name: /Visualizar Painel das Prefeituras/ })).toHaveAttribute('href', '/paineis/prefeituras/')

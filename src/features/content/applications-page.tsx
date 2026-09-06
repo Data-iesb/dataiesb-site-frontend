@@ -11,7 +11,7 @@ export function ApplicationsPage() {
   const general = items.filter((item) => item.key.startsWith('report-'))
   const sections = [
     { id: 'catalogo-sus', eyebrow: 'Saúde pública', title: 'SUS Assistência à Saúde' },
-    { id: 'catalogo-educacao', eyebrow: 'Educação', title: 'Panorama da Educação no Brasil' },
+    { id: 'catalogo-educacao', eyebrow: 'Educação básica', title: 'Educação' },
     { id: 'catalogo-municipio', eyebrow: 'Território', title: 'Conheça o seu Município' },
     { id: 'catalogo-estudos', eyebrow: 'Análise espacial', title: 'Estudos e Publicações' },
   ] as const

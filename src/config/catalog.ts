@@ -56,9 +56,9 @@ export const dashboards: readonly DashboardDefinition[] = [
   },
   {
     slug: 'iara-sus',
-    title: 'Aurya',
-    shortTitle: 'Aurya — SUS',
-    description: 'Assistente de inteligência artificial para consulta às bases de dados oficiais.',
+    title: 'Aurya SUS',
+    shortTitle: 'Aurya SUS',
+    description: 'Converse com a assistente de inteligência artificial sobre os dados do SUS.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_IARA_SUS_URL,
       'https://funasa.dataiesb.com/chatbot?agent=sus',
@@ -76,9 +76,9 @@ export const dashboards: readonly DashboardDefinition[] = [
   },
   {
     slug: 'inep',
-    title: 'Saúde Ambiental nas Escolas',
-    shortTitle: 'Saúde Ambiental nas Escolas',
-    description: 'Panorama das escolas brasileiras e de suas condições ambientais e sanitárias.',
+    title: 'Censo Escolar — Ensino Médio e Fundamental',
+    shortTitle: 'Censo Escolar — Ensino Médio e Fundamental',
+    description: 'Escolas, matrículas e infraestrutura do Ensino Médio e Fundamental no Brasil.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_EDUCACAO_ESCOLAS_URL,
       'https://funasa.dataiesb.com/inep/',
@@ -233,7 +233,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       key: 'educacao-escolas',
       title: dashboard('inep').shortTitle,
       description: dashboard('inep').description,
-      eyebrow: 'Panorama da Educação no Brasil',
+      eyebrow: 'Educação',
       author: 'DataIESB / FUNASA',
       href: '/paineis/inep/',
     },
@@ -276,12 +276,5 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
 
 export function getFeaturedApplications(reports: readonly PublicReport[]) {
   const catalog = buildApplicationCatalog(reports)
-  const general = catalog.filter((item) => item.key.startsWith('report-')).slice(0, 3)
-  const featuredKeys = new Set([
-    'sus-aih',
-    'educacao-escolas',
-    'municipio-pib',
-    'estudos-clusters-lisa',
-  ])
-  return [...general, ...catalog.filter((item) => featuredKeys.has(item.key))]
+  return catalog.filter((item) => item.key === 'report-33' || !item.key.startsWith('report-'))
 }

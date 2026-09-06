@@ -8,17 +8,17 @@ describe('navigationGroups', () => {
       'Visão geral',
       'Inteligência Artificial',
       'SUS Assistência à Saúde',
-      'Panorama da Educação no Brasil',
+      'Educação',
       'Conheça o seu Município',
       'Estudos e Publicações',
       'Institucional',
     ])
 
     const labels = navigationGroups.flatMap((group) => group.items.map((item) => item.label))
-    expect(labels).toContain('Aurya')
-    expect(labels).toContain('Aurya — SUS')
-    expect(labels.filter((label) => label === 'Aurya')).toHaveLength(1)
-    expect(labels).toContain('Saúde Ambiental nas Escolas')
+    expect(labels).not.toContain('Aurya')
+    expect(labels.filter((label) => label === 'Aurya SUS')).toHaveLength(1)
+    expect(labels).not.toContain('Explorar catálogo')
+    expect(labels).toContain('Censo Escolar — Ensino Médio e Fundamental')
     expect(labels).toContain('PIB dos Municípios')
     expect(labels).toContain('Setores Censitários 2022')
     expect(labels).toContain('Painel das Prefeituras')
@@ -27,15 +27,12 @@ describe('navigationGroups', () => {
     expect(labels).not.toContain('Gestão de Convênios')
   })
 
-  it('keeps the official Aurya external and the temporary Aurya integration inside the portal', () => {
+  it('directs the only assistant entry to the Aurya SUS environment', () => {
     const items = navigationGroups.flatMap((group) => group.items)
-    expect(items.find((item) => item.id === 'aurya')).toMatchObject({
-      href: 'https://aurya.dataiesb.com',
-      external: true,
-    })
+    expect(items.find((item) => item.id === 'aurya')).toBeUndefined()
     expect(items.find((item) => item.id === 'iara-sus')).toMatchObject({
-      label: 'Aurya — SUS',
-      href: '/assistentes/iara-sus/',
+      label: 'Aurya SUS',
+      href: '/assistentes/aurya-sus/',
     })
   })
 })

@@ -11,6 +11,7 @@ const newsPayload = {
 
 const reportsPayload = {
   1: { id_s3: 1, titulo: 'Mercado de trabalho', autor: 'DATA IESB', descricao: 'Indicadores de trabalho.', image_url: 'https://images.example.org/report-1.png' },
+  33: { id_s3: 33, titulo: 'Como Votei – Eleições por Zona Eleitoral na RIDE-DF', autor: 'DATA IESB', descricao: 'Eleições de 2002 a 2022.', image_url: 'https://images.example.org/report-33.png', url: 'https://app.dataiesb.com/votei/' },
   32: { id_s3: 32, titulo: 'AIH Nacional', autor: 'DATA IESB / FUNASA', descricao: 'Internações hospitalares.' },
 }
 
@@ -42,6 +43,7 @@ test('all public routes render from the static export', async ({ page }) => {
   }
 
   const embeddedRoutes = [
+    '/assistentes/aurya-sus/',
     '/assistentes/iara-sus/',
     '/paineis/sus-aih/',
     '/paineis/producao-ambulatorial/',
@@ -58,7 +60,7 @@ test('all public routes render from the static export', async ({ page }) => {
     await page.getByRole('button', { name: 'Exibir agora' }).click()
     await expect(page.locator('iframe')).toHaveClass(/is-revealed/)
     await expect(page.locator('iframe')).toBeVisible()
-    const externalAction = route === '/assistentes/iara-sus/'
+    const externalAction = route.startsWith('/assistentes/')
       ? 'Abrir chat em nova aba'
       : 'Abrir painel'
     await expect(page.getByRole('link', { name: externalAction })).toHaveAttribute('target', '_blank')
@@ -67,11 +69,12 @@ test('all public routes render from the static export', async ({ page }) => {
 
 test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
   const dashboards = [
-    ['/assistentes/iara-sus/', 'Aurya — DATA IESB'],
+    ['/assistentes/aurya-sus/', 'Aurya SUS — DATA IESB'],
+    ['/assistentes/iara-sus/', 'Aurya SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
     ['/paineis/sinan-doencas-agravos/', 'SINAN — Doenças e Agravos — DATA IESB'],
-    ['/paineis/inep/', 'Saúde Ambiental nas Escolas — DATA IESB'],
+    ['/paineis/inep/', 'Censo Escolar — Ensino Médio e Fundamental — DATA IESB'],
     ['/paineis/pib/', 'PIB dos Municípios — DATA IESB'],
     ['/paineis/setores-censitarios/', 'Setores Censitários 2022 — DATA IESB'],
     ['/paineis/prefeituras/', 'Painel das Prefeituras — DATA IESB'],
@@ -149,7 +152,9 @@ test('home preserves the institutional, service and recent-publication content',
   await expect(results).toContainText('12Projetos entregues')
   await expect(results).toContainText('25Membros ativos')
   await expect(page.locator('.service-card-media')).toHaveCount(3)
-  await expect(page.getByRole('img', { name: 'Capa de Mercado de trabalho' })).toBeVisible()
+  await expect(page.getByRole('img', { name: 'Capa de Como Votei – Eleições por Zona Eleitoral na RIDE-DF' })).toBeVisible()
+  await expect(page.locator('#projects .application-card')).toHaveCount(9)
+  await expect(page.locator('#projects')).not.toContainText('Mercado de trabalho')
   await expect(page.getByText(/Desenvolvido por/)).toBeVisible()
 })
 
@@ -164,8 +169,8 @@ test('legacy aliases and section anchors remain compatible', async ({ page }) =>
   await expect(page.locator('#contact')).toBeVisible()
 
   await page.goto('/ia-iesb/')
-  await expect(page).toHaveURL(/^https:\/\/aurya\.dataiesb\.com\/?$/)
-  await expect(page.getByRole('heading', { name: 'Aurya' })).toBeVisible()
+  await expect(page).toHaveURL(/\/assistentes\/aurya-sus\/$/)
+  await expect(page.getByRole('heading', { name: 'Aurya SUS', exact: true })).toBeVisible()
 })
 
 test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
@@ -175,8 +180,8 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
   const dialog = page.getByRole('dialog', { name: 'Menu móvel' })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Fechar menu' })).toBeFocused()
-  await expect(dialog.getByRole('link', { name: 'Aurya', exact: true })).toHaveAttribute('target', '_blank')
-  await expect(dialog.getByRole('link', { name: 'Aurya — SUS' })).toHaveAttribute('href', '/assistentes/iara-sus/')
+  await expect(dialog.getByRole('link', { name: 'Aurya', exact: true })).toHaveCount(0)
+  await expect(dialog.getByRole('link', { name: 'Aurya SUS' })).toHaveAttribute('href', '/assistentes/aurya-sus/')
   await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toHaveCount(1)
   await expect(page.locator('.portal-header .mobile-menu-button')).toBeHidden()
   await dialog.getByRole('button', { name: 'Fechar menu' }).click()
@@ -220,7 +225,7 @@ test('dashboard crop follows the iframe width at tablet size', async ({ page }, 
 })
 
 test('the short Aurya delay reveals automatically and masks external navigation', async ({ page }, testInfo) => {
-  await page.goto('/assistentes/iara-sus/')
+  await page.goto('/assistentes/aurya-sus/')
 
   const frame = page.locator('iframe')
   await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/chatbot?agent=sus')
@@ -231,9 +236,8 @@ test('the short Aurya delay reveals automatically and masks external navigation'
     'href',
     'https://funasa.dataiesb.com/chatbot?agent=sus',
   )
-  await expect(page.locator('.dashboard-toolbar')).toContainText(
-    'Painel exibido · disponibilidade externa não confirmada',
-  )
+  await expect(page.getByRole('heading', { name: 'Aurya SUS', exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Recarregar chat' })).toBeVisible()
 
   const bottomMask = page.getByTestId('dashboard-mask-bottom')
   const topLeftMask = page.getByTestId('dashboard-mask-top-left')

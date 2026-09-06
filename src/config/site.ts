@@ -13,5 +13,5 @@ export const siteConfig = {
   contactApiUrl:
     process.env.NEXT_PUBLIC_CONTACT_API_URL ??
     'https://pl1ecmd782.execute-api.us-east-1.amazonaws.com/default/dataiesb-contato',
-  auryaUrl: 'https://aurya.dataiesb.com',
+  auryaSusPath: '/assistentes/aurya-sus/',
 } as const
