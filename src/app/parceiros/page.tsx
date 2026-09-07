@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: 'Parceiros' }
 const partners = [
   {
     name: 'Centro Universitário IESB',
-    image: '/logo.png',
+    image: '/img/partners/iesb.jpeg',
     imageClass: ' is-iesb',
     paragraphs: [
       'O Instituto de Educação Superior de Brasília – IESB é a instituição idealizadora e principal apoiadora do Projeto Big Data – IESB. Com forte compromisso com a inovação, a pesquisa aplicada e a formação profissional de excelência, o IESB promove esta iniciativa como um recurso estratégico voltado à transformação digital no setor público e privado e à qualificação de seus estudantes.',
@@ -29,8 +29,20 @@ const partners = [
     ],
   },
   {
+    name: 'Darede',
+    image: '/img/partners/darede.jpg',
+    imageClass: ' is-darede',
+    paragraphs: [
+      "A Darede (https://darede.com.br ) é uma empresa especializada em computação em nuvem, dados, inteligência artificial e serviços gerenciados, com forte atuação no ecossistema da Amazon Web Services (AWS). Seu portfólio contempla consultoria e modernização de ambientes em nuvem, migração, segurança, gerenciamento de infraestrutura, bancos de dados, DevOps, FinOps, Big Data, Analytics, Machine Learning e Inteligência Artificial Generativa. A empresa também possui competências específicas em tecnologias AWS e atuação nos segmentos de setor público e educação.",
+      "No contexto do Projeto Big Data – IESB, a Darede atua como parceira tecnológica e elo entre o Centro Universitário IESB e a AWS, contribuindo para que o projeto utilize de maneira eficiente os recursos e serviços disponibilizados pela infraestrutura de nuvem. Essa atuação é particularmente importante para apoiar a evolução da arquitetura tecnológica do Big Data – IESB, que necessita de ambientes escaláveis e seguros para armazenamento, processamento, integração e análise de grandes volumes de dados, além da implantação de aplicações de Ciência de Dados e Inteligência Artificial.",
+      "A parceria também possibilita aproximar o conhecimento acadêmico produzido pelo IESB da experiência da Darede em projetos de Cloud Computing, Data & Analytics, Machine Learning e Inteligência Artificial Generativa. A empresa possui soluções e serviços voltados à transformação de dados em informações úteis para a tomada de decisões, além de competências relacionadas ao setor público e à educação, áreas diretamente relacionadas aos propósitos institucionais do Projeto Big Data – IESB.",
+      "A participação da Darede fortalece, ainda, a dimensão acadêmica e de inovação do projeto, criando oportunidades para que professores e estudantes do Bacharelado em Ciência de Dados e Inteligência Artificial do IESB tenham contato com arquiteturas, tecnologias e boas práticas utilizadas em ambientes profissionais de nuvem. Dessa forma, a parceria contribui para aproximar academia, tecnologia e mercado, favorecendo a formação prática dos estudantes e o desenvolvimento de soluções aplicadas a problemas reais.",
+      "Ao integrar o ecossistema de parceiros do Projeto Big Data – IESB, a Darede complementa a atuação da AWS como provedora da infraestrutura de nuvem do projeto, oferecendo conhecimento especializado para apoiar sua utilização e evolução. Essa cooperação fortalece a capacidade do Big Data – IESB de desenvolver soluções inovadoras e sustentáveis baseadas em dados, especialmente aquelas destinadas a apoiar instituições públicas federais, estaduais, distritais e municipais, além de organizações parceiras do setor privado, contribuindo para a transformação digital, a melhoria da gestão e a tomada de decisões baseada em evidências.",
+    ],
+  },
+  {
     name: 'SAS',
-    image: '/img/sas.png',
+    image: '/img/partners/sas.jpeg',
     imageClass: '',
     paragraphs: [
       'A parceria entre o Centro Universitário IESB e a SAS, líder global em soluções de analytics, representa um importante avanço na integração entre academia e mercado. Por meio do programa SAS Viya for Learning, o IESB oferece aos seus estudantes e professores acesso gratuito a uma plataforma tecnológica de ponta, amplamente utilizada por empresas, governos e centros de pesquisa em todo o mundo.',
