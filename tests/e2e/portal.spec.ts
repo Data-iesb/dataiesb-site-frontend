@@ -34,6 +34,7 @@ test('all public routes render from the static export', async ({ page }) => {
   const routes = [
     '/', '/noticias/', '/aplicacoes/', '/aplicacoes/visualizar/?id=1',
     '/quem-somos/', '/parceiros/', '/contato/',
+    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/iara-sus/',
   ]
   for (const route of routes) {
     const response = await page.goto(route)
@@ -43,8 +44,6 @@ test('all public routes render from the static export', async ({ page }) => {
   }
 
   const embeddedRoutes = [
-    '/assistentes/aurya-sus/',
-    '/assistentes/iara-sus/',
     '/paineis/sus-aih/',
     '/paineis/producao-ambulatorial/',
     '/paineis/sinan-doencas-agravos/',
@@ -60,15 +59,13 @@ test('all public routes render from the static export', async ({ page }) => {
     await page.getByRole('button', { name: 'Exibir agora' }).click()
     await expect(page.locator('iframe')).toHaveClass(/is-revealed/)
     await expect(page.locator('iframe')).toBeVisible()
-    const externalAction = route.startsWith('/assistentes/')
-      ? 'Abrir chat em nova aba'
-      : 'Abrir painel'
-    await expect(page.getByRole('link', { name: externalAction })).toHaveAttribute('target', '_blank')
+    await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute('target', '_blank')
   }
 })
 
 test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
   const dashboards = [
+    ['/assistentes/', 'Aurya — DATA IESB'],
     ['/assistentes/aurya-sus/', 'Aurya SUS — DATA IESB'],
     ['/assistentes/iara-sus/', 'Aurya SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
@@ -170,7 +167,7 @@ test('legacy aliases and section anchors remain compatible', async ({ page }) =>
 
   await page.goto('/ia-iesb/')
   await expect(page).toHaveURL(/\/assistentes\/aurya-sus\/$/)
-  await expect(page.getByRole('heading', { name: 'Aurya SUS', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /AURYA SUS/ })).toBeVisible()
 })
 
 test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
@@ -180,8 +177,8 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
   const dialog = page.getByRole('dialog', { name: 'Menu móvel' })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Fechar menu' })).toBeFocused()
-  await expect(dialog.getByRole('link', { name: 'Aurya', exact: true })).toHaveCount(0)
-  await expect(dialog.getByRole('link', { name: 'Aurya SUS' })).toHaveAttribute('href', '/assistentes/aurya-sus/')
+  await expect(dialog.getByRole('link', { name: 'Aurya', exact: true })).toHaveAttribute('href', '/assistentes/')
+  await expect(dialog.getByRole('link', { name: 'Aurya SUS' })).toHaveCount(0)
   await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toHaveCount(1)
   await expect(page.locator('.portal-header .mobile-menu-button')).toBeHidden()
   await dialog.getByRole('button', { name: 'Fechar menu' }).click()
@@ -224,32 +221,40 @@ test('dashboard crop follows the iframe width at tablet size', async ({ page }, 
   expect(Math.round(frameBox!.height - canvasBox!.height)).toBe(150)
 })
 
-test('the short Aurya delay reveals automatically and masks external navigation', async ({ page }, testInfo) => {
+test('the Aurya hub lists assistants and opens the selected native chat', async ({ page }) => {
+  await page.goto('/assistentes/')
+
+  await expect(page.getByRole('heading', { name: 'Aurya', exact: true })).toBeVisible()
+  await expect(page.getByText('Bem-vindo(a) ao hub')).toHaveCount(0)
+  const card = page.locator('.application-card').filter({ hasText: 'Aurya SUS' })
+  await expect(card).toContainText('Base SUS')
+  await expect(card.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
+    'href',
+    '/assistentes/aurya-sus/',
+  )
+  await card.getByRole('link', { name: 'Conversar' }).click()
+  await expect(page).toHaveURL(/\/assistentes\/aurya-sus\/$/)
+  await expect(page.getByRole('heading', { name: /AURYA SUS/ })).toBeVisible()
+})
+
+test('the native Aurya SUS chat renders and answers locally', async ({ page }, testInfo) => {
   await page.goto('/assistentes/aurya-sus/')
 
-  const frame = page.locator('iframe')
-  await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/chatbot?agent=sus')
-  await expect(frame).toHaveClass(/is-preparing/)
-  await expect(frame).toHaveClass(/is-revealed/, { timeout: 5_000 })
-  await expect(frame).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Abrir chat em nova aba' })).toHaveAttribute(
-    'href',
-    'https://funasa.dataiesb.com/chatbot?agent=sus',
-  )
-  await expect(page.getByRole('heading', { name: 'Aurya SUS', exact: true })).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Recarregar chat' })).toBeVisible()
-
-  const bottomMask = page.getByTestId('dashboard-mask-bottom')
-  const topLeftMask = page.getByTestId('dashboard-mask-top-left')
+  await expect(page.locator('iframe')).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: /AURYA SUS/ })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Reiniciar' })).toBeVisible()
   if (testInfo.project.name === 'desktop') {
-    await expect(bottomMask).toHaveCSS('height', '50px')
-    await expect(topLeftMask).toHaveCSS('width', '280px')
-    await expect(topLeftMask).toHaveCSS('height', '43px')
-    await expect(topLeftMask).toHaveCSS('pointer-events', 'auto')
-  } else {
-    await expect(bottomMask).toHaveCSS('height', '0px')
-    await expect(topLeftMask).toBeHidden()
+    await expect(page.getByRole('button', { name: 'Nova conversa' })).toBeVisible()
   }
+  await expect(page.getByRole('button', { name: 'Enviar pergunta' })).toBeDisabled()
+
+  const composer = page.getByLabel('Digite sua pergunta')
+  await composer.fill('Quais estados mais gastam com o SUS?')
+  await page.getByRole('button', { name: 'Enviar pergunta' }).click()
+  await expect(page.locator('.aurya-chat-message.message-user p')).toHaveText(
+    'Quais estados mais gastam com o SUS?',
+  )
+  await expect(page.getByText(/conexão com o modelo de inteligência artificial será habilitada/)).toBeVisible()
 })
 
 test('mobile dashboard geometry preserves Setores scale and Ambulatorial native width', async ({ page }, testInfo) => {

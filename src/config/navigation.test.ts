@@ -15,8 +15,8 @@ describe('navigationGroups', () => {
     ])
 
     const labels = navigationGroups.flatMap((group) => group.items.map((item) => item.label))
-    expect(labels).not.toContain('Aurya')
-    expect(labels.filter((label) => label === 'Aurya SUS')).toHaveLength(1)
+    expect(labels.filter((label) => label === 'Aurya')).toHaveLength(1)
+    expect(labels).not.toContain('Aurya SUS')
     expect(labels).not.toContain('Explorar catálogo')
     expect(labels).toContain('Censo Escolar — Ensino Médio e Fundamental')
     expect(labels).toContain('PIB dos Municípios')
@@ -27,12 +27,13 @@ describe('navigationGroups', () => {
     expect(labels).not.toContain('Gestão de Convênios')
   })
 
-  it('directs the only assistant entry to the Aurya SUS environment', () => {
+  it('directs the assistant entry to the Aurya hub', () => {
     const items = navigationGroups.flatMap((group) => group.items)
-    expect(items.find((item) => item.id === 'aurya')).toBeUndefined()
-    expect(items.find((item) => item.id === 'iara-sus')).toMatchObject({
-      label: 'Aurya SUS',
-      href: '/assistentes/aurya-sus/',
+    expect(items.find((item) => item.id === 'iara-sus')).toBeUndefined()
+    expect(items.find((item) => item.id === 'aurya-sus')).toBeUndefined()
+    expect(items.find((item) => item.id === 'aurya')).toMatchObject({
+      label: 'Aurya',
+      href: '/assistentes/',
     })
   })
 })

@@ -35,7 +35,7 @@ const THEME_KEY = 'dataiesb-theme'
 const iconById = {
   home: Home,
   noticias: Newspaper,
-  'iara-sus': Bot,
+  'aurya': Bot,
   'sus-aih': HeartPulse,
   'sus-ambulatorial': Activity,
   'sus-sinan': FileText,
@@ -55,7 +55,7 @@ const isActive = (pathname: string, href: string) =>
   href === '/' ? pathname === '/' : href.startsWith('/') && pathname.startsWith(href)
 
 export function PortalShell({ children, immersive = false }: Props) {
-  const pathname = usePathname().replace('/assistentes/iara-sus', '/assistentes/aurya-sus')
+  const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [theme, setTheme] = useState<'dark' | 'light'>('light')
@@ -256,8 +256,8 @@ export function PortalShell({ children, immersive = false }: Props) {
       <nav className="mobile-bottom-nav" aria-label="Atalhos móveis" inert={mobileOpen ? true : undefined}>
         <a className={isActive(pathname, '/') ? 'is-active' : undefined} href="/" aria-current={isActive(pathname, '/') ? 'page' : undefined}><Home size={18} /><span>Início</span></a>
         <a className={isActive(pathname, '/aplicacoes/') ? 'is-active' : undefined} href="/aplicacoes/" aria-current={isActive(pathname, '/aplicacoes/') ? 'page' : undefined}><BarChart3 size={18} /><span>Aplicações</span></a>
-        <a className={isActive(pathname, siteConfig.auryaSusPath) ? 'is-active' : undefined} href={siteConfig.auryaSusPath} aria-current={isActive(pathname, siteConfig.auryaSusPath) ? 'page' : undefined}>
-          <Bot size={18} /><span>Aurya SUS</span>
+        <a className={isActive(pathname, siteConfig.auryaPath) ? 'is-active' : undefined} href={siteConfig.auryaPath} aria-current={isActive(pathname, siteConfig.auryaPath) ? 'page' : undefined}>
+          <Bot size={18} /><span>Aurya</span>
         </a>
         <button type="button" onClick={openMobileMenu}>
           <Menu size={18} /><span>Menu</span>

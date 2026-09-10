@@ -25,11 +25,11 @@ describe('PortalShell', () => {
     const primaryNavigation = screen.getByRole('navigation', { name: 'Navegação principal' })
     expect(primaryNavigation).toBeInTheDocument()
     expect(screen.getByRole('main')).toHaveAttribute('id', 'conteudo-principal')
-    expect(within(primaryNavigation).queryByRole('link', { name: /^Aurya$/ })).not.toBeInTheDocument()
-    expect(within(primaryNavigation).getByRole('link', { name: 'Aurya SUS' })).toHaveAttribute(
+    expect(within(primaryNavigation).getByRole('link', { name: /^Aurya$/ })).toHaveAttribute(
       'href',
-      '/assistentes/aurya-sus/',
+      '/assistentes/',
     )
+    expect(within(primaryNavigation).queryByRole('link', { name: 'Aurya SUS' })).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Recolher menu lateral' }))
     expect(screen.getByRole('button', { name: 'Expandir menu lateral' })).toBeInTheDocument()

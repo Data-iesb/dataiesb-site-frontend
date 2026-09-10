@@ -51,10 +51,6 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   }
 
   const crop = dashboard.crop
-  const isAssistant = dashboard.slug === 'iara-sus'
-  const externalActionLabel = isAssistant
-    ? 'Abrir chat em nova aba'
-    : 'Abrir painel'
   const mobileScale = dashboard.mobileScale ?? 1
   const mobileSize = 100 / mobileScale
   const cropStyle = {
@@ -69,32 +65,23 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
     '--frame-left-mobile': `${crop.mobile.left * mobileScale}px`,
     '--frame-width-mobile': `calc(${mobileSize}% + ${crop.mobile.left}px)`,
     '--frame-height-mobile': `calc(${mobileSize}% + ${crop.mobile.top + crop.mobile.bottom}px)`,
-    '--mask-bottom-desktop': `${dashboard.mask?.desktopBottom ?? 0}px`,
-    '--mask-bottom-mobile': `${dashboard.mask?.mobileBottom ?? 0}px`,
-    '--mask-top-left-width-desktop': `${dashboard.mask?.desktopTopLeft?.width ?? 0}px`,
-    '--mask-top-left-height-desktop': `${dashboard.mask?.desktopTopLeft?.height ?? 0}px`,
   } as CSSProperties
 
   return (
-    <section className={`dashboard-embed${isAssistant ? ' assistant-environment' : ''}`} aria-label={`Visualização: ${dashboard.title}`}>
-      {!isAssistant && <h1 className="sr-only">{dashboard.title}</h1>}
+    <section className="dashboard-embed" aria-label={`Visualização: ${dashboard.title}`}>
+      <h1 className="sr-only">{dashboard.title}</h1>
       <div className="dashboard-toolbar">
-        {isAssistant ? (
-          <div className="assistant-heading">
-            <h1>{dashboard.title}</h1>
-            <p>Converse sobre os dados do SUS.</p>
-          </div>
-        ) : <span>
+        <span>
           {state === 'revealed'
             ? 'Painel exibido · disponibilidade externa não confirmada'
             : state === 'preparing'
               ? 'Preparando painel DATA IESB'
               : 'Visualização incorporada'}
-        </span>}
+        </span>
         <div>
-          <button type="button" onClick={reload}><RefreshCw size={15} /> {isAssistant ? 'Recarregar chat' : 'Recarregar painel'}</button>
+          <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
           <a href={dashboard.sourceUrl} target="_blank" rel="noopener noreferrer">
-            <ExternalLink size={15} /> {externalActionLabel}
+            <ExternalLink size={15} /> Abrir painel
           </a>
         </div>
       </div>
@@ -102,8 +89,8 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
         {state === 'loading' && (
           <div className="embed-status" role="status" aria-live="polite">
             <span className="loading-orbit" aria-hidden="true" />
-            <strong>{isAssistant ? 'Abrindo a Aurya SUS' : 'Carregando painel'}</strong>
-            <span>{isAssistant ? 'Aguarde enquanto o ambiente de conversa carrega.' : 'Os dados podem levar alguns instantes para aparecer.'}</span>
+            <strong>Carregando painel</strong>
+            <span>Os dados podem levar alguns instantes para aparecer.</span>
           </div>
         )}
 
@@ -111,8 +98,8 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
           <div className="embed-status is-preparing" role="status" aria-live="polite">
             <span className="embed-brand" aria-hidden="true">Data<strong>IESB</strong></span>
             <span className="loading-orbit" aria-hidden="true" />
-            <strong>{isAssistant ? 'Preparando sua conversa' : 'Preparando dados do painel'}</strong>
-            <span>{isAssistant ? 'Você já vai poder consultar os dados do SUS.' : 'Estamos organizando indicadores, mapas e gráficos para você.'}</span>
+            <strong>Preparando dados do painel</strong>
+            <span>Estamos organizando indicadores, mapas e gráficos para você.</span>
             <button type="button" onClick={() => setState('revealed')}>Exibir agora</button>
           </div>
         )}
@@ -137,20 +124,6 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
           onLoad={() => setState((dashboard.revealDelayMs ?? 0) > 0 ? 'preparing' : 'revealed')}
           onError={() => setState('error')}
         />
-        {dashboard.mask && (
-          <div
-            className="dashboard-frame-mask is-bottom"
-            data-testid="dashboard-mask-bottom"
-            aria-hidden="true"
-          />
-        )}
-        {dashboard.mask?.desktopTopLeft && (
-          <div
-            className="dashboard-frame-mask is-top-left"
-            data-testid="dashboard-mask-top-left"
-            aria-hidden="true"
-          />
-        )}
       </div>
     </section>
   )

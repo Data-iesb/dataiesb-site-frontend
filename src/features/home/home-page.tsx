@@ -70,8 +70,8 @@ export function HomePage() {
             actions={(
               <>
                 <a className="primary-button" href="#projects">Explore os dados <ArrowRight size={17} /></a>
-                <a className="secondary-button" href={siteConfig.auryaSusPath}>
-                  <Bot size={17} /> Conversar com a Aurya SUS
+                <a className="secondary-button" href={siteConfig.auryaPath}>
+                  <Bot size={17} /> Conversar com a Aurya
                 </a>
               </>
             )}

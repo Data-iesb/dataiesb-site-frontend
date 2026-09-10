@@ -28,7 +28,7 @@ Como a distribuição atual não resolve automaticamente `rota/index.html`, os w
 
 Copie `.env.example` para `.env.local` apenas quando precisar substituir uma URL. Todas as variáveis `NEXT_PUBLIC_*` são incorporadas ao bundle e jamais devem conter credenciais, chaves privadas ou segredos AWS.
 
-O portal consome as APIs públicas de notícias, aplicações e equipe, oferece o ambiente Aurya SUS em `/assistentes/aurya-sus/`, conectado ao chat SUS da FUNASA. O formulário de contato continua usando a API Gateway existente. As respostas são validadas antes de entrarem na interface, com timeout, estados de erro/vazio e nova tentativa. A página inicial preserva os diferenciais, serviços, resultados, publicações e créditos institucionais exibidos no portal oficial anterior e apresenta um panorama nacional com fontes públicas do IBGE, INEP e DATASUS.
+O portal consome as APIs públicas de notícias, aplicações e equipe, e oferece a Aurya SUS em `/assistentes/aurya-sus/`, construtida como chat nativo do portal com a identidade visual do DATA IESB. O formulário de contato continua usando a API Gateway existente.
 
 ## Painéis incorporados
 

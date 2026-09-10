@@ -52,14 +52,6 @@ export type DashboardDefinition = Readonly<{
   sourceUrl: string
   revealDelayMs?: number
   mobileScale?: number
-  mask?: Readonly<{
-    desktopBottom: number
-    mobileBottom: number
-    desktopTopLeft?: Readonly<{
-      width: number
-      height: number
-    }>
-  }>
   crop: Readonly<{
     desktop: DashboardCrop
     mobile: DashboardCrop

@@ -1,5 +1,3 @@
-import { readFileSync } from 'node:fs'
-
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -93,13 +91,7 @@ describe('buildApplicationCatalog', () => {
 })
 
 describe('dashboard registry', () => {
-  it('documents the direct Aurya SUS route for environment-based builds', () => {
-    expect(readFileSync('.env.example', 'utf8')).toContain(
-      'NEXT_PUBLIC_IARA_SUS_URL=https://funasa.dataiesb.com/chatbot?agent=sus',
-    )
-  })
-
-  it('locks the full reveal, crop, and mobile-scale contract for all nine embeds', () => {
+  it('locks the full reveal, crop, and mobile-scale contract for all eight embeds', () => {
     const zeroCrop = {
       desktop: { top: 0, left: 0, bottom: 0 },
       mobile: { top: 0, left: 0, bottom: 0 },
@@ -108,7 +100,6 @@ describe('dashboard registry', () => {
       ['sus-aih', 11_000, undefined, { desktop: { top: 68, left: 0, bottom: 0 }, mobile: { top: 130, left: 0, bottom: 0 } }],
       ['producao-ambulatorial', 15_000, undefined, { desktop: { top: 71, left: 0, bottom: 0 }, mobile: { top: 150, left: 0, bottom: 0 } }],
       ['sinan-doencas-agravos', 7_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
-      ['iara-sus', 2_000, undefined, { desktop: { top: 64, left: 56, bottom: 0 }, mobile: { top: 60, left: 0, bottom: 0 } }],
       ['inep', 6_000, undefined, zeroCrop],
       ['pib', 6_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
       ['setores-censitarios', 8_000, 0.8, zeroCrop],
@@ -125,16 +116,5 @@ describe('dashboard registry', () => {
         crop: dashboard?.crop,
       }, slug).toEqual({ revealDelayMs, mobileScale, crop })
     }
-
-    expect(getDashboardBySlug('iara-sus')).toMatchObject({
-      title: 'Aurya SUS',
-      shortTitle: 'Aurya SUS',
-      sourceUrl: 'https://funasa.dataiesb.com/chatbot?agent=sus',
-      mask: {
-        desktopBottom: 50,
-        mobileBottom: 0,
-        desktopTopLeft: { width: 280, height: 43 },
-      },
-    })
   })
 })

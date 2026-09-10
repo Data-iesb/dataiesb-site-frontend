@@ -109,23 +109,4 @@ describe('DashboardEmbed', () => {
       '--frame-height-mobile': 'calc(125% + 0px)',
     })
   })
-
-  it('masks the external footer and desktop agent switch around the direct Aurya SUS chat', () => {
-    const dashboard = getDashboardBySlug('iara-sus')!
-    render(<DashboardEmbed dashboard={dashboard} />)
-
-    expect(screen.getByTestId('dashboard-canvas')).toHaveStyle({
-      '--mask-bottom-desktop': '50px',
-      '--mask-bottom-mobile': '0px',
-      '--mask-top-left-width-desktop': '280px',
-      '--mask-top-left-height-desktop': '43px',
-      '--crop-bottom-mobile': '0px',
-    })
-    expect(screen.getByTestId('dashboard-mask-bottom')).toBeInTheDocument()
-    expect(screen.getByTestId('dashboard-mask-top-left')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Abrir chat em nova aba' })).toHaveAttribute(
-      'href',
-      'https://funasa.dataiesb.com/chatbot?agent=sus',
-    )
-  })
 })
