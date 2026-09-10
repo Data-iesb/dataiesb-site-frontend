@@ -202,6 +202,8 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioUrlRef = useRef<string | null>(null)
   const voiceBlobRef = useRef<(blob: Blob) => void>(() => {})
+  const speakRequestRef = useRef(0)
+  const pendingSpeakRef = useRef<number | null>(null)
   const pendingRef = useRef<{
     resolve: (response: WsResponse) => void
     timer: number
@@ -353,26 +355,39 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
   }
 
   const handleSpeak = useCallback(async (index: number, content: string) => {
+    // Enquanto gera o áudio deste item, ignora cliques repetidos (não duplica)
+    if (pendingSpeakRef.current === index) return
+
+    // Já está tocando este item: para
     if (speakingIndex === index) {
+      speakRequestRef.current += 1
       stopAudio()
       return
     }
 
+    speakRequestRef.current += 1
+    const requestId = speakRequestRef.current
+    pendingSpeakRef.current = index
     stopAudio()
     setIsSynthesizing(true)
+    setSpeakingIndex(index)
     try {
       const url = await synthesizeSpeech(content)
+      if (speakRequestRef.current !== requestId) return
+      pendingSpeakRef.current = null
       audioUrlRef.current = url
       const audio = new Audio(url)
       audioRef.current = audio
       audio.onended = () => stopAudio()
-      setSpeakingIndex(index)
       await audio.play()
     } catch (error) {
       console.error('Erro ao gerar o áudio da resposta:', error)
-      stopAudio()
+      if (speakRequestRef.current === requestId) stopAudio()
     } finally {
-      setIsSynthesizing(false)
+      if (speakRequestRef.current === requestId) {
+        pendingSpeakRef.current = null
+        setIsSynthesizing(false)
+      }
     }
   }, [speakingIndex, stopAudio])
 
