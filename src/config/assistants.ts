@@ -10,7 +10,7 @@ export type AssistantDefinition = Readonly<{
 export const assistants: readonly AssistantDefinition[] = [
   {
     id: 'aurya-sus',
-    title: 'Aurya SUS',
+    title: 'Atena SUS',
     eyebrow: 'Base SUS',
     description:
       'Consulta dados hospitalares do SUS (AIH) por município de residência: procedimentos, internações, gastos e grupos cirúrgicos, clínicos e de transplantes.',
@@ -22,7 +22,7 @@ export const assistants: readonly AssistantDefinition[] = [
   },
   {
     id: 'aurya-pos-graduacao',
-    title: 'Aurya Pós-Graduação',
+    title: 'Atena Pós-Graduação',
     eyebrow: 'Base CAPES',
     description:
       'Consulta os programas de pós-graduação stricto sensu do Brasil (CAPES/Sucupira) por instituição, área de conhecimento, modalidade, conceito e região.',

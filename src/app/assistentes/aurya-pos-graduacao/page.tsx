@@ -5,8 +5,8 @@ import { getAssistantById } from '@/config/assistants'
 import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Aurya Pós-Graduação',
-  description: 'Ambiente da Aurya Pós-Graduação para conversar sobre os programas de pós-graduação do Brasil (CAPES).',
+  title: 'Atena Pós-Graduação',
+  description: 'Ambiente da Atena Pós-Graduação para conversar sobre os programas de pós-graduação do Brasil (CAPES).',
 }
 
 export default function Page() {

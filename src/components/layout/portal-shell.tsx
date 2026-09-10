@@ -257,7 +257,7 @@ export function PortalShell({ children, immersive = false }: Props) {
         <a className={isActive(pathname, '/') ? 'is-active' : undefined} href="/" aria-current={isActive(pathname, '/') ? 'page' : undefined}><Home size={18} /><span>Início</span></a>
         <a className={isActive(pathname, '/aplicacoes/') ? 'is-active' : undefined} href="/aplicacoes/" aria-current={isActive(pathname, '/aplicacoes/') ? 'page' : undefined}><BarChart3 size={18} /><span>Aplicações</span></a>
         <a className={isActive(pathname, siteConfig.auryaPath) ? 'is-active' : undefined} href={siteConfig.auryaPath} aria-current={isActive(pathname, siteConfig.auryaPath) ? 'page' : undefined}>
-          <Bot size={18} /><span>Aurya</span>
+          <Bot size={18} /><span>Atena</span>
         </a>
         <button type="button" onClick={openMobileMenu}>
           <Menu size={18} /><span>Menu</span>

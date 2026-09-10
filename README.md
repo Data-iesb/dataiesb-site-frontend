@@ -28,13 +28,13 @@ Como a distribuição atual não resolve automaticamente `rota/index.html`, os w
 
 Copie `.env.example` para `.env.local` apenas quando precisar substituir uma URL. Todas as variáveis `NEXT_PUBLIC_*` são incorporadas ao bundle e jamais devem conter credenciais, chaves privadas ou segredos AWS.
 
-O portal consome as APIs públicas de notícias, aplicações e equipe, e oferece a Aurya SUS em `/assistentes/aurya-sus/`, construtida como chat nativo do portal com a identidade visual do DATA IESB. O formulário de contato continua usando a API Gateway existente.
+O portal consome as APIs públicas de notícias, aplicações e equipe, e oferece a Atena SUS em `/assistentes/aurya-sus/`, construtida como chat nativo do portal com a identidade visual do DATA IESB. O formulário de contato continua usando a API Gateway existente.
 
 ## Painéis incorporados
 
 Somente URLs HTTPS de `app.dataiesb.com` e `funasa.dataiesb.com` podem ser abertas em iframe. As experiências incorporadas são:
 
-- Aurya SUS
+- Atena SUS
 - SUS — Autorizações de Internação Hospitalar (AIH)
 - SUS — Produção Ambulatorial
 - SUS — SINAN: Doenças e Agravos

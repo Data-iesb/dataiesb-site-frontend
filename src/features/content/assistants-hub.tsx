@@ -8,12 +8,12 @@ export function AssistantsHub() {
     <div className="page-content">
       <PageIntro
         eyebrow="Inteligência Artificial"
-        title="Aurya"
-        description="Escolha a assistente de inteligência artificial do DATA IESB. Cada Aurya é especialista em um conjunto de dados públicos."
+        title="Atena"
+        description="Escolha a assistente de inteligência artificial do DATA IESB. Cada Atena é especialista em um conjunto de dados públicos."
       />
       <section className="page-section" aria-labelledby="assistentes-heading">
         <div className="section-heading">
-          <div><span className="eyebrow">Assistentes disponíveis</span><h2 id="assistentes-heading">Escolha uma Aurya</h2></div>
+          <div><span className="eyebrow">Assistentes disponíveis</span><h2 id="assistentes-heading">Escolha uma Atena</h2></div>
         </div>
         <div className="card-grid">
           {assistants.map((assistant) => (

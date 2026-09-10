@@ -74,7 +74,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .mobile-drawer .icon-button{color:#fff;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1)}
 
 
-/* Aurya SUS — native chat (IARA-inspired layout, DATA IESB theme) */
+/* Atena SUS — native chat (IARA-inspired layout, DATA IESB theme) */
 .aurya-chat-page{width:100%;height:calc(100dvh - var(--header-height));min-height:0;display:grid;grid-template-columns:280px minmax(0,1fr);overflow:hidden;background:var(--page)}
 .aurya-chat-history{min-width:0;overflow-y:auto;padding:18px 16px;background:var(--surface);border-right:1px solid var(--border)}
 .aurya-new-chat{width:100%;height:32px;display:flex;align-items:center;justify-content:center;gap:3px;margin-bottom:14px;color:var(--red-bright);background:transparent;border:1px solid var(--red);border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}.aurya-new-chat:hover{background:rgba(227,6,19,.08)}

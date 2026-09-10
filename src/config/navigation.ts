@@ -13,7 +13,7 @@ export const navigationGroups: readonly NavigationGroup[] = [
     items: [
       {
         id: 'aurya',
-        label: 'Aurya',
+        label: 'Atena',
         href: '/assistentes/',
       },
     ],

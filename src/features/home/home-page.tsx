@@ -71,7 +71,7 @@ export function HomePage() {
               <>
                 <a className="primary-button" href="#projects">Explore os dados <ArrowRight size={17} /></a>
                 <a className="secondary-button" href={siteConfig.auryaPath}>
-                  <Bot size={17} /> Conversar com a Aurya
+                  <Bot size={17} /> Conversar com a Atena
                 </a>
               </>
             )}

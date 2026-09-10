@@ -247,7 +247,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
 
     await new Promise<void>((resolve, reject) => {
       socket.addEventListener('open', () => resolve(), { once: true })
-      socket.addEventListener('error', () => reject(new Error('Não foi possível conectar ao servidor da Aurya')), { once: true })
+      socket.addEventListener('error', () => reject(new Error('Não foi possível conectar ao servidor da Atena')), { once: true })
     })
     return socket
   }, [assistant.agent])
@@ -287,7 +287,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
       setConnectionError(message)
       setMessages((current) => [...current, {
         role: 'assistant',
-        content: `Não foi possível conversar com a Aurya agora.\n\n${message}`,
+        content: `Não foi possível conversar com a Atena agora.\n\n${message}`,
       }])
     } finally {
       setIsProcessing(false)
@@ -351,7 +351,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
 
       <section className="aurya-chat-main" aria-label={`Conversa com ${assistant.title}`}>
         <header className="aurya-chat-topbar">
-          <h1><span>Aurya AI /</span> {assistant.title.toUpperCase()}</h1>
+          <h1><span>Atena AI /</span> {assistant.title.toUpperCase()}</h1>
           <button type="button" onClick={() => void resetChat()}>
             <RefreshCw size={13} strokeWidth={1.5} /> Reiniciar
           </button>
@@ -394,7 +394,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
           ))}
 
           {isProcessing && (
-            <article className="aurya-chat-typing" aria-label="Aurya está digitando">
+            <article className="aurya-chat-typing" aria-label="Atena está digitando">
               <span className="aurya-message-avatar" aria-hidden="true"><Bot size={18} strokeWidth={1.6} /></span>
               <span className="aurya-typing-dots"><i /><i /><i /></span>
             </article>
@@ -426,7 +426,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
             </button>
           </div>
           <small>
-            A Aurya pode cometer erros de interpretação matemática. Certifique-se de validar dados
+            A Atena pode cometer erros de interpretação matemática. Certifique-se de validar dados
             sensíveis em relatórios formais.
           </small>
         </form>
