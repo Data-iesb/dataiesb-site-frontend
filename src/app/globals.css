@@ -96,3 +96,5 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .aurya-mobile-suggestions{display:none}
 @media(max-width:1024px){.aurya-chat-page{grid-template-columns:minmax(0,1fr)}.aurya-chat-history{display:none}.aurya-mobile-suggestions{display:grid;gap:8px;margin-bottom:18px}.aurya-mobile-suggestions h2{margin:0 0 2px;color:var(--muted);font-size:11px;font-weight:700;line-height:15px}.aurya-mobile-suggestions button{width:100%;min-height:48px;display:flex;align-items:flex-start;gap:10px;padding:10px 12px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:12px;line-height:17px;text-align:left}.aurya-mobile-suggestions button:hover{border-color:var(--red);color:var(--red-bright)}}
 @media(max-width:760px){.aurya-chat-page{height:calc(100dvh - var(--header-height) - 64px)}}
+
+.aurya-connection-error{margin:0 0 18px;padding:11px 14px;color:var(--red-bright);background:rgba(227,6,19,.08);border:1px solid rgba(227,6,19,.3);border-radius:9px;font-size:.82rem;line-height:1.5}

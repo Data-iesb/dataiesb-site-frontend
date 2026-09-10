@@ -254,7 +254,14 @@ test('the native Aurya SUS chat renders and answers locally', async ({ page }, t
   await expect(page.locator('.aurya-chat-message.message-user p')).toHaveText(
     'Quais estados mais gastam com o SUS?',
   )
-  await expect(page.getByText(/conexão com o modelo de inteligência artificial será habilitada/)).toBeVisible()
+  await page.waitForFunction(
+    () => document.querySelectorAll('.aurya-chat-message.message-assistant p').length >= 2,
+    undefined,
+    { timeout: 180_000 },
+  )
+  await expect(page.locator('.aurya-chat-message.message-assistant p').last()).not.toHaveText(
+    'Olá! Sou a Aurya SUS, a assistente de inteligência artificial do DATA IESB. Digite sua pergunta abaixo ou escolha uma sugestão para começar.',
+  )
 })
 
 test('mobile dashboard geometry preserves Setores scale and Ambulatorial native width', async ({ page }, testInfo) => {
