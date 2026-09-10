@@ -1,10 +1,12 @@
 'use client'
 
-import { Bot, Mic, Plus, RefreshCw, Send, Sparkles } from 'lucide-react'
+import { Bot, Loader2, Mic, Plus, RefreshCw, Send, Sparkles, Square, Volume2, VolumeX } from 'lucide-react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { siteConfig } from '@/config/site'
+import { synthesizeSpeech, transcribeAudio } from '@/lib/aurya-audio'
+import { useAudioRecorder } from '@/hooks/use-audio-recorder'
 import type { AssistantDefinition } from '@/config/assistants'
 
 type ChatMessage = Readonly<{ role: 'user' | 'assistant'; content: string }>
@@ -190,18 +192,44 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
   const [messages, setMessages] = useState<ChatMessage[]>(() => [welcome(assistant)])
   const [input, setInput] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
+  const [isTranscribing, setIsTranscribing] = useState(false)
+  const [speakingIndex, setSpeakingIndex] = useState<number | null>(null)
+  const [isSynthesizing, setIsSynthesizing] = useState(false)
   const [connectionError, setConnectionError] = useState('')
   const streamRef = useRef<HTMLDivElement>(null)
   const socketRef = useRef<WebSocket | null>(null)
   const sessionIdRef = useRef(newSessionId())
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const audioUrlRef = useRef<string | null>(null)
+  const voiceBlobRef = useRef<(blob: Blob) => void>(() => {})
   const pendingRef = useRef<{
     resolve: (response: WsResponse) => void
     timer: number
   } | null>(null)
 
+  const { isRecording, formattedTime, startRecording, stopRecording } =
+    useAudioRecorder((blob) => voiceBlobRef.current(blob))
+
   useEffect(() => {
     streamRef.current?.scrollTo({ top: streamRef.current.scrollHeight })
   }, [messages, isProcessing])
+
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current = null
+    }
+    if (audioUrlRef.current) {
+      URL.revokeObjectURL(audioUrlRef.current)
+      audioUrlRef.current = null
+    }
+    setSpeakingIndex(null)
+    setIsSynthesizing(false)
+  }, [])
+
+  useEffect(() => {
+    return () => stopAudio()
+  }, [stopAudio])
 
   const ensureSocket = useCallback(async (): Promise<WebSocket> => {
     const existing = socketRef.current
@@ -268,7 +296,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
     })
   }, [ensureSocket])
 
-  const sendMessage = async (content: string) => {
+  const sendMessage = useCallback(async (content: string) => {
     const question = content.trim()
     if (!question || isProcessing) return
     setMessages((current) => [...current, { role: 'user', content: question }])
@@ -292,9 +320,64 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
     } finally {
       setIsProcessing(false)
     }
+  }, [isProcessing, request])
+
+  useEffect(() => {
+    voiceBlobRef.current = async (blob: Blob) => {
+      if (isProcessing || !blob) return
+
+      setIsTranscribing(true)
+      try {
+        const text = await transcribeAudio(blob)
+        if (!text.trim()) {
+          throw new Error('O áudio não contém fala reconhecível. Tente novamente.')
+        }
+        await sendMessage(text)
+      } catch (error) {
+        setMessages((current) => [...current, {
+          role: 'assistant',
+          content: `Não foi possível transcrever o áudio.\n\n${error instanceof Error ? error.message : 'Tente novamente.'}`,
+        }])
+      } finally {
+        setIsTranscribing(false)
+      }
+    }
+  }, [isProcessing, sendMessage])
+
+  const handleMicClick = () => {
+    if (isRecording) {
+      stopRecording()
+    } else {
+      void startRecording()
+    }
   }
 
+  const handleSpeak = useCallback(async (index: number, content: string) => {
+    if (speakingIndex === index) {
+      stopAudio()
+      return
+    }
+
+    stopAudio()
+    setIsSynthesizing(true)
+    try {
+      const url = await synthesizeSpeech(content)
+      audioUrlRef.current = url
+      const audio = new Audio(url)
+      audioRef.current = audio
+      audio.onended = () => stopAudio()
+      setSpeakingIndex(index)
+      await audio.play()
+    } catch (error) {
+      console.error('Erro ao gerar o áudio da resposta:', error)
+      stopAudio()
+    } finally {
+      setIsSynthesizing(false)
+    }
+  }, [speakingIndex, stopAudio])
+
   const resetChat = async () => {
+    stopAudio()
     if (socketRef.current) {
       socketRef.current.close()
       socketRef.current = null
@@ -387,7 +470,28 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
               )}
               <div className="aurya-message-bubble">
                 {message.role === 'assistant'
-                  ? <AssistantMessageContent content={message.content} />
+                  ? (
+                    <>
+                      <AssistantMessageContent content={message.content} />
+                      <button
+                        type="button"
+                        className="aurya-speak-button"
+                        onClick={() => void handleSpeak(index, message.content)}
+                        aria-label={speakingIndex === index ? 'Parar áudio da resposta' : 'Ouvir resposta em áudio'}
+                      >
+                        {isSynthesizing && speakingIndex === index
+                          ? <Loader2 size={14} strokeWidth={1.5} className="aurya-spin" />
+                          : speakingIndex === index
+                            ? <VolumeX size={14} strokeWidth={1.5} />
+                            : <Volume2 size={14} strokeWidth={1.5} />}
+                        {isSynthesizing && speakingIndex === index
+                          ? 'Gerando áudio...'
+                          : speakingIndex === index
+                            ? 'Parar'
+                            : 'Ouvir resposta'}
+                      </button>
+                    </>
+                  )
                   : <p>{message.content}</p>}
               </div>
             </article>
@@ -407,27 +511,43 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
             <textarea
               id="aurya-chat-input"
               rows={1}
-              disabled={isProcessing}
+              disabled={isProcessing || isTranscribing}
               value={input}
-              placeholder={`Pergunte para ${assistant.title}...`}
+              placeholder={
+                isRecording
+                  ? 'Gravando... clique no botão vermelho para finalizar'
+                  : isTranscribing
+                    ? 'Transcrevendo áudio...'
+                    : `Pergunte para ${assistant.title}...`
+              }
               onChange={(event) => setInput(event.target.value)}
               onKeyDown={handleKeyDown}
             />
             <button
               type="button"
-              aria-label="Gravar mensagem por voz"
-              className="aurya-chat-mic"
-              disabled
+              aria-label={isRecording ? 'Finalizar gravação' : 'Gravar mensagem por voz'}
+              className={`aurya-chat-mic ${isRecording ? 'is-recording' : ''} ${isTranscribing ? 'is-transcribing' : ''}`}
+              onClick={handleMicClick}
+              disabled={isProcessing || isTranscribing}
             >
-              <Mic size={16} strokeWidth={1.5} />
+              {isRecording ? (
+                <Square size={16} strokeWidth={1.5} />
+              ) : isTranscribing ? (
+                <Loader2 size={16} strokeWidth={1.5} className="aurya-spin" />
+              ) : (
+                <Mic size={16} strokeWidth={1.5} />
+              )}
             </button>
-            <button type="submit" aria-label="Enviar pergunta" disabled={!input.trim() || isProcessing}>
+            <button type="submit" aria-label="Enviar pergunta" disabled={!input.trim() || isProcessing || isTranscribing || isRecording}>
               <Send size={18} strokeWidth={1.5} />
             </button>
           </div>
           <small>
-            A Atena pode cometer erros de interpretação matemática. Certifique-se de validar dados
-            sensíveis em relatórios formais.
+            {isRecording
+              ? `Gravando... ${formattedTime}`
+              : isTranscribing
+                ? 'Transcrevendo áudio...'
+                : 'A Atena pode cometer erros de interpretação matemática. Certifique-se de validar dados sensíveis em relatórios formais.'}
           </small>
         </form>
       </section>

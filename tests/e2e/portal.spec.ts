@@ -256,6 +256,7 @@ test('the native Atena SUS chat renders and answers locally', async ({ page }, t
     await expect(page.getByRole('button', { name: 'Nova conversa' })).toBeVisible()
   }
   await expect(page.getByRole('button', { name: 'Enviar pergunta' })).toBeDisabled()
+  await expect(page.getByRole('button', { name: 'Gravar mensagem por voz' })).toBeEnabled()
 
   const composer = page.getByLabel('Digite sua pergunta')
   await composer.fill('Quais estados mais gastam com o SUS?')
@@ -271,6 +272,7 @@ test('the native Atena SUS chat renders and answers locally', async ({ page }, t
   await expect(page.locator('.aurya-chat-message.message-assistant p').last()).not.toHaveText(
     'Olá! Sou a Atena SUS, a assistente de inteligência artificial do DATA IESB. Digite sua pergunta abaixo ou escolha uma sugestão para começar.',
   )
+  await expect(page.getByRole('button', { name: 'Ouvir resposta em áudio' }).last()).toBeVisible()
 })
 
 test('mobile dashboard geometry preserves Setores scale and Ambulatorial native width', async ({ page }, testInfo) => {

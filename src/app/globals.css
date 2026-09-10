@@ -106,3 +106,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .aurya-chat-table-wrap td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
 .aurya-chat-table-wrap tbody tr:nth-child(even) td{background:var(--soft)}
 .aurya-chat-table-wrap tbody tr:last-child td{border-bottom:0}
+
+.aurya-chat-mic.is-recording{background:#dc2626}
+.aurya-chat-mic.is-transcribing{opacity:.7}
+.aurya-spin{animation:spin .8s linear infinite}
+.aurya-speak-button{margin-top:12px;display:inline-flex;align-items:center;gap:6px;padding:5px 11px;color:var(--muted);background:var(--surface-raised);border:1px solid var(--border);border-radius:999px;font-size:11px;font-weight:700;cursor:pointer}
+.aurya-speak-button:hover{border-color:var(--red);color:var(--red-bright)}
