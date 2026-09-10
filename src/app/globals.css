@@ -98,3 +98,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(max-width:760px){.aurya-chat-page{height:calc(100dvh - var(--header-height) - 64px)}}
 
 .aurya-connection-error{margin:0 0 18px;padding:11px 14px;color:var(--red-bright);background:rgba(227,6,19,.08);border:1px solid rgba(227,6,19,.3);border-radius:9px;font-size:.82rem;line-height:1.5}
+
+.aurya-message-bubble p+p{margin-top:8px}
+.aurya-chat-table-wrap{margin:16px 0 14px;overflow-x:auto;border:1px solid var(--border);border-radius:8px}
+.aurya-chat-table-wrap table{width:100%;min-width:36rem;border-collapse:collapse;background:var(--surface);text-align:left;font-size:12px;line-height:1.45}
+.aurya-chat-table-wrap th{padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(227,6,19,.08);color:var(--red-bright);vertical-align:top;font-weight:800}
+.aurya-chat-table-wrap td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+.aurya-chat-table-wrap tbody tr:nth-child(even) td{background:var(--soft)}
+.aurya-chat-table-wrap tbody tr:last-child td{border-bottom:0}

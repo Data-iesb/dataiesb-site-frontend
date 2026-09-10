@@ -9,6 +9,164 @@ import type { AssistantDefinition } from '@/config/assistants'
 
 type ChatMessage = Readonly<{ role: 'user' | 'assistant'; content: string }>
 
+type AssistantContentBlock =
+  | { type: 'text'; content: string }
+  | { type: 'table'; headers: string[]; rows: string[][] }
+
+function parseTableLine(line: string) {
+  const delimiter = line.includes('|') ? '|' : line.includes('\t') ? /\t+/ : null
+
+  if (!delimiter) {
+    return null
+  }
+
+  const cells = line
+    .split(delimiter)
+    .map((cell) => cell.trim())
+    .filter(Boolean)
+
+  return cells.length > 1 ? cells : null
+}
+
+function isMarkdownSeparatorRow(cells: string[]) {
+  return cells.every((cell) => /^:?-{3,}:?$/.test(cell))
+}
+
+function isPlainSeparatorLine(line: string) {
+  const trimmed = line.trim()
+  const dashCount = trimmed.replace(/[^-]/g, '').length
+
+  return dashCount >= 3 && Array.from(trimmed).every((char) => (
+    char === '-' || char === ':' || char === '|' || char.trim() === ''
+  ))
+}
+
+function parseAssistantContent(content: string): AssistantContentBlock[] {
+  const blocks: AssistantContentBlock[] = []
+  const textLines: string[] = []
+  const lines = content.split(/\r?\n/)
+
+  const flushText = () => {
+    const text = textLines.join('\n').trim()
+
+    if (text) {
+      blocks.push({ type: 'text', content: text })
+    }
+
+    textLines.length = 0
+  }
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const firstRow = parseTableLine(lines[index])
+
+    if (!firstRow) {
+      textLines.push(lines[index])
+      continue
+    }
+
+    const tableRows = [firstRow]
+    const skippedTableLines: string[] = []
+    let foundPlainSeparator = false
+    let nextIndex = index + 1
+
+    while (nextIndex < lines.length) {
+      const nextLine = lines[nextIndex]
+      const nextRow = parseTableLine(nextLine)
+
+      if (!nextRow || nextRow.length !== firstRow.length) {
+        if (tableRows.length === 1 && isPlainSeparatorLine(nextLine)) {
+          skippedTableLines.push(nextLine)
+          foundPlainSeparator = true
+          nextIndex += 1
+          continue
+        }
+
+        if (tableRows.length === 1 && foundPlainSeparator && !nextLine.trim()) {
+          skippedTableLines.push(nextLine)
+          nextIndex += 1
+          continue
+        }
+
+        break
+      }
+
+      tableRows.push(nextRow)
+      nextIndex += 1
+    }
+
+    if (tableRows.length < 2) {
+      textLines.push(lines[index])
+      textLines.push(...skippedTableLines)
+      index = nextIndex - 1
+      continue
+    }
+
+    flushText()
+
+    const bodyRows = isMarkdownSeparatorRow(tableRows[1])
+      ? tableRows.slice(2)
+      : tableRows.slice(1)
+
+    if (bodyRows.length === 0) {
+      textLines.push(...lines.slice(index, nextIndex))
+      index = nextIndex - 1
+      continue
+    }
+
+    blocks.push({
+      type: 'table',
+      headers: tableRows[0],
+      rows: bodyRows,
+    })
+    index = nextIndex - 1
+  }
+
+  flushText()
+
+  return blocks
+}
+
+function AssistantMessageContent({ content }: Readonly<{ content: string }>) {
+  const blocks = parseAssistantContent(content)
+
+  if (blocks.length === 0) {
+    return <p>{content}</p>
+  }
+
+  return (
+    <>
+      {blocks.map((block, blockIndex) => {
+        if (block.type === 'text') {
+          return <p key={`text-${blockIndex}`}>{block.content}</p>
+        }
+
+        return (
+          <div className="aurya-chat-table-wrap" key={`table-${blockIndex}`}>
+            <table>
+              <thead>
+                <tr>
+                  {block.headers.map((header) => (
+                    <th key={header}>{header}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {block.rows.map((row, rowIndex) => (
+                  <tr key={`${row.join('|')}-${rowIndex}`}>
+                    {row.map((cell, cellIndex) => (
+                      <td key={`${cell}-${cellIndex}`}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+      })}
+    </>
+  )
+}
+
 type WsResponse = Readonly<{
   answer?: string
   error?: string
@@ -227,7 +385,9 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
                 <span className="aurya-message-avatar" aria-hidden="true"><Bot size={18} strokeWidth={1.6} /></span>
               )}
               <div className="aurya-message-bubble">
-                <p>{message.content}</p>
+                {message.role === 'assistant'
+                  ? <AssistantMessageContent content={message.content} />
+                  : <p>{message.content}</p>}
               </div>
             </article>
           ))}
