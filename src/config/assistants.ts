@@ -4,6 +4,7 @@ export type AssistantDefinition = Readonly<{
   eyebrow: string
   description: string
   suggestions: readonly string[]
+  agent?: string
 }>
 
 export const assistants: readonly AssistantDefinition[] = [
@@ -18,6 +19,19 @@ export const assistants: readonly AssistantDefinition[] = [
       'Qual a evolução mensal de procedimentos e valores em 2025?',
       'Quais os municípios com mais internações em São Paulo em 2025?',
     ],
+  },
+  {
+    id: 'aurya-pos-graduacao',
+    title: 'Aurya Pós-Graduação',
+    eyebrow: 'Base CAPES',
+    description:
+      'Consulta os programas de pós-graduação stricto sensu do Brasil (CAPES/Sucupira) por instituição, área de conhecimento, modalidade, conceito e região.',
+    suggestions: [
+      'Quais instituições têm mais programas de pós-graduação?',
+      'Qual a distribuição dos programas por grau?',
+      'Quantos programas de pós-graduação existem por região?',
+    ],
+    agent: 'pos_graduacao',
   },
 ]
 

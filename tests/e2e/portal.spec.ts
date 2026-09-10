@@ -34,7 +34,7 @@ test('all public routes render from the static export', async ({ page }) => {
   const routes = [
     '/', '/noticias/', '/aplicacoes/', '/aplicacoes/visualizar/?id=1',
     '/quem-somos/', '/parceiros/', '/contato/',
-    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/iara-sus/',
+    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/iara-sus/',
   ]
   for (const route of routes) {
     const response = await page.goto(route)
@@ -67,6 +67,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
   const dashboards = [
     ['/assistentes/', 'Aurya — DATA IESB'],
     ['/assistentes/aurya-sus/', 'Aurya SUS — DATA IESB'],
+    ['/assistentes/aurya-pos-graduacao/', 'Aurya Pós-Graduação — DATA IESB'],
     ['/assistentes/iara-sus/', 'Aurya SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
@@ -226,15 +227,23 @@ test('the Aurya hub lists assistants and opens the selected native chat', async 
 
   await expect(page.getByRole('heading', { name: 'Aurya', exact: true })).toBeVisible()
   await expect(page.getByText('Bem-vindo(a) ao hub')).toHaveCount(0)
-  const card = page.locator('.application-card').filter({ hasText: 'Aurya SUS' })
-  await expect(card).toContainText('Base SUS')
-  await expect(card.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
+
+  const susCard = page.locator('.application-card').filter({ hasText: 'Aurya SUS' })
+  await expect(susCard).toContainText('Base SUS')
+  await expect(susCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
     'href',
     '/assistentes/aurya-sus/',
   )
-  await card.getByRole('link', { name: 'Conversar' }).click()
-  await expect(page).toHaveURL(/\/assistentes\/aurya-sus\/$/)
-  await expect(page.getByRole('heading', { name: /AURYA SUS/ })).toBeVisible()
+
+  const posCard = page.locator('.application-card').filter({ hasText: 'Aurya Pós-Graduação' })
+  await expect(posCard).toContainText('Base CAPES')
+  await expect(posCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
+    'href',
+    '/assistentes/aurya-pos-graduacao/',
+  )
+  await posCard.getByRole('link', { name: 'Conversar' }).click()
+  await expect(page).toHaveURL(/\/assistentes\/aurya-pos-graduacao\/$/)
+  await expect(page.getByRole('heading', { name: /AURYA PÓS-GRADUAÇÃO/ })).toBeVisible()
 })
 
 test('the native Aurya SUS chat renders and answers locally', async ({ page }, testInfo) => {

@@ -218,7 +218,8 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
     }
 
     setConnectionError('')
-    const socket = new WebSocket(`${siteConfig.auryaWsUrl}/ws/${sessionIdRef.current}`)
+    const agentQuery = assistant.agent ? `?agent=${assistant.agent}` : ''
+    const socket = new WebSocket(`${siteConfig.auryaWsUrl}/ws/${sessionIdRef.current}${agentQuery}`)
     socketRef.current = socket
 
     socket.addEventListener('message', (event) => {
@@ -249,7 +250,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
       socket.addEventListener('error', () => reject(new Error('Não foi possível conectar ao servidor da Aurya')), { once: true })
     })
     return socket
-  }, [])
+  }, [assistant.agent])
 
   const request = useCallback(async (question: string): Promise<WsResponse> => {
     const socket = await ensureSocket()
