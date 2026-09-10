@@ -47,6 +47,7 @@ test('all public routes render from the static export', async ({ page }) => {
     '/paineis/sus-aih/',
     '/paineis/producao-ambulatorial/',
     '/paineis/sinan-doencas-agravos/',
+    '/paineis/educacao-superior/',
     '/paineis/inep/',
     '/paineis/pib/',
     '/paineis/setores-censitarios/',
@@ -72,6 +73,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
     ['/paineis/sinan-doencas-agravos/', 'SINAN — Doenças e Agravos — DATA IESB'],
+    ['/paineis/educacao-superior/', 'Educação Superior — DATA IESB'],
     ['/paineis/inep/', 'Censo Escolar — Ensino Médio e Fundamental — DATA IESB'],
     ['/paineis/pib/', 'PIB dos Municípios — DATA IESB'],
     ['/paineis/setores-censitarios/', 'Setores Censitários 2022 — DATA IESB'],
@@ -151,7 +153,7 @@ test('home preserves the institutional, service and recent-publication content',
   await expect(results).toContainText('25Membros ativos')
   await expect(page.locator('.service-card-media')).toHaveCount(3)
   await expect(page.getByRole('img', { name: 'Capa de Como Votei – Eleições por Zona Eleitoral na RIDE-DF' })).toBeVisible()
-  await expect(page.locator('#projects .application-card')).toHaveCount(9)
+  await expect(page.locator('#projects .application-card')).toHaveCount(10)
   await expect(page.locator('#projects')).not.toContainText('Mercado de trabalho')
   await expect(page.getByText(/Desenvolvido por/)).toBeVisible()
 })

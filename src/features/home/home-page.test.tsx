@@ -38,7 +38,7 @@ describe('HomePage national overview', () => {
     render(<HomePage />)
 
     const portalMetrics = screen.getByLabelText('Indicadores do portal')
-    expect(within(portalMetrics).getByText('8')).toBeInTheDocument()
+    expect(within(portalMetrics).getByText('9')).toBeInTheDocument()
     expect(within(portalMetrics).queryByText('3+')).not.toBeInTheDocument()
   })
 

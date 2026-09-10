@@ -117,7 +117,7 @@ export function HomePage() {
         <div><strong>{applications.length}</strong><span>aplicações e estudos</span></div>
         <div><strong>{news.status === 'ready' ? news.data.length : '—'}</strong><span>publicações recentes</span></div>
         <div><strong>{team.status === 'ready' ? team.data.length : '—'}</strong><span>integrantes ativos</span></div>
-        <div><strong>08</strong><span>painéis temáticos</span></div>
+        <div><strong>09</strong><span>painéis temáticos</span></div>
       </section>
 
       <section className="institutional-highlights" aria-label="Diferenciais do projeto">

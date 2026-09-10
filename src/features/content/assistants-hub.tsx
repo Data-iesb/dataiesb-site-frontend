@@ -6,6 +6,7 @@ import { assistants } from '@/config/assistants'
 export function AssistantsHub() {
   return (
     <div className="page-content">
+      <img className="atena-hub-logo" src="/img/atena.png" alt="Atena — Deusa do Conhecimento" width={112} height={112} />
       <PageIntro
         eyebrow="Inteligência Artificial"
         title="Atena"

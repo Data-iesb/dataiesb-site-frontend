@@ -39,6 +39,7 @@ const iconById = {
   'sus-aih': HeartPulse,
   'sus-ambulatorial': Activity,
   'sus-sinan': FileText,
+  'educacao-superior': School,
   'educacao-escolas': School,
   'municipio-pib': BarChart3,
   'municipio-setores': MapPinned,

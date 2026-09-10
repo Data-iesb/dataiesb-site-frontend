@@ -52,6 +52,6 @@ describe('ApplicationsPage', () => {
 
     expect(screen.getByText('Ainda não há outras aplicações publicadas.')).toBeInTheDocument()
     expect(screen.queryByText('Nenhuma aplicação disponível neste momento.')).not.toBeInTheDocument()
-    expect(screen.getAllByRole('article')).toHaveLength(8)
+    expect(screen.getAllByRole('article')).toHaveLength(9)
   })
 })

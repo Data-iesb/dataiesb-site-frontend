@@ -38,6 +38,9 @@ export const navigationGroups: readonly NavigationGroup[] = [
     label: 'Educação',
     items: [
       {
+        id: 'educacao-superior', label: 'Educação Superior', href: '/paineis/educacao-superior/',
+      },
+      {
         id: 'educacao-escolas',
         label: 'Censo Escolar — Ensino Médio e Fundamental',
         href: '/paineis/inep/',

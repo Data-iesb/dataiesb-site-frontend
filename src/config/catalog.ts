@@ -10,6 +10,19 @@ const envOr = (value: string | undefined, fallback: string) => value?.trim() || 
 
 export const dashboards: readonly DashboardDefinition[] = [
   {
+    slug: 'educacao-superior',
+    title: 'Educação Superior',
+    shortTitle: 'Educação Superior',
+    description: 'Instituições, cursos e indicadores da educação superior no Brasil — INEP.',
+    sourceUrl: envOr(process.env.NEXT_PUBLIC_EDUCACAO_SUPERIOR_URL, 'https://funasa.dataiesb.com/educacao-superior/'),
+    revealDelayMs: 6_000,
+    crop: {
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    },
+  },
+
+  {
     slug: 'sus-aih',
     title: 'SUS — Autorizações de Internação Hospitalar (AIH)',
     shortTitle: 'Internações hospitalares — AIH',
@@ -209,6 +222,15 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
   ]
 
   const requestedItems: ApplicationCatalogItem[] = [
+    {
+      key: 'educacao-superior',
+      title: dashboard('educacao-superior').shortTitle,
+      description: dashboard('educacao-superior').description,
+      eyebrow: 'Educação',
+      author: 'DATA IESB / INEP',
+      href: '/paineis/educacao-superior/',
+    },
+
     {
       key: 'educacao-escolas',
       title: dashboard('inep').shortTitle,

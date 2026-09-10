@@ -449,6 +449,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
 
       <section className="aurya-chat-main" aria-label={`Conversa com ${assistant.title}`}>
         <header className="aurya-chat-topbar">
+          <img className="atena-logo" src="/img/atena.png" alt="Atena — Deusa do Conhecimento" width={44} height={44} />
           <h1><span>Atena AI /</span> {assistant.title.toUpperCase()}</h1>
           <button type="button" onClick={() => void resetChat()}>
             <RefreshCw size={13} strokeWidth={1.5} /> Reiniciar

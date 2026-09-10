@@ -88,6 +88,7 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
       <div className="dashboard-canvas" data-testid="dashboard-canvas" style={cropStyle}>
         {state === 'loading' && (
           <div className="embed-status" role="status" aria-live="polite">
+            <span className="embed-brand" aria-hidden="true">Data<strong>IESB</strong></span>
             <span className="loading-orbit" aria-hidden="true" />
             <strong>Carregando painel</strong>
             <span>Os dados podem levar alguns instantes para aparecer.</span>
