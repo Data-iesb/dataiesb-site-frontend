@@ -23,6 +23,7 @@ describe('navigationGroups', () => {
     expect(labels).toContain('Setores Censitários 2022')
     expect(labels).toContain('Painel das Prefeituras')
     expect(labels).toContain('Clusters LISA')
+    expect(labels).toContain('Como Votei')
     expect(labels).not.toContain('Aqui Tem Funasa')
     expect(labels).not.toContain('Gestão de Convênios')
   })

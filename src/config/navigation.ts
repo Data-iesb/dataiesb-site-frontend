@@ -67,6 +67,11 @@ export const navigationGroups: readonly NavigationGroup[] = [
     label: 'Estudos e Publicações',
     items: [
       {
+        id: 'como-votei',
+        label: 'Como Votei',
+        href: '/aplicacoes/visualizar/?id=33',
+      },
+      {
         id: 'estudos-clusters-lisa',
         label: 'Clusters LISA',
         href: '/paineis/clusters-lisa/',

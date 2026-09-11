@@ -44,6 +44,7 @@ const iconById = {
   'municipio-pib': BarChart3,
   'municipio-setores': MapPinned,
   'municipio-prefeituras': Building2,
+  'como-votei': MapPinned,
   'estudos-clusters-lisa': BookOpenText,
   'quem-somos': CircleUserRound,
   parceiros: UsersRound,

@@ -64,6 +64,13 @@ test('all public routes render from the static export', async ({ page }) => {
   }
 })
 
+test('the sidebar opens Como Votei in the report viewer', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'The desktop sidebar is not rendered on mobile.')
+  await page.goto('/')
+  await page.getByRole('link', { name: 'Como Votei', exact: true }).click()
+  await expect(page).toHaveURL(/\/aplicacoes\/visualizar\/\?id=33$/)
+})
+
 test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
   const dashboards = [
     ['/assistentes/', 'Atena — DATA IESB'],
