@@ -24,6 +24,8 @@ export type TeamMember = Readonly<{
   category: string
   photoUrl?: string
   linkedin?: string
+  lattes?: string
+  github?: string
   escavador?: string
 }>
 

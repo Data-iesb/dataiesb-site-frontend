@@ -40,4 +40,7 @@ export const portalTeamMembers: readonly TeamMember[] = [
   {
     id: 'sergio-da-costa-cortes', name: 'Sérgio da Costa Côrtes', role: 'Integrante do Projeto Big Data IESB', category: 'Equipe do Projeto', photoUrl: '/img/team/sergio-cortes.webp',
   },
+  {
+    id: 'joel-carolino-farias', name: 'Joel Carolino Farias', role: 'Integrante do Projeto Big Data IESB', category: 'Equipe do Projeto', linkedin: 'https://www.linkedin.com/in/joel-carolinof/', lattes: 'http://lattes.cnpq.br/3218791434540061', github: 'https://github.com/JoelFarias',
+  },
 ]
