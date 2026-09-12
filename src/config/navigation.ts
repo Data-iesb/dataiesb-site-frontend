@@ -19,6 +19,12 @@ export const navigationGroups: readonly NavigationGroup[] = [
     ],
   },
   {
+    label: 'Eleições',
+    items: [
+      { id: 'como-votamos', label: 'Como Votamos', href: '/aplicacoes/visualizar/?id=33' },
+    ],
+  },
+  {
     label: 'SUS Assistência à Saúde',
     items: [
       { id: 'sus-aih', label: 'Internações hospitalares — AIH', href: '/paineis/sus-aih/' },
@@ -67,15 +73,17 @@ export const navigationGroups: readonly NavigationGroup[] = [
     label: 'Estudos e Publicações',
     items: [
       {
-        id: 'como-votei',
-        label: 'Como Votei',
-        href: '/aplicacoes/visualizar/?id=33',
-      },
-      {
         id: 'estudos-clusters-lisa',
         label: 'Clusters LISA',
         href: '/paineis/clusters-lisa/',
       },
+    ],
+  },
+  {
+    label: 'Trabalhos Acadêmicos',
+    items: [
+      { id: 'trabalhos-tcc', label: 'Trabalhos de Conclusão de Curso (TCC)', href: '#', disabled: true },
+      { id: 'trabalhos-dissertacoes-geo', label: 'Dissertações de Mestrado (Geo)', href: '#', disabled: true },
     ],
   },
   {

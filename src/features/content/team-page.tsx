@@ -2,14 +2,11 @@
 
 import { ExternalLink } from 'lucide-react'
 
-import { PageIntro, ResourceState } from '@/components/content-ui'
-import { mergeTeamMembers } from '@/config/team'
-import { useRemoteResource } from '@/hooks/use-remote-resource'
-import { loadTeam } from '@/lib/content-api'
+import { PageIntro } from '@/components/content-ui'
+import { portalTeamMembers } from '@/config/team'
 
 export function TeamPage() {
-  const team = useRemoteResource(loadTeam)
-  const visibleTeam = mergeTeamMembers(team.data)
+  const visibleTeam = portalTeamMembers
   const categories = [...new Set(visibleTeam.map((member) => member.category))]
 
   return (
@@ -26,10 +23,9 @@ export function TeamPage() {
       <section className="wide-image"><img src="/img/quem-somos/iesb-labs.jpeg" alt="Laboratório de computadores do IESB" /></section>
       <section className="page-section" aria-labelledby="equipe-heading">
         <div className="section-heading"><div><span className="eyebrow">Pessoas</span><h2 id="equipe-heading">Equipe técnica</h2></div></div>
-        <ResourceState status={team.status} error={team.error} retry={team.retry} emptyMessage="A equipe será publicada em breve." />
         {categories.map((category) => (
           <div className="team-category" key={category}><h3>{category}</h3><div className="team-grid">{visibleTeam.filter((member) => member.category === category).map((member) => (
-            <article className="team-card" key={member.id}><span className="member-mark">{member.name.split(' ').slice(0, 2).map((part) => part[0]).join('')}</span><div><h4>{member.name}</h4><p>{member.role}</p><div className="member-links">{member.linkedin && <a href={member.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ExternalLink size={13} /></a>}{member.escavador && <a href={member.escavador} target="_blank" rel="noopener noreferrer">Escavador <ExternalLink size={13} /></a>}</div></div></article>
+            <article className="team-card" key={member.id}>{member.photoUrl ? <img className="member-photo" src={member.photoUrl} alt={`Foto de ${member.name}`} /> : <span className="member-mark" aria-label={`Iniciais de ${member.name}`}>{member.name.split(' ').slice(0, 2).map((part) => part[0]).join('')}</span>}<div><h4>{member.name}</h4><p>{member.role}</p><div className="member-links">{member.linkedin && <a href={member.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ExternalLink size={13} /></a>}{member.escavador && <a href={member.escavador} target="_blank" rel="noopener noreferrer">Escavador <ExternalLink size={13} /></a>}</div></div></article>
           ))}</div></div>
         ))}
       </section>

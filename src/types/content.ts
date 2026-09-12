@@ -22,6 +22,7 @@ export type TeamMember = Readonly<{
   name: string
   role: string
   category: string
+  photoUrl?: string
   linkedin?: string
   escavador?: string
 }>
@@ -31,6 +32,7 @@ export type NavigationItem = Readonly<{
   label: string
   href: string
   external?: boolean
+  disabled?: boolean
 }>
 
 export type NavigationGroup = Readonly<{

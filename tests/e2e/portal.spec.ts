@@ -64,10 +64,10 @@ test('all public routes render from the static export', async ({ page }) => {
   }
 })
 
-test('the sidebar opens Como Votei in the report viewer', async ({ page }, testInfo) => {
+test('the Eleições menu opens Como Votamos in the report viewer', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'The desktop sidebar is not rendered on mobile.')
   await page.goto('/')
-  await page.getByRole('link', { name: 'Como Votei', exact: true }).click()
+  await page.getByRole('link', { name: 'Como Votamos', exact: true }).click()
   await expect(page).toHaveURL(/\/aplicacoes\/visualizar\/\?id=33$/)
 })
 
@@ -113,15 +113,13 @@ test('AIH uses the healthy official dashboard behind the branded preparation scr
   )
 })
 
-test('technical team always includes Joel with his verified LinkedIn profile', async ({ page }) => {
+test('team page uses the registered Projeto Big Data IESB roster and available photos', async ({ page }) => {
   await page.goto('/quem-somos/')
 
-  const card = page.locator('.team-card').filter({ hasText: 'Joel Carolino Farias' })
-  await expect(card).toContainText('Analista de Dados e IA')
-  await expect(card.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
-    'href',
-    'https://www.linkedin.com/in/joel-carolinof/',
-  )
+  const card = page.locator('.team-card').filter({ hasText: 'Marco Antônio Valério Da Cunha' })
+  await expect(card).toContainText('Integrante do Projeto Big Data IESB')
+  await expect(card.getByRole('img', { name: 'Foto de Marco Antônio Valério Da Cunha' })).toHaveAttribute(
+    'src', '/img/team/marco-cunha.webp')
 })
 
 test('keyboard navigation and theme preference remain available', async ({ page }) => {

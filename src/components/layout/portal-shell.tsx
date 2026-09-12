@@ -44,7 +44,7 @@ const iconById = {
   'municipio-pib': BarChart3,
   'municipio-setores': MapPinned,
   'municipio-prefeituras': Building2,
-  'como-votei': MapPinned,
+  'como-votamos': MapPinned,
   'estudos-clusters-lisa': BookOpenText,
   'quem-somos': CircleUserRound,
   parceiros: UsersRound,
@@ -151,7 +151,16 @@ export function PortalShell({ children, immersive = false }: Props) {
                 </>
               )
 
-              return item.external ? (
+              return item.disabled ? (
+                <span
+                  className="nav-link is-disabled"
+                  key={item.id}
+                  aria-disabled="true"
+                  title={collapsed ? item.label : undefined}
+                >
+                  {content}
+                </span>
+              ) : item.external ? (
                 <a
                   className="nav-link"
                   href={item.href}
