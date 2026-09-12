@@ -18,4 +18,11 @@ describe('portalTeamMembers', () => {
     expect(portalTeamMembers.filter((member) => member.photoUrl)).toHaveLength(9)
     expect(portalTeamMembers.find((member) => member.id === 'kaike-armond-costa')).not.toHaveProperty('photoUrl')
   })
+
+  it('includes the registered profile links without publishing registration data', () => {
+    expect(portalTeamMembers.filter((member) => member.linkedin)).toHaveLength(14)
+    expect(portalTeamMembers.filter((member) => member.github)).toHaveLength(14)
+    expect(portalTeamMembers.filter((member) => member.lattes)).toHaveLength(12)
+    expect(portalTeamMembers.find((member) => member.id === 'arthur-souza-de-melo-rosa')).not.toHaveProperty('lattes')
+  })
 })

@@ -120,6 +120,9 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   await expect(card).toContainText('Integrante do Projeto Big Data IESB')
   await expect(card.getByRole('img', { name: 'Foto de Marco Antônio Valério Da Cunha' })).toHaveAttribute(
     'src', '/img/team/marco-cunha.webp')
+  await expect(card.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/marcovallerio')
+  await expect(card.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/9300328811249938')
+  await expect(card.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/marcoantoniio')
   const joelCard = page.locator('.team-card').filter({ hasText: 'Joel Carolino Farias' })
   await expect(joelCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/joel-carolinof/')
   await expect(joelCard.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/3218791434540061')
