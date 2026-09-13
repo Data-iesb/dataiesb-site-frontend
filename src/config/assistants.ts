@@ -33,6 +33,19 @@ export const assistants: readonly AssistantDefinition[] = [
     ],
     agent: 'pos_graduacao',
   },
+  {
+    id: 'aurya-iesb',
+    title: 'Atena IESB',
+    eyebrow: 'Guias IESB',
+    description:
+      'Responde dúvidas sobre a Extensão Curricularizada e as Atividades Complementares do IESB, com base nos guias oficiais da instituição.',
+    suggestions: [
+      'Quantas horas de extensão curricularizada eu preciso cumprir?',
+      'Como envio as comprovações das atividades complementares?',
+      'O que conta como atividade complementar?',
+    ],
+    agent: 'iesb',
+  },
 ]
 
 export function getAssistantById(id: string) {

@@ -34,7 +34,7 @@ test('all public routes render from the static export', async ({ page }) => {
   const routes = [
     '/', '/noticias/', '/aplicacoes/', '/aplicacoes/visualizar/?id=1',
     '/quem-somos/', '/parceiros/', '/contato/',
-    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/iara-sus/',
+    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/aurya-iesb/', '/assistentes/iara-sus/',
   ]
   for (const route of routes) {
     const response = await page.goto(route)
@@ -76,6 +76,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/assistentes/', 'Atena — DATA IESB'],
     ['/assistentes/aurya-sus/', 'Atena SUS — DATA IESB'],
     ['/assistentes/aurya-pos-graduacao/', 'Atena Pós-Graduação — DATA IESB'],
+    ['/assistentes/aurya-iesb/', 'Atena IESB — DATA IESB'],
     ['/assistentes/iara-sus/', 'Atena SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
@@ -259,9 +260,16 @@ test('the Atena hub lists assistants and opens the selected native chat', async 
     'href',
     '/assistentes/aurya-pos-graduacao/',
   )
-  await posCard.getByRole('link', { name: 'Conversar' }).click()
-  await expect(page).toHaveURL(/\/assistentes\/aurya-pos-graduacao\/$/)
-  await expect(page.getByRole('heading', { name: /ATENA PÓS-GRADUAÇÃO/ })).toBeVisible()
+
+  const iesbCard = page.locator('.application-card').filter({ hasText: 'Atena IESB' })
+  await expect(iesbCard).toContainText('Guias IESB')
+  await expect(iesbCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
+    'href',
+    '/assistentes/aurya-iesb/',
+  )
+  await iesbCard.getByRole('link', { name: 'Conversar' }).click()
+  await expect(page).toHaveURL(/\/assistentes\/aurya-iesb\/$/)
+  await expect(page.getByRole('heading', { name: /ATENA IESB/ })).toBeVisible()
 })
 
 test('the native Atena SUS chat renders and answers locally', async ({ page }, testInfo) => {

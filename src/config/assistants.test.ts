@@ -4,7 +4,11 @@ import { assistants, getAssistantById } from './assistants'
 
 describe('assistants', () => {
   it('registers the integrated Atenas with their chat suggestions', () => {
-    expect(assistants.map((assistant) => assistant.id)).toEqual(['aurya-sus', 'aurya-pos-graduacao'])
+    expect(assistants.map((assistant) => assistant.id)).toEqual([
+      'aurya-sus',
+      'aurya-pos-graduacao',
+      'aurya-iesb',
+    ])
     expect(assistants[0]).toMatchObject({
       title: 'Atena SUS',
       eyebrow: 'Base SUS',
@@ -14,6 +18,11 @@ describe('assistants', () => {
       eyebrow: 'Base CAPES',
       agent: 'pos_graduacao',
     })
+    expect(assistants[2]).toMatchObject({
+      title: 'Atena IESB',
+      eyebrow: 'Guias IESB',
+      agent: 'iesb',
+    })
     for (const assistant of assistants) {
       expect(assistant.suggestions.length).toBeGreaterThan(0)
     }
@@ -22,6 +31,7 @@ describe('assistants', () => {
   it('resolves assistants by id', () => {
     expect(getAssistantById('aurya-sus')?.title).toBe('Atena SUS')
     expect(getAssistantById('aurya-pos-graduacao')?.title).toBe('Atena Pós-Graduação')
+    expect(getAssistantById('aurya-iesb')?.title).toBe('Atena IESB')
     expect(getAssistantById('inexistente')).toBeUndefined()
   })
 })
