@@ -117,6 +117,17 @@ test('AIH uses the healthy official dashboard behind the branded preparation scr
 test('team page uses the registered Projeto Big Data IESB roster and available photos', async ({ page }) => {
   await page.goto('/quem-somos/')
 
+  await expect(page.getByRole('img', { name: 'Logotipo DATA IESB' })).toBeVisible()
+  const professorCategory = page.locator('.team-category').filter({ hasText: 'Professores Coordenadores do Projeto' })
+  await expect(professorCategory.locator('.team-card')).toHaveCount(3)
+  await expect(professorCategory).toContainText('Sérgio da Costa Côrtes')
+  await expect(professorCategory).toContainText('Natália Ribeiro de Souza Evangelista')
+  await expect(professorCategory).toContainText('José Roberto Steiner de Moura')
+  await expect(professorCategory.getByText('Professor Coordenador do Projeto', { exact: true })).toHaveCount(2)
+  await expect(professorCategory.getByText('Professora Coordenadora do Projeto', { exact: true })).toHaveCount(1)
+  const studentCategory = page.locator('.team-category').filter({ hasText: 'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)' })
+  await expect(studentCategory.locator('.team-card')).toHaveCount(11)
+
   const card = page.locator('.team-card').filter({ hasText: 'Marco Antônio Valério Da Cunha' })
   await expect(card).toContainText('Integrante do Projeto Big Data IESB')
   await expect(card.getByRole('img', { name: 'Foto de Marco Antônio Valério Da Cunha' })).toHaveAttribute(

@@ -195,6 +195,7 @@ export function PortalShell({ children, immersive = false }: Props) {
 
       <header className="portal-header">
         <a className="brand-wordmark" href="/" aria-label="DataIESB — início">
+          <img src="/logo.png" alt="Logotipo DATA IESB" width={29} height={32} />
           <span>Data</span><strong>IESB</strong>
         </a>
         <div className="header-actions">

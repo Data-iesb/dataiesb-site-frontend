@@ -18,7 +18,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .portal-frame.is-collapsed{grid-template-columns:var(--sidebar-collapsed) minmax(0,1fr)}
 .portal-header{grid-column:1/-1;position:sticky;top:0;z-index:50;height:var(--header-height);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(21,21,21,.94);border-bottom:1px solid rgba(255,255,255,.1);backdrop-filter:blur(18px)}
 [data-theme="light"] .portal-header{background:rgba(245,247,250,.94);border-color:rgba(21,21,21,.1)}
-.brand-wordmark{display:inline-flex;align-items:baseline;letter-spacing:-.04em;font-size:1.28rem;font-weight:500}
+.brand-wordmark{display:inline-flex;align-items:center;gap:8px;letter-spacing:-.04em;font-size:1.28rem;font-weight:500}.brand-wordmark img{display:block;width:29px;height:32px;object-fit:contain}[data-theme="light"] .brand-wordmark img{filter:invert(1)}
 .brand-wordmark strong{color:var(--red);font-weight:800}
 .header-actions{display:flex;align-items:center;gap:8px}.icon-button{width:40px;height:40px;border:1px solid var(--border);border-radius:10px;background:var(--soft);color:var(--text);display:grid;place-items:center;cursor:pointer}.icon-button:hover{border-color:var(--red);color:var(--red-bright)}
 .mobile-menu-button{display:none}

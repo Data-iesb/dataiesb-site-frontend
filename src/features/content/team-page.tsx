@@ -7,7 +7,10 @@ import { portalTeamMembers } from '@/config/team'
 
 export function TeamPage() {
   const visibleTeam = portalTeamMembers
-  const categories = [...new Set(visibleTeam.map((member) => member.category))]
+  const categories = [
+    'Professores Coordenadores do Projeto',
+    'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)',
+  ].filter((category) => visibleTeam.some((member) => member.category === category))
 
   return (
     <div className="page-content">
