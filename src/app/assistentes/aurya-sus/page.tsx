@@ -5,8 +5,8 @@ import { getAssistantById } from '@/config/assistants'
 import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Atena SUS',
-  description: 'Ambiente da Atena SUS para conversar sobre os dados do Sistema Único de Saúde.',
+  title: 'Athena SUS',
+  description: 'Ambiente da Athena SUS para conversar sobre os dados do Sistema Único de Saúde.',
 }
 
 export default function Page() {

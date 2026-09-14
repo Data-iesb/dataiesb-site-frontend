@@ -73,11 +73,11 @@ test('the Eleições menu opens Como Votamos in the report viewer', async ({ pag
 
 test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
   const dashboards = [
-    ['/assistentes/', 'Atena — DATA IESB'],
-    ['/assistentes/aurya-sus/', 'Atena SUS — DATA IESB'],
-    ['/assistentes/aurya-pos-graduacao/', 'Atena Pós-Graduação — DATA IESB'],
-    ['/assistentes/aurya-iesb/', 'Atena IESB — DATA IESB'],
-    ['/assistentes/iara-sus/', 'Atena SUS — DATA IESB'],
+    ['/assistentes/', 'Athena — DATA IESB'],
+    ['/assistentes/aurya-sus/', 'Athena SUS — DATA IESB'],
+    ['/assistentes/aurya-pos-graduacao/', 'Athena Pós-Graduação — DATA IESB'],
+    ['/assistentes/aurya-iesb/', 'Athena IESB — DATA IESB'],
+    ['/assistentes/iara-sus/', 'Athena SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
     ['/paineis/sinan-doencas-agravos/', 'SINAN — Doenças e Agravos — DATA IESB'],
@@ -198,7 +198,7 @@ test('legacy aliases and section anchors remain compatible', async ({ page }) =>
 
   await page.goto('/ia-iesb/')
   await expect(page).toHaveURL(/\/assistentes\/aurya-sus\/$/)
-  await expect(page.getByRole('heading', { name: /ATENA SUS/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /ATHENA SUS/ })).toBeVisible()
 })
 
 test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
@@ -208,8 +208,8 @@ test('mobile drawer and shortcuts are usable', async ({ page }, testInfo) => {
   const dialog = page.getByRole('dialog', { name: 'Menu móvel' })
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('button', { name: 'Fechar menu' })).toBeFocused()
-  await expect(dialog.getByRole('link', { name: 'Atena', exact: true })).toHaveAttribute('href', '/assistentes/')
-  await expect(dialog.getByRole('link', { name: 'Atena SUS' })).toHaveCount(0)
+  await expect(dialog.getByRole('link', { name: 'Athena', exact: true })).toHaveAttribute('href', '/assistentes/')
+  await expect(dialog.getByRole('link', { name: 'Athena SUS' })).toHaveCount(0)
   await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toHaveCount(1)
   await expect(page.locator('.portal-header .mobile-menu-button')).toBeHidden()
   await dialog.getByRole('button', { name: 'Fechar menu' }).click()
@@ -252,27 +252,27 @@ test('dashboard crop follows the iframe width at tablet size', async ({ page }, 
   expect(Math.round(frameBox!.height - canvasBox!.height)).toBe(150)
 })
 
-test('the Atena hub lists assistants and opens the selected native chat', async ({ page }) => {
+test('the Athena hub lists assistants and opens the selected native chat', async ({ page }) => {
   await page.goto('/assistentes/')
 
-  await expect(page.getByRole('heading', { name: 'Atena', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Athena', exact: true })).toBeVisible()
   await expect(page.getByText('Bem-vindo(a) ao hub')).toHaveCount(0)
 
-  const susCard = page.locator('.application-card').filter({ hasText: 'Atena SUS' })
+  const susCard = page.locator('.application-card').filter({ hasText: 'Athena SUS' })
   await expect(susCard).toContainText('Base SUS')
   await expect(susCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
     'href',
     '/assistentes/aurya-sus/',
   )
 
-  const posCard = page.locator('.application-card').filter({ hasText: 'Atena Pós-Graduação' })
+  const posCard = page.locator('.application-card').filter({ hasText: 'Athena Pós-Graduação' })
   await expect(posCard).toContainText('Base CAPES')
   await expect(posCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
     'href',
     '/assistentes/aurya-pos-graduacao/',
   )
 
-  const iesbCard = page.locator('.application-card').filter({ hasText: 'Atena IESB' })
+  const iesbCard = page.locator('.application-card').filter({ hasText: 'Athena IESB' })
   await expect(iesbCard).toContainText('Guias IESB')
   await expect(iesbCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
     'href',
@@ -280,14 +280,14 @@ test('the Atena hub lists assistants and opens the selected native chat', async 
   )
   await iesbCard.getByRole('link', { name: 'Conversar' }).click()
   await expect(page).toHaveURL(/\/assistentes\/aurya-iesb\/$/)
-  await expect(page.getByRole('heading', { name: /ATENA IESB/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /ATHENA IESB/ })).toBeVisible()
 })
 
-test('the native Atena SUS chat renders and answers locally', async ({ page }, testInfo) => {
+test('the native Athena SUS chat renders and answers locally', async ({ page }, testInfo) => {
   await page.goto('/assistentes/aurya-sus/')
 
   await expect(page.locator('iframe')).toHaveCount(0)
-  await expect(page.getByRole('heading', { name: /ATENA SUS/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /ATHENA SUS/ })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Reiniciar' })).toBeVisible()
   if (testInfo.project.name === 'desktop') {
     await expect(page.getByRole('button', { name: 'Nova conversa' })).toBeVisible()
@@ -307,7 +307,7 @@ test('the native Atena SUS chat renders and answers locally', async ({ page }, t
     { timeout: 180_000 },
   )
   await expect(page.locator('.aurya-chat-message.message-assistant p').last()).not.toHaveText(
-    'Olá! Sou a Atena SUS, a assistente de inteligência artificial do DATA IESB. Digite sua pergunta abaixo ou escolha uma sugestão para começar.',
+    'Olá! Sou a Athena SUS, a assistente de inteligência artificial do DATA IESB. Digite sua pergunta abaixo ou escolha uma sugestão para começar.',
   )
   await expect(page.getByRole('button', { name: 'Ouvir resposta em áudio' }).last()).toBeVisible()
 })

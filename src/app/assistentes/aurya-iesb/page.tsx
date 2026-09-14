@@ -5,8 +5,8 @@ import { getAssistantById } from '@/config/assistants'
 import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Atena IESB',
-  description: 'Ambiente da Atena IESB para conversar sobre a Extensão Curricularizada e as Atividades Complementares.',
+  title: 'Athena IESB',
+  description: 'Ambiente da Athena IESB para conversar sobre a Extensão Curricularizada e as Atividades Complementares.',
 }
 
 export default function Page() {

@@ -17,8 +17,8 @@ describe('navigationGroups', () => {
     ])
 
     const labels = navigationGroups.flatMap((group) => group.items.map((item) => item.label))
-    expect(labels.filter((label) => label === 'Atena')).toHaveLength(1)
-    expect(labels).not.toContain('Atena SUS')
+    expect(labels.filter((label) => label === 'Athena')).toHaveLength(1)
+    expect(labels).not.toContain('Athena SUS')
     expect(labels).not.toContain('Explorar catálogo')
     expect(labels).toContain('Censo Escolar — Ensino Médio e Fundamental')
     expect(labels).toContain('PIB dos Municípios')
@@ -38,12 +38,12 @@ describe('navigationGroups', () => {
     expect(items.find((item) => item.id === 'trabalhos-dissertacoes-geo')).toMatchObject({ disabled: true })
   })
 
-  it('directs the assistant entry to the Atena hub', () => {
+  it('directs the assistant entry to the Athena hub', () => {
     const items = navigationGroups.flatMap((group) => group.items)
     expect(items.find((item) => item.id === 'iara-sus')).toBeUndefined()
     expect(items.find((item) => item.id === 'aurya-sus')).toBeUndefined()
     expect(items.find((item) => item.id === 'aurya')).toMatchObject({
-      label: 'Atena',
+      label: 'Athena',
       href: '/assistentes/',
     })
   })
