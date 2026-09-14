@@ -70,21 +70,23 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   return (
     <section className="dashboard-embed" aria-label={`Visualização: ${dashboard.title}`}>
       <h1 className="sr-only">{dashboard.title}</h1>
-      <div className="dashboard-toolbar">
-        <span>
-          {state === 'revealed'
-            ? 'Painel exibido · disponibilidade externa não confirmada'
-            : state === 'preparing'
-              ? 'Preparando painel DATA IESB'
-              : 'Visualização incorporada'}
-        </span>
-        <div>
-          <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
-          <a href={dashboard.sourceUrl} target="_blank" rel="noopener noreferrer">
-            <ExternalLink size={15} /> Abrir painel
-          </a>
+      {!dashboard.hideToolbar && (
+        <div className="dashboard-toolbar">
+          <span>
+            {state === 'revealed'
+              ? 'Painel exibido · disponibilidade externa não confirmada'
+              : state === 'preparing'
+                ? 'Preparando painel DATA IESB'
+                : 'Visualização incorporada'}
+          </span>
+          <div>
+            <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
+            <a href={dashboard.sourceUrl} target="_blank" rel="noopener noreferrer">
+              <ExternalLink size={15} /> Abrir painel
+            </a>
+          </div>
         </div>
-      </div>
+      )}
       <div className="dashboard-canvas" data-testid="dashboard-canvas" style={cropStyle}>
         {state === 'loading' && (
           <div className="embed-status" role="status" aria-live="polite">

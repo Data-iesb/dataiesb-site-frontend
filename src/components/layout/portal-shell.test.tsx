@@ -30,6 +30,10 @@ describe('PortalShell', () => {
       '/assistentes/',
     )
     expect(within(primaryNavigation).queryByRole('link', { name: 'Athena SUS' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Joel Farias' })).toHaveAttribute(
+      'href',
+      'https://github.com/JoelFarias',
+    )
 
     await user.click(screen.getByRole('button', { name: 'Recolher menu lateral' }))
     expect(screen.getByRole('button', { name: 'Expandir menu lateral' })).toBeInTheDocument()

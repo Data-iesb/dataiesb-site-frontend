@@ -62,6 +62,23 @@ describe('DashboardEmbed', () => {
     expect(frame).toHaveClass('is-revealed')
   })
 
+  it('renders a clean embed when the report owns its complete navigation', () => {
+    const reportDashboard = {
+      ...getDashboardBySlug('sus-aih')!,
+      hideToolbar: true,
+      crop: { desktop: { top: 0, left: 0, bottom: 0 }, mobile: { top: 0, left: 0, bottom: 0 } },
+    }
+    render(<DashboardEmbed dashboard={reportDashboard} />)
+
+    expect(screen.queryByText('Visualização incorporada')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Recarregar painel' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Abrir painel' })).not.toBeInTheDocument()
+    expect(screen.getByTestId('dashboard-canvas')).toHaveStyle({
+      '--crop-top-desktop': '0px',
+      '--crop-top-mobile': '0px',
+    })
+  })
+
   it('offers retry and external access after the load timeout', () => {
     vi.useFakeTimers()
     const dashboard = getDashboardBySlug('producao-ambulatorial')!

@@ -259,7 +259,7 @@ export function PortalShell({ children, immersive = false }: Props) {
         {children}
         {!immersive && (
           <footer className="portal-credits">
-            <span>Desenvolvido por <a href="https://levav.it" target="_blank" rel="noopener noreferrer">Levav-IT</a> · Patrocínio: <a href="https://datai.tec.br" target="_blank" rel="noopener noreferrer">DatAí</a></span>
+            <span>Desenvolvido por <a href="https://levav.it" target="_blank" rel="noopener noreferrer">Levav-IT</a> e <a href="https://github.com/JoelFarias" target="_blank" rel="noopener noreferrer">Joel Farias</a> · Patrocínio: <a href="https://datai.tec.br" target="_blank" rel="noopener noreferrer">DatAí</a></span>
             <a className="aws-credit" href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer"><span>Powered by</span><img src="/img/Amazon_Web_Services-Logo.wine.png" alt="AWS" /></a>
           </footer>
         )}

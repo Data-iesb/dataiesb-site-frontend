@@ -55,6 +55,7 @@ export type DashboardDefinition = Readonly<{
   description: string
   sourceUrl: string
   revealDelayMs?: number
+  hideToolbar?: boolean
   mobileScale?: number
   crop: Readonly<{
     desktop: DashboardCrop

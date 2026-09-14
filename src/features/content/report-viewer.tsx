@@ -26,7 +26,10 @@ export function ReportViewer() {
     shortTitle: report.title,
     description: report.description,
     sourceUrl: resolveReportEmbed(report),
-    crop: { desktop: { top: 64, left: 0, bottom: 0 }, mobile: { top: 64, left: 0, bottom: 0 } },
+    hideToolbar: report.id === 33,
+    crop: report.id === 33
+      ? { desktop: { top: 0, left: 0, bottom: 0 }, mobile: { top: 0, left: 0, bottom: 0 } }
+      : { desktop: { top: 64, left: 0, bottom: 0 }, mobile: { top: 64, left: 0, bottom: 0 } },
   }
 
   return <DashboardEmbed dashboard={dashboard} />

@@ -69,6 +69,9 @@ test('the Eleições menu opens Como Votamos in the report viewer', async ({ pag
   await page.goto('/')
   await page.getByRole('link', { name: 'Como Votamos', exact: true }).click()
   await expect(page).toHaveURL(/\/aplicacoes\/visualizar\/\?id=33$/)
+  await expect(page.getByText('Painel exibido · disponibilidade externa não confirmada')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Recarregar painel' })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveCount(0)
 })
 
 test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
@@ -184,6 +187,7 @@ test('home preserves the institutional, service and recent-publication content',
   await expect(page.locator('#projects .application-card')).toHaveCount(10)
   await expect(page.locator('#projects')).not.toContainText('Mercado de trabalho')
   await expect(page.getByText(/Desenvolvido por/)).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Joel Farias' })).toHaveAttribute('href', 'https://github.com/JoelFarias')
 })
 
 test('legacy aliases and section anchors remain compatible', async ({ page }) => {
