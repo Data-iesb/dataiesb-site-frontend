@@ -34,7 +34,7 @@ test('all public routes render from the static export', async ({ page }) => {
   const routes = [
     '/', '/noticias/', '/aplicacoes/', '/aplicacoes/visualizar/?id=1',
     '/quem-somos/', '/parceiros/', '/contato/',
-    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/aurya-iesb/', '/assistentes/iara-sus/',
+    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/aurya-iesb/', '/assistentes/athena-educacional/', '/assistentes/iara-sus/',
   ]
   for (const route of routes) {
     const response = await page.goto(route)
@@ -80,6 +80,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/assistentes/aurya-sus/', 'Athena SUS — DATA IESB'],
     ['/assistentes/aurya-pos-graduacao/', 'Athena Pós-Graduação — DATA IESB'],
     ['/assistentes/aurya-iesb/', 'Athena IESB — DATA IESB'],
+    ['/assistentes/athena-educacional/', 'Athena Educacional — DATA IESB'],
     ['/assistentes/iara-sus/', 'Athena SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
@@ -282,9 +283,34 @@ test('the Athena hub lists assistants and opens the selected native chat', async
     'href',
     '/assistentes/aurya-iesb/',
   )
+
+  const educacionalCard = page.locator('.application-card').filter({ hasText: 'Athena Educacional' })
+  await expect(educacionalCard).toContainText('Apostilas CIA031')
+  await expect(educacionalCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
+    'href',
+    '/assistentes/athena-educacional/',
+  )
+
   await iesbCard.getByRole('link', { name: 'Conversar' }).click()
   await expect(page).toHaveURL(/\/assistentes\/aurya-iesb\/$/)
   await expect(page.getByRole('heading', { name: /ATHENA IESB/ })).toBeVisible()
+})
+
+test('the Athena Educacional chat offers the professor and student modes', async ({ page }) => {
+  await page.goto('/assistentes/athena-educacional/')
+
+  await expect(page.getByRole('heading', { name: /ATHENA EDUCACIONAL/ })).toBeVisible()
+  const pickerHeading = page.getByRole('heading', { name: 'Como você quer usar a Athena Educacional?' })
+  await expect(pickerHeading).toBeVisible()
+
+  await page.getByRole('button', { name: /Sou professor/ }).click()
+  await expect(pickerHeading).toHaveCount(0)
+  await expect(page.getByRole('button', { name: /Trocar modo \(Sou professor\)/ })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Enviar pergunta' })).toBeDisabled()
+
+  await page.getByRole('button', { name: /Trocar modo/ }).click()
+  await expect(pickerHeading).toBeVisible()
+  await expect(page.getByRole('button', { name: /Quero estudar/ })).toBeVisible()
 })
 
 test('the native Athena SUS chat renders and answers locally', async ({ page }, testInfo) => {

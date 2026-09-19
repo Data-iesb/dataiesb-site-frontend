@@ -1,13 +1,13 @@
 'use client'
 
-import { Bot, Loader2, Mic, Plus, RefreshCw, Send, Sparkles, Square, Volume2, VolumeX } from 'lucide-react'
+import { Bot, Loader2, Mic, Plus, RefreshCw, Repeat, Send, Sparkles, Square, Volume2, VolumeX } from 'lucide-react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { siteConfig } from '@/config/site'
 import { synthesizeSpeech, transcribeAudio } from '@/lib/aurya-audio'
 import { useAudioRecorder } from '@/hooks/use-audio-recorder'
-import type { AssistantDefinition } from '@/config/assistants'
+import type { AssistantDefinition, AssistantMode } from '@/config/assistants'
 
 type ChatMessage = Readonly<{ role: 'user' | 'assistant'; content: string }>
 
@@ -178,9 +178,11 @@ type WsResponse = Readonly<{
 
 const RESPONSE_TIMEOUT_MS = 120_000
 
-const welcome = (assistant: AssistantDefinition): ChatMessage => ({
+const welcome = (assistant: AssistantDefinition, mode?: AssistantMode | null): ChatMessage => ({
   role: 'assistant',
-  content: `Olá! Sou a ${assistant.title}, a assistente de inteligência artificial do DATA IESB. Digite sua pergunta abaixo ou escolha uma sugestão para começar.`,
+  content: mode
+    ? mode.welcome
+    : `Olá! Sou a ${assistant.title}, a assistente de inteligência artificial do DATA IESB. Digite sua pergunta abaixo ou escolha uma sugestão para começar.`,
 })
 
 const newSessionId = () =>
@@ -189,7 +191,10 @@ const newSessionId = () =>
     : Math.random().toString(36).slice(2)
 
 export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefinition }>) {
-  const [messages, setMessages] = useState<ChatMessage[]>(() => [welcome(assistant)])
+  const [selectedMode, setSelectedMode] = useState<AssistantMode | null>(null)
+  const [messages, setMessages] = useState<ChatMessage[]>(() =>
+    assistant.modes?.length ? [] : [welcome(assistant)],
+  )
   const [input, setInput] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
   const [isTranscribing, setIsTranscribing] = useState(false)
@@ -211,6 +216,9 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
 
   const { isRecording, formattedTime, startRecording, stopRecording } =
     useAudioRecorder((blob) => voiceBlobRef.current(blob))
+
+  const modes = assistant.modes ?? []
+  const suggestions = selectedMode?.suggestions ?? assistant.suggestions
 
   useEffect(() => {
     streamRef.current?.scrollTo({ top: streamRef.current.scrollHeight })
@@ -249,7 +257,8 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
 
     setConnectionError('')
     const agentQuery = assistant.agent ? `?agent=${assistant.agent}` : ''
-    const socket = new WebSocket(`${siteConfig.auryaWsUrl}/ws/${sessionIdRef.current}${agentQuery}`)
+    const modeQuery = selectedMode ? `${agentQuery ? '&' : '?'}mode=${selectedMode.id}` : ''
+    const socket = new WebSocket(`${siteConfig.auryaWsUrl}/ws/${sessionIdRef.current}${agentQuery}${modeQuery}`)
     socketRef.current = socket
 
     socket.addEventListener('message', (event) => {
@@ -280,7 +289,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
       socket.addEventListener('error', () => reject(new Error('Não foi possível conectar ao servidor da Athena')), { once: true })
     })
     return socket
-  }, [assistant.agent])
+  }, [assistant.agent, selectedMode])
 
   const request = useCallback(async (question: string): Promise<WsResponse> => {
     const socket = await ensureSocket()
@@ -391,6 +400,32 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
     }
   }, [speakingIndex, stopAudio])
 
+  const chooseMode = (mode: AssistantMode) => {
+    sessionIdRef.current = newSessionId()
+    setSelectedMode(mode)
+    setMessages([welcome(assistant, mode)])
+    setInput('')
+    setConnectionError('')
+  }
+
+  const changeMode = () => {
+    stopAudio()
+    if (socketRef.current) {
+      socketRef.current.close()
+      socketRef.current = null
+    }
+    sessionIdRef.current = newSessionId()
+    if (pendingRef.current) {
+      window.clearTimeout(pendingRef.current.timer)
+      pendingRef.current = null
+    }
+    setSelectedMode(null)
+    setMessages([])
+    setInput('')
+    setIsProcessing(false)
+    setConnectionError('')
+  }
+
   const resetChat = async () => {
     stopAudio()
     if (socketRef.current) {
@@ -403,7 +438,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
       pendingRef.current = null
     }
     setConnectionError('')
-    setMessages([welcome(assistant)])
+    setMessages([welcome(assistant, selectedMode)])
     setInput('')
     setIsProcessing(false)
   }
@@ -431,39 +466,10 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
           <h2>{assistant.title}</h2>
           <p>{assistant.description}</p>
         </section>
-        <section className="aurya-chat-suggestions">
-          <h2>PERGUNTAS SUGERIDAS</h2>
-          {assistant.suggestions.map((suggestion) => (
-            <button
-              type="button"
-              key={suggestion}
-              onClick={() => void sendMessage(suggestion)}
-              disabled={isProcessing}
-            >
-              <Sparkles size={14} strokeWidth={1.5} />
-              <span>{suggestion}</span>
-            </button>
-          ))}
-        </section>
-      </aside>
-
-      <section className="aurya-chat-main" aria-label={`Conversa com ${assistant.title}`}>
-        <header className="aurya-chat-topbar">
-          <img className="atena-logo" src="/img/atena.png" alt="Athena — Deusa do Conhecimento" width={44} height={44} />
-          <h1><span>Athena AI /</span> {assistant.title.toUpperCase()}</h1>
-          <button type="button" onClick={() => void resetChat()}>
-            <RefreshCw size={13} strokeWidth={1.5} /> Reiniciar
-          </button>
-        </header>
-
-        <div className="aurya-message-stream" aria-live="polite" ref={streamRef}>
-          {connectionError && (
-            <p className="aurya-connection-error" role="alert">{connectionError}</p>
-          )}
-
-          <section className="aurya-mobile-suggestions" aria-label="Perguntas sugeridas">
+        {suggestions.length > 0 && (
+          <section className="aurya-chat-suggestions">
             <h2>PERGUNTAS SUGERIDAS</h2>
-            {assistant.suggestions.map((suggestion) => (
+            {suggestions.map((suggestion) => (
               <button
                 type="button"
                 key={suggestion}
@@ -475,6 +481,70 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
               </button>
             ))}
           </section>
+        )}
+      </aside>
+
+      <section className="aurya-chat-main" aria-label={`Conversa com ${assistant.title}`}>
+        <header className="aurya-chat-topbar">
+          <img className="atena-logo" src="/img/atena.png" alt="Athena — Deusa do Conhecimento" width={44} height={44} />
+          <h1><span>Athena AI /</span> {assistant.title.toUpperCase()}</h1>
+          {modes.length > 0 && selectedMode && (
+            <button
+              type="button"
+              className="aurya-mode-switch"
+              onClick={changeMode}
+              aria-label={`Trocar modo (${selectedMode.title})`}
+            >
+              <Repeat size={13} strokeWidth={1.5} />
+              <span className="aurya-mode-switch-label">Trocar modo</span>
+            </button>
+          )}
+          <button type="button" onClick={() => void resetChat()}>
+            <RefreshCw size={13} strokeWidth={1.5} /> Reiniciar
+          </button>
+        </header>
+
+        {modes.length > 0 && !selectedMode ? (
+          <div className="aurya-mode-picker">
+            <h2>Como você quer usar a Athena Educacional?</h2>
+            <p>Escolha o modo para começar — dá para trocar depois.</p>
+            <div className="aurya-mode-grid">
+              {modes.map((mode) => (
+                <button
+                  type="button"
+                  key={mode.id}
+                  className="aurya-mode-card"
+                  onClick={() => chooseMode(mode)}
+                >
+                  <strong>{mode.title}</strong>
+                  <span>{mode.description}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="aurya-message-stream" aria-live="polite" ref={streamRef}>
+          {connectionError && (
+            <p className="aurya-connection-error" role="alert">{connectionError}</p>
+          )}
+
+          {suggestions.length > 0 && (
+            <section className="aurya-mobile-suggestions" aria-label="Perguntas sugeridas">
+              <h2>PERGUNTAS SUGERIDAS</h2>
+              {suggestions.map((suggestion) => (
+                <button
+                  type="button"
+                  key={suggestion}
+                  onClick={() => void sendMessage(suggestion)}
+                  disabled={isProcessing}
+                >
+                  <Sparkles size={14} strokeWidth={1.5} />
+                  <span>{suggestion}</span>
+                </button>
+              ))}
+            </section>
+          )}
 
           {messages.map((message, index) => (
             <article
@@ -566,6 +636,8 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
                 : 'A Athena pode cometer erros de interpretação matemática. Certifique-se de validar dados sensíveis em relatórios formais.'}
           </small>
         </form>
+          </>
+        )}
       </section>
     </div>
   )
