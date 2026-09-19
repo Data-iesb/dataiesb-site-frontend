@@ -1,6 +1,6 @@
 'use client'
 
-import { Bot, Loader2, Mic, Plus, RefreshCw, Repeat, Send, Sparkles, Square, Volume2, VolumeX } from 'lucide-react'
+import { Bot, FileText, Loader2, Mic, Plus, RefreshCw, Repeat, Send, Sparkles, Square, Volume2, VolumeX } from 'lucide-react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -218,6 +218,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
     useAudioRecorder((blob) => voiceBlobRef.current(blob))
 
   const modes = assistant.modes ?? []
+  const materials = assistant.materials ?? []
   const suggestions = selectedMode?.suggestions ?? assistant.suggestions
 
   useEffect(() => {
@@ -482,6 +483,17 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
             ))}
           </section>
         )}
+        {selectedMode && materials.length > 0 && (
+          <section className="aurya-chat-materials">
+            <h2>MATERIAIS DA DISCIPLINA</h2>
+            {materials.map((material) => (
+              <a key={material.href} href={material.href} target="_blank" rel="noopener noreferrer">
+                <FileText size={14} strokeWidth={1.5} />
+                <span>{material.label}</span>
+              </a>
+            ))}
+          </section>
+        )}
       </aside>
 
       <section className="aurya-chat-main" aria-label={`Conversa com ${assistant.title}`}>
@@ -542,6 +554,18 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
                   <Sparkles size={14} strokeWidth={1.5} />
                   <span>{suggestion}</span>
                 </button>
+              ))}
+            </section>
+          )}
+
+          {selectedMode && materials.length > 0 && (
+            <section className="aurya-mobile-suggestions aurya-mobile-materials" aria-label="Materiais da disciplina">
+              <h2>MATERIAIS DA DISCIPLINA</h2>
+              {materials.map((material) => (
+                <a key={material.href} href={material.href} target="_blank" rel="noopener noreferrer">
+                  <FileText size={14} strokeWidth={1.5} />
+                  <span>{material.label}</span>
+                </a>
               ))}
             </section>
           )}

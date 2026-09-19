@@ -336,6 +336,10 @@ test('the Athena Educacional chat offers the professor and student modes', async
   await expect(page.getByRole('button', { name: /Trocar modo \(Sou professor\)/ })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Enviar pergunta' })).toBeDisabled()
 
+  const material = page.getByRole('link', { name: /01\. Introdução à inteligência artificial/ })
+  await expect(material).toHaveAttribute('href', '/pdfs/01-introducao-a-inteligencia-artificial.pdf')
+  await expect(material).toHaveAttribute('target', '_blank')
+
   await page.getByRole('button', { name: /Trocar modo/ }).click()
   await expect(pickerHeading).toBeVisible()
   await expect(page.getByRole('button', { name: /Quero estudar/ })).toBeVisible()

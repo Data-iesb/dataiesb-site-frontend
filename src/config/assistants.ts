@@ -6,6 +6,11 @@ export type AssistantMode = Readonly<{
   suggestions: readonly string[]
 }>
 
+export type AssistantMaterial = Readonly<{
+  label: string
+  href: string
+}>
+
 export type AssistantDefinition = Readonly<{
   id: string
   title: string
@@ -14,6 +19,7 @@ export type AssistantDefinition = Readonly<{
   suggestions: readonly string[]
   agent?: string
   modes?: readonly AssistantMode[]
+  materials?: readonly AssistantMaterial[]
 }>
 
 export const assistants: readonly AssistantDefinition[] = [
@@ -63,6 +69,24 @@ export const assistants: readonly AssistantDefinition[] = [
       'Ajuda professores a montar listas de exercícios adaptadas para alunos com mais dificuldade e tutora os alunos passo a passo, sem entregar a resposta pronta.',
     suggestions: [],
     agent: 'educacional',
+    materials: [
+      {
+        label: '01. Introdução à inteligência artificial',
+        href: '/pdfs/01-introducao-a-inteligencia-artificial.pdf',
+      },
+      {
+        label: '02. Inteligência Artificial',
+        href: '/pdfs/02-inteligencia-artificial.pdf',
+      },
+      {
+        label: '03. A sociedade e o avanço da inteligência artificial',
+        href: '/pdfs/03-a-sociedade-e-o-avanco-da-inteligencia-artificial.pdf',
+      },
+      {
+        label: '04. Tecnologia da inteligência',
+        href: '/pdfs/04-tecnologia-da-inteligencia.pdf',
+      },
+    ],
     modes: [
       {
         id: 'professor',

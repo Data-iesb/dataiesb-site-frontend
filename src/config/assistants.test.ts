@@ -30,6 +30,12 @@ describe('assistants', () => {
       agent: 'educacional',
     })
     expect(assistants[3].modes?.map((mode) => mode.id)).toEqual(['professor', 'aluno'])
+    expect(assistants[3].materials?.map((material) => material.href)).toEqual([
+      '/pdfs/01-introducao-a-inteligencia-artificial.pdf',
+      '/pdfs/02-inteligencia-artificial.pdf',
+      '/pdfs/03-a-sociedade-e-o-avanco-da-inteligencia-artificial.pdf',
+      '/pdfs/04-tecnologia-da-inteligencia.pdf',
+    ])
     for (const assistant of assistants) {
       if (assistant.modes?.length) {
         for (const mode of assistant.modes) {
