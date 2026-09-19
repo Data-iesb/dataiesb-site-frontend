@@ -75,6 +75,8 @@ export const assistants: readonly AssistantDefinition[] = [
           'Monte uma lista bem fácil sobre introdução à inteligência artificial',
           'Crie exercícios com exemplo resolvido sobre tipos de aprendizado de máquina',
           'Quero um gabarito comentado sobre aplicações de inteligência artificial',
+          'Crie uma lista gradual sobre a história e a evolução da IA',
+          'Monte exercícios contextualizados sobre os impactos sociais da inteligência artificial',
         ],
       },
       {
@@ -87,7 +89,9 @@ export const assistants: readonly AssistantDefinition[] = [
         suggestions: [
           'Quero entender o que é inteligência artificial',
           'Não entendi a diferença entre IA e aprendizado de máquina',
+          'Como a inteligência artificial funciona na prática?',
           'Me ajude a revisar as aplicações de inteligência artificial',
+          'Quais são os impactos da inteligência artificial na sociedade?',
         ],
       },
     ],
