@@ -187,8 +187,9 @@ test('home preserves the institutional, service and recent-publication content',
   await expect(page.getByRole('img', { name: 'Capa de Como Votei – Eleições por Zona Eleitoral na RIDE-DF' })).toBeVisible()
   await expect(page.locator('#projects .application-card')).toHaveCount(10)
   await expect(page.locator('#projects')).not.toContainText('Mercado de trabalho')
-  await expect(page.getByText(/Desenvolvido por/)).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Joel Farias' })).toHaveAttribute('href', 'https://github.com/JoelFarias')
+  // Créditos de desenvolvimento e patrocínio comentados no rodapé:
+  // await expect(page.getByText(/Desenvolvido por/)).toBeVisible()
+  // await expect(page.getByRole('link', { name: 'Joel Farias' })).toHaveAttribute('href', 'https://github.com/JoelFarias')
 })
 
 test('legacy aliases and section anchors remain compatible', async ({ page }) => {
