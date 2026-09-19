@@ -58,9 +58,9 @@ export const assistants: readonly AssistantDefinition[] = [
   {
     id: 'athena-educacional',
     title: 'Athena Educacional',
-    eyebrow: 'Apostilas CIA031',
+    eyebrow: 'Material didático',
     description:
-      'Ajuda professores a montar listas de exercícios adaptadas para alunos com mais dificuldade e tutora os alunos de Amostragem Aplicada passo a passo, sem entregar a resposta pronta.',
+      'Ajuda professores a montar listas de exercícios adaptadas para alunos com mais dificuldade e tutora os alunos passo a passo, sem entregar a resposta pronta.',
     suggestions: [],
     agent: 'educacional',
     modes: [
@@ -68,13 +68,13 @@ export const assistants: readonly AssistantDefinition[] = [
         id: 'professor',
         title: 'Sou professor',
         description:
-          'Monta listas de exercícios graduais sobre Amostragem Aplicada, com exemplo resolvido e gabarito comentado.',
+          'Monta listas de exercícios graduais sobre o conteúdo indexado, com exemplo resolvido e gabarito comentado.',
         welcome:
-          'Olá! Sou a Athena Educacional. Posso montar listas de exercícios adaptadas para alunos com mais dificuldade, com explicações passo a passo e nível progressivo. Me diga a unidade ou o tópico que você quer trabalhar.',
+          'Olá! Sou a Athena Educacional. Posso montar listas de exercícios adaptadas para alunos com mais dificuldade, com explicações passo a passo e nível progressivo. Me diga o tópico que você quer trabalhar.',
         suggestions: [
-          'Monte uma lista bem fácil sobre amostragem aleatória simples',
-          'Crie exercícios com exemplo resolvido sobre amostragem sistemática',
-          'Quero um gabarito comentado sobre tamanho da amostra',
+          'Monte uma lista bem fácil sobre introdução à inteligência artificial',
+          'Crie exercícios com exemplo resolvido sobre tipos de aprendizado de máquina',
+          'Quero um gabarito comentado sobre aplicações de inteligência artificial',
         ],
       },
       {
@@ -83,11 +83,11 @@ export const assistants: readonly AssistantDefinition[] = [
         description:
           'Tutoria guiada: te faz perguntas e dá dicas até você chegar na resposta, sem entregá-la pronta.',
         welcome:
-          'Olá! Sou a Athena Educacional e vou te ajudar a estudar Amostragem Aplicada. Vou te guiar com perguntas, sem entregar a resposta pronta — assim você aprende de verdade. Qual assunto vamos estudar hoje?',
+          'Olá! Sou a Athena Educacional e vou te ajudar a estudar. Vou te guiar com perguntas, sem entregar a resposta pronta — assim você aprende de verdade. Qual assunto vamos estudar hoje?',
         suggestions: [
-          'Quero entender amostragem aleatória simples',
-          'Não entendi o que é amostragem sistemática',
-          'Me ajude a revisar tamanho da amostra',
+          'Quero entender o que é inteligência artificial',
+          'Não entendi a diferença entre IA e aprendizado de máquina',
+          'Me ajude a revisar as aplicações de inteligência artificial',
         ],
       },
     ],
