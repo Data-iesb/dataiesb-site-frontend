@@ -41,7 +41,7 @@ export const portalTeamMembers: readonly TeamMember[] = [
     id: 'kaike-armond-costa', name: 'Kaike Armond Costa', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, linkedin: 'https://www.linkedin.com/in/kaike-armond/', github: 'https://github.com/kaikearmond',
   },
   {
-    id: 'diego-alexandre-rodrigues-de-sa', name: 'Diego Alexandre Rodrigues de Sá', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, linkedin: 'https://www.linkedin.com/in/diegoalexandresa/', lattes: 'https://lattes.cnpq.br/5685899832458406', github: 'https://github.com/diegolamarck',
+    id: 'diego-alexandre-rodrigues-de-sa', name: 'Diego Alexandre Rodrigues de Sá', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/diego-sa.png', linkedin: 'https://www.linkedin.com/in/diegoalexandresa/', lattes: 'https://lattes.cnpq.br/5685899832458406', github: 'https://github.com/diegolamarck',
   },
   {
     id: 'felipe-melo-moreira-nunes', name: 'Felipe Melo Moreira Nunes', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/felipe-moreira-v2.jpg', linkedin: 'https://www.linkedin.com/in/felipemoreiradt', lattes: 'https://lattes.cnpq.br/1844341937323514', github: 'https://github.com/felipemoreira-data',

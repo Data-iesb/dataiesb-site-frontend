@@ -17,7 +17,7 @@ describe('portalTeamMembers', () => {
   })
 
   it('associates available photos without hiding members that do not yet have one', () => {
-    expect(portalTeamMembers.filter((member) => member.photoUrl)).toHaveLength(14)
+    expect(portalTeamMembers.filter((member) => member.photoUrl)).toHaveLength(15)
     expect(portalTeamMembers.find((member) => member.id === 'kaike-armond-costa')).not.toHaveProperty('photoUrl')
   })
 

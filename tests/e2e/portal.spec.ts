@@ -173,6 +173,7 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   await expect(joelCard.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/JoelFarias')
   await expect(professorCategory.getByRole('img', { name: 'Foto de Simone de Araújo Góes Assis' })).toHaveAttribute('src', '/img/team/simone-assis.webp')
   await expect(studentCategory.getByRole('img', { name: 'Foto de Ana Sophia Sousa Barros' })).toHaveAttribute('src', '/img/team/ana-sophia.webp')
+  await expect(studentCategory.getByRole('img', { name: 'Foto de Diego Alexandre Rodrigues de Sá' })).toHaveAttribute('src', '/img/team/diego-sa.png')
 })
 
 test('keyboard navigation and theme preference remain available', async ({ page }) => {
