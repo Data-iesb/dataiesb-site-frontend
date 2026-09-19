@@ -47,6 +47,11 @@ export const navigationGroups: readonly NavigationGroup[] = [
         id: 'educacao-superior', label: 'Educação Superior', href: '/paineis/educacao-superior/',
       },
       {
+        id: 'educacao-mestrado-doutorado',
+        label: 'Mestrado e Doutorado',
+        href: '/paineis/mestrado-doutorado/',
+      },
+      {
         id: 'educacao-escolas',
         label: 'Censo Escolar — Ensino Médio e Fundamental',
         href: '/paineis/inep/',
@@ -54,9 +59,9 @@ export const navigationGroups: readonly NavigationGroup[] = [
     ],
   },
   {
-    label: 'Conheça o seu Município',
+    label: 'Conhecendo os nossos municípios',
     items: [
-      { id: 'municipio-pib', label: 'PIB dos Municípios', href: '/paineis/pib/' },
+      { id: 'municipio-pib', label: 'Conheça o seu Município', href: '/paineis/pib/' },
       {
         id: 'municipio-setores',
         label: 'Setores Censitários 2022',

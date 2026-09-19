@@ -21,6 +21,21 @@ export const dashboards: readonly DashboardDefinition[] = [
       mobile: { top: 0, left: 0, bottom: 0 },
     },
   },
+  {
+    slug: 'mestrado-doutorado',
+    title: 'Mestrado e Doutorado no Brasil',
+    shortTitle: 'Mestrado e Doutorado',
+    description: 'Panorama dos programas de pós-graduação stricto sensu no Brasil — CAPES / Plataforma Sucupira.',
+    sourceUrl: envOr(
+      process.env.NEXT_PUBLIC_MESTRADO_DOUTORADO_URL,
+      'https://app.dataiesb.com/mestrado-doutorado/',
+    ),
+    revealDelayMs: 6_000,
+    crop: {
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    },
+  },
 
   {
     slug: 'sus-aih',
@@ -84,8 +99,8 @@ export const dashboards: readonly DashboardDefinition[] = [
   },
   {
     slug: 'pib',
-    title: 'PIB dos Municípios',
-    shortTitle: 'PIB dos Municípios',
+    title: 'Conheça o seu Município',
+    shortTitle: 'Conheça o seu Município',
     description: 'Participação econômica e produto interno bruto nos estados e municípios brasileiros.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_PIB_MUNICIPIOS_URL,
@@ -230,6 +245,14 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       author: 'DATA IESB / INEP',
       href: '/paineis/educacao-superior/',
     },
+    {
+      key: 'educacao-mestrado-doutorado',
+      title: dashboard('mestrado-doutorado').shortTitle,
+      description: dashboard('mestrado-doutorado').description,
+      eyebrow: 'Educação',
+      author: 'DATA IESB / CAPES',
+      href: '/paineis/mestrado-doutorado/',
+    },
 
     {
       key: 'educacao-escolas',
@@ -243,7 +266,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       key: 'municipio-pib',
       title: dashboard('pib').shortTitle,
       description: dashboard('pib').description,
-      eyebrow: 'Conheça o seu Município',
+      eyebrow: 'Conhecendo os nossos municípios',
       author: 'DataIESB / FUNASA',
       href: '/paineis/pib/',
     },
@@ -251,7 +274,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       key: 'municipio-setores',
       title: dashboard('setores-censitarios').shortTitle,
       description: dashboard('setores-censitarios').description,
-      eyebrow: 'Conheça o seu Município',
+      eyebrow: 'Conhecendo os nossos municípios',
       author: 'DataIESB / FUNASA',
       href: '/paineis/setores-censitarios/',
     },
@@ -259,7 +282,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       key: 'municipio-prefeituras',
       title: dashboard('prefeituras').shortTitle,
       description: dashboard('prefeituras').description,
-      eyebrow: 'Conheça o seu Município',
+      eyebrow: 'Conhecendo os nossos municípios',
       author: 'DataIESB / FUNASA',
       href: '/paineis/prefeituras/',
     },

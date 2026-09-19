@@ -10,7 +10,7 @@ describe('navigationGroups', () => {
       'Eleições',
       'SUS Assistência à Saúde',
       'Educação',
-      'Conheça o seu Município',
+      'Conhecendo os nossos municípios',
       'Estudos e Publicações',
       'Trabalhos Acadêmicos',
       'Institucional',
@@ -21,7 +21,8 @@ describe('navigationGroups', () => {
     expect(labels).not.toContain('Athena SUS')
     expect(labels).not.toContain('Explorar catálogo')
     expect(labels).toContain('Censo Escolar — Ensino Médio e Fundamental')
-    expect(labels).toContain('PIB dos Municípios')
+    expect(labels).toContain('Conheça o seu Município')
+    expect(labels).toContain('Mestrado e Doutorado')
     expect(labels).toContain('Setores Censitários 2022')
     expect(labels).toContain('Painel das Prefeituras')
     expect(labels).toContain('Clusters LISA')

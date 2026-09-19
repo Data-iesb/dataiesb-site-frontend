@@ -34,7 +34,8 @@ describe('ApplicationsPage', () => {
     expect(screen.getByRole('link', { name: /Visualizar Produção ambulatorial/ })).toHaveAttribute('href', '/paineis/producao-ambulatorial/')
     expect(screen.getByRole('link', { name: /Visualizar SINAN/ })).toHaveAttribute('href', '/paineis/sinan-doencas-agravos/')
     expect(screen.getByRole('link', { name: /Visualizar Censo Escolar/ })).toHaveAttribute('href', '/paineis/inep/')
-    expect(screen.getByRole('link', { name: /Visualizar PIB dos Municípios/ })).toHaveAttribute('href', '/paineis/pib/')
+    expect(screen.getByRole('link', { name: /Visualizar Mestrado e Doutorado/ })).toHaveAttribute('href', '/paineis/mestrado-doutorado/')
+    expect(screen.getByRole('link', { name: /Visualizar Conheça o seu Município/ })).toHaveAttribute('href', '/paineis/pib/')
     expect(screen.getByRole('link', { name: /Visualizar Setores Censitários 2022/ })).toHaveAttribute('href', '/paineis/setores-censitarios/')
     expect(screen.getByRole('link', { name: /Visualizar Painel das Prefeituras/ })).toHaveAttribute('href', '/paineis/prefeituras/')
     expect(screen.getByRole('link', { name: /Visualizar Clusters LISA/ })).toHaveAttribute('href', '/paineis/clusters-lisa/')
@@ -52,6 +53,6 @@ describe('ApplicationsPage', () => {
 
     expect(screen.getByText('Ainda não há outras aplicações publicadas.')).toBeInTheDocument()
     expect(screen.queryByText('Nenhuma aplicação disponível neste momento.')).not.toBeInTheDocument()
-    expect(screen.getAllByRole('article')).toHaveLength(9)
+    expect(screen.getAllByRole('article')).toHaveLength(10)
   })
 })

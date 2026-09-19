@@ -60,6 +60,7 @@ describe('buildApplicationCatalog', () => {
       'sus-ambulatorial',
       'sus-sinan',
       'educacao-superior',
+      'educacao-mestrado-doutorado',
       'educacao-escolas',
       'municipio-pib',
       'municipio-setores',
@@ -83,6 +84,7 @@ describe('buildApplicationCatalog', () => {
       'sus-ambulatorial',
       'sus-sinan',
       'educacao-superior',
+      'educacao-mestrado-doutorado',
       'educacao-escolas',
       'municipio-pib',
       'municipio-setores',
@@ -93,7 +95,13 @@ describe('buildApplicationCatalog', () => {
 })
 
 describe('dashboard registry', () => {
-  it('locks the full reveal, crop, and mobile-scale contract for all nine embeds', () => {
+  it('integrates the CAPES panel from the approved DATA IESB host', () => {
+    expect(getDashboardBySlug('mestrado-doutorado')?.sourceUrl).toBe(
+      'https://app.dataiesb.com/mestrado-doutorado/',
+    )
+  })
+
+  it('locks the full reveal, crop, and mobile-scale contract for all ten embeds', () => {
     const zeroCrop = {
       desktop: { top: 0, left: 0, bottom: 0 },
       mobile: { top: 0, left: 0, bottom: 0 },
@@ -103,6 +111,7 @@ describe('dashboard registry', () => {
       ['producao-ambulatorial', 15_000, undefined, { desktop: { top: 71, left: 0, bottom: 0 }, mobile: { top: 150, left: 0, bottom: 0 } }],
       ['sinan-doencas-agravos', 7_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
       ['educacao-superior', 6_000, undefined, zeroCrop],
+      ['mestrado-doutorado', 6_000, undefined, zeroCrop],
       ['inep', 6_000, undefined, zeroCrop],
       ['pib', 6_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
       ['setores-censitarios', 8_000, 0.8, zeroCrop],
