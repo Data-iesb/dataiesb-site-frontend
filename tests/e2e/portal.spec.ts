@@ -137,8 +137,9 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   await expect(professorCategory.getByText('Professor Coordenador do Projeto', { exact: true })).toHaveCount(2)
   await expect(professorCategory.getByText('Professora Coordenadora do Projeto', { exact: true })).toHaveCount(2)
   const studentCategory = page.locator('.team-category').filter({ hasText: 'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)' })
-  await expect(studentCategory.locator('.team-card')).toHaveCount(15)
+  await expect(studentCategory.locator('.team-card')).toHaveCount(16)
   expect(await studentCategory.locator('.team-card h4').allTextContents()).toEqual([
+    'Roberto Diniz',
     'Joel Carolino Farias',
     'Marco Antônio Valério Da Cunha',
     'Luca Adriano Melo Mendonça Soares',
@@ -168,6 +169,10 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   const pedroCard = page.locator('.team-card').filter({ hasText: 'Pedro Henrique de Oliveira Marques' })
   await expect(pedroCard.getByRole('img', { name: 'Foto de Pedro Henrique de Oliveira Marques' })).toHaveAttribute('src', '/img/team/pedro-marques-v2.jpg')
   const joelCard = page.locator('.team-card').filter({ hasText: 'Joel Carolino Farias' })
+  const robertoCard = page.locator('.team-card').filter({ hasText: 'Roberto Diniz' })
+  await expect(robertoCard.getByLabel('Iniciais de Roberto Diniz')).toBeVisible()
+  await expect(robertoCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/s33ding/')
+  await expect(joelCard.getByRole('img', { name: 'Foto de Joel Carolino Farias' })).toHaveAttribute('src', '/img/team/joel-farias.png')
   await expect(joelCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/joel-carolinof/')
   await expect(joelCard.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/3218791434540061')
   await expect(joelCard.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/JoelFarias')

@@ -17,7 +17,10 @@ export const portalTeamMembers: readonly TeamMember[] = [
     id: 'jose-roberto-steiner-de-moura', name: 'José Roberto Steiner de Moura', role: 'Professor Coordenador do Projeto', category: professorCategory, linkedin: 'https://www.linkedin.com/in/roberto-steiner', lattes: 'http://lattes.cnpq.br/0843344698115019', github: 'https://github.com/jrsmoura',
   },
   {
-    id: 'joel-carolino-farias', name: 'Joel Carolino Farias', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, linkedin: 'https://www.linkedin.com/in/joel-carolinof/', lattes: 'http://lattes.cnpq.br/3218791434540061', github: 'https://github.com/JoelFarias',
+    id: 'roberto-diniz', name: 'Roberto Diniz', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, linkedin: 'https://www.linkedin.com/in/s33ding/',
+  },
+  {
+    id: 'joel-carolino-farias', name: 'Joel Carolino Farias', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/joel-farias.png', linkedin: 'https://www.linkedin.com/in/joel-carolinof/', lattes: 'http://lattes.cnpq.br/3218791434540061', github: 'https://github.com/JoelFarias',
   },
   {
     id: 'marco-antonio-valerio-da-cunha', name: 'Marco Antônio Valério Da Cunha', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/marco-cunha.webp', linkedin: 'https://www.linkedin.com/in/marcovallerio', lattes: 'http://lattes.cnpq.br/9300328811249938', github: 'https://github.com/marcoantoniio',
