@@ -288,7 +288,7 @@ test('the Athena hub lists assistants and opens the selected native chat', async
   )
 
   const educacionalCard = page.locator('.application-card').filter({ hasText: 'Athena Educacional' })
-  await expect(educacionalCard).toContainText('Apostilas CIA031')
+  await expect(educacionalCard).toContainText('Material didático')
   await expect(educacionalCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
     'href',
     '/assistentes/athena-educacional/',

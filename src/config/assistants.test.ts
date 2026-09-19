@@ -26,7 +26,7 @@ describe('assistants', () => {
     })
     expect(assistants[3]).toMatchObject({
       title: 'Athena Educacional',
-      eyebrow: 'Apostilas CIA031',
+      eyebrow: 'Material didático',
       agent: 'educacional',
     })
     expect(assistants[3].modes?.map((mode) => mode.id)).toEqual(['professor', 'aluno'])
