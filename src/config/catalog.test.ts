@@ -62,6 +62,7 @@ describe('buildApplicationCatalog', () => {
       'educacao-superior',
       'educacao-mestrado-doutorado',
       'educacao-escolas',
+      'meio-ambiente-queimadas',
       'municipio-pib',
       'municipio-setores',
       'municipio-prefeituras',
@@ -86,6 +87,7 @@ describe('buildApplicationCatalog', () => {
       'educacao-superior',
       'educacao-mestrado-doutorado',
       'educacao-escolas',
+      'meio-ambiente-queimadas',
       'municipio-pib',
       'municipio-setores',
       'municipio-prefeituras',
@@ -101,7 +103,13 @@ describe('dashboard registry', () => {
     )
   })
 
-  it('locks the full reveal, crop, and mobile-scale contract for all ten embeds', () => {
+  it('integrates the FUNASA Queimadas panel', () => {
+    expect(getDashboardBySlug('queimadas')?.sourceUrl).toBe(
+      'https://funasa.dataiesb.com/queimadas/',
+    )
+  })
+
+  it('locks the full reveal, crop, and mobile-scale contract for all eleven embeds', () => {
     const zeroCrop = {
       desktop: { top: 0, left: 0, bottom: 0 },
       mobile: { top: 0, left: 0, bottom: 0 },
@@ -113,6 +121,7 @@ describe('dashboard registry', () => {
       ['educacao-superior', 6_000, undefined, zeroCrop],
       ['mestrado-doutorado', 6_000, undefined, zeroCrop],
       ['inep', 6_000, undefined, zeroCrop],
+      ['queimadas', 6_000, undefined, zeroCrop],
       ['pib', 6_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
       ['setores-censitarios', 8_000, 0.8, zeroCrop],
       ['prefeituras', 9_000, undefined, { desktop: { top: 96, left: 0, bottom: 0 }, mobile: { top: 112, left: 0, bottom: 0 } }],

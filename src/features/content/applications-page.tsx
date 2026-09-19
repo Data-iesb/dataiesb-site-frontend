@@ -12,6 +12,7 @@ export function ApplicationsPage() {
   const sections = [
     { id: 'catalogo-sus', eyebrow: 'Saúde pública', title: 'SUS Assistência à Saúde' },
     { id: 'catalogo-educacao', eyebrow: 'Educação básica', title: 'Educação' },
+    { id: 'catalogo-meio-ambiente', eyebrow: 'Dados ambientais', title: 'Meio Ambiente' },
     { id: 'catalogo-municipio', eyebrow: 'Território', title: 'Conhecendo os nossos municípios' },
     { id: 'catalogo-estudos', eyebrow: 'Análise espacial', title: 'Estudos e Publicações' },
   ] as const

@@ -98,6 +98,21 @@ export const dashboards: readonly DashboardDefinition[] = [
     },
   },
   {
+    slug: 'queimadas',
+    title: 'Monitoramento de Queimadas',
+    shortTitle: 'Queimadas',
+    description: 'Focos de fogo ativo, evolução temporal e distribuição territorial no Brasil — Programa Queimadas/INPE.',
+    sourceUrl: envOr(
+      process.env.NEXT_PUBLIC_QUEIMADAS_URL,
+      'https://funasa.dataiesb.com/queimadas/',
+    ),
+    revealDelayMs: 6_000,
+    crop: {
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    },
+  },
+  {
     slug: 'pib',
     title: 'Conheça o seu Município',
     shortTitle: 'Conheça o seu Município',
@@ -261,6 +276,14 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Educação',
       author: 'DataIESB / FUNASA',
       href: '/paineis/inep/',
+    },
+    {
+      key: 'meio-ambiente-queimadas',
+      title: dashboard('queimadas').shortTitle,
+      description: dashboard('queimadas').description,
+      eyebrow: 'Meio Ambiente',
+      author: 'DATA IESB / FUNASA / INPE',
+      href: '/paineis/queimadas/',
     },
     {
       key: 'municipio-pib',

@@ -10,6 +10,7 @@ describe('navigationGroups', () => {
       'Eleições',
       'SUS Assistência à Saúde',
       'Educação',
+      'Meio Ambiente',
       'Conhecendo os nossos municípios',
       'Estudos e Publicações',
       'Trabalhos Acadêmicos',
@@ -23,6 +24,7 @@ describe('navigationGroups', () => {
     expect(labels).toContain('Censo Escolar — Ensino Médio e Fundamental')
     expect(labels).toContain('Conheça o seu Município')
     expect(labels).toContain('Mestrado e Doutorado')
+    expect(labels).toContain('Queimadas')
     expect(labels).toContain('Setores Censitários 2022')
     expect(labels).toContain('Painel das Prefeituras')
     expect(labels).toContain('Clusters LISA')

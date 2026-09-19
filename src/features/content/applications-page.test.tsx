@@ -35,6 +35,7 @@ describe('ApplicationsPage', () => {
     expect(screen.getByRole('link', { name: /Visualizar SINAN/ })).toHaveAttribute('href', '/paineis/sinan-doencas-agravos/')
     expect(screen.getByRole('link', { name: /Visualizar Censo Escolar/ })).toHaveAttribute('href', '/paineis/inep/')
     expect(screen.getByRole('link', { name: /Visualizar Mestrado e Doutorado/ })).toHaveAttribute('href', '/paineis/mestrado-doutorado/')
+    expect(screen.getByRole('link', { name: /Visualizar Queimadas/ })).toHaveAttribute('href', '/paineis/queimadas/')
     expect(screen.getByRole('link', { name: /Visualizar Conheça o seu Município/ })).toHaveAttribute('href', '/paineis/pib/')
     expect(screen.getByRole('link', { name: /Visualizar Setores Censitários 2022/ })).toHaveAttribute('href', '/paineis/setores-censitarios/')
     expect(screen.getByRole('link', { name: /Visualizar Painel das Prefeituras/ })).toHaveAttribute('href', '/paineis/prefeituras/')
@@ -53,6 +54,6 @@ describe('ApplicationsPage', () => {
 
     expect(screen.getByText('Ainda não há outras aplicações publicadas.')).toBeInTheDocument()
     expect(screen.queryByText('Nenhuma aplicação disponível neste momento.')).not.toBeInTheDocument()
-    expect(screen.getAllByRole('article')).toHaveLength(10)
+    expect(screen.getAllByRole('article')).toHaveLength(11)
   })
 })

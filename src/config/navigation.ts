@@ -59,6 +59,12 @@ export const navigationGroups: readonly NavigationGroup[] = [
     ],
   },
   {
+    label: 'Meio Ambiente',
+    items: [
+      { id: 'meio-ambiente-queimadas', label: 'Queimadas', href: '/paineis/queimadas/' },
+    ],
+  },
+  {
     label: 'Conhecendo os nossos municípios',
     items: [
       { id: 'municipio-pib', label: 'Conheça o seu Município', href: '/paineis/pib/' },

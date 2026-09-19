@@ -50,6 +50,7 @@ test('all public routes render from the static export', async ({ page }) => {
     '/paineis/educacao-superior/',
     '/paineis/mestrado-doutorado/',
     '/paineis/inep/',
+    '/paineis/queimadas/',
     '/paineis/pib/',
     '/paineis/setores-censitarios/',
     '/paineis/prefeituras/',
@@ -89,6 +90,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/paineis/educacao-superior/', 'Educação Superior — DATA IESB'],
     ['/paineis/mestrado-doutorado/', 'Mestrado e Doutorado no Brasil — DATA IESB'],
     ['/paineis/inep/', 'Censo Escolar — Ensino Médio e Fundamental — DATA IESB'],
+    ['/paineis/queimadas/', 'Monitoramento de Queimadas — DATA IESB'],
     ['/paineis/pib/', 'Conheça o seu Município — DATA IESB'],
     ['/paineis/setores-censitarios/', 'Setores Censitários 2022 — DATA IESB'],
     ['/paineis/prefeituras/', 'Painel das Prefeituras — DATA IESB'],
@@ -125,14 +127,34 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
 
   await expect(page.getByRole('img', { name: 'Logotipo DATA IESB' })).toBeVisible()
   const professorCategory = page.locator('.team-category').filter({ hasText: 'Professores Coordenadores do Projeto' })
-  await expect(professorCategory.locator('.team-card')).toHaveCount(3)
-  await expect(professorCategory).toContainText('Sérgio da Costa Côrtes')
-  await expect(professorCategory).toContainText('Natália Ribeiro de Souza Evangelista')
-  await expect(professorCategory).toContainText('José Roberto Steiner de Moura')
+  await expect(professorCategory.locator('.team-card')).toHaveCount(4)
+  expect(await professorCategory.locator('.team-card h4').allTextContents()).toEqual([
+    'Sérgio da Costa Côrtes',
+    'Simone de Araújo Góes Assis',
+    'Natália Ribeiro de Souza Evangelista',
+    'José Roberto Steiner de Moura',
+  ])
   await expect(professorCategory.getByText('Professor Coordenador do Projeto', { exact: true })).toHaveCount(2)
-  await expect(professorCategory.getByText('Professora Coordenadora do Projeto', { exact: true })).toHaveCount(1)
+  await expect(professorCategory.getByText('Professora Coordenadora do Projeto', { exact: true })).toHaveCount(2)
   const studentCategory = page.locator('.team-category').filter({ hasText: 'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)' })
-  await expect(studentCategory.locator('.team-card')).toHaveCount(11)
+  await expect(studentCategory.locator('.team-card')).toHaveCount(15)
+  expect(await studentCategory.locator('.team-card h4').allTextContents()).toEqual([
+    'Joel Carolino Farias',
+    'Marco Antônio Valério Da Cunha',
+    'Luca Adriano Melo Mendonça Soares',
+    'Pedro Henrique de Oliveira Marques',
+    'Mateus de Lima Costa',
+    'Erick Lopes Jost',
+    'Arthur Souza de Melo Rosa',
+    'Kaike Armond Costa',
+    'Diego Alexandre Rodrigues de Sá',
+    'Felipe Melo Moreira Nunes',
+    'Samuel Tavares Rego',
+    'Igor dos Santos Conceição de Andrade Filho',
+    'Nicole Lima Duarte',
+    'Luiza Vitoria Brito Vasconcelos',
+    'Ana Sophia Sousa Barros',
+  ])
 
   const card = page.locator('.team-card').filter({ hasText: 'Marco Antônio Valério Da Cunha' })
   await expect(card).toContainText('Integrante do Projeto Big Data IESB')
@@ -149,6 +171,8 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   await expect(joelCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/joel-carolinof/')
   await expect(joelCard.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/3218791434540061')
   await expect(joelCard.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/JoelFarias')
+  await expect(professorCategory.getByRole('img', { name: 'Foto de Simone de Araújo Góes Assis' })).toHaveAttribute('src', '/img/team/simone-assis.webp')
+  await expect(studentCategory.getByRole('img', { name: 'Foto de Ana Sophia Sousa Barros' })).toHaveAttribute('src', '/img/team/ana-sophia.webp')
 })
 
 test('keyboard navigation and theme preference remain available', async ({ page }) => {
@@ -187,7 +211,7 @@ test('home preserves the institutional, service and recent-publication content',
   await expect(results).toContainText('25Membros ativos')
   await expect(page.locator('.service-card-media')).toHaveCount(3)
   await expect(page.getByRole('img', { name: 'Capa de Como Votei – Eleições por Zona Eleitoral na RIDE-DF' })).toBeVisible()
-  await expect(page.locator('#projects .application-card')).toHaveCount(11)
+  await expect(page.locator('#projects .application-card')).toHaveCount(12)
   await expect(page.locator('#projects')).not.toContainText('Mercado de trabalho')
   // Créditos de desenvolvimento e patrocínio comentados no rodapé:
   // await expect(page.getByText(/Desenvolvido por/)).toBeVisible()
