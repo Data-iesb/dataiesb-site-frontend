@@ -30,6 +30,12 @@ describe('navigationGroups', () => {
     expect(labels).toContain('Clusters LISA')
     expect(labels).toContain('Como Votamos')
     expect(labels).toContain('Trabalhos de Conclusão de Curso (TCC)')
+
+    expect(navigationGroups.find((group) => group.label === 'Educação')?.items.map((item) => item.label)).toEqual([
+      'Censo Escolar — Ensino Médio e Fundamental',
+      'Educação Superior',
+      'Mestrado e Doutorado',
+    ])
     expect(labels).toContain('Dissertações de Mestrado (Geo)')
     expect(labels).not.toContain('Aqui Tem Funasa')
     expect(labels).not.toContain('Gestão de Convênios')

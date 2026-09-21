@@ -44,17 +44,17 @@ export const navigationGroups: readonly NavigationGroup[] = [
     label: 'Educação',
     items: [
       {
+        id: 'educacao-escolas',
+        label: 'Censo Escolar — Ensino Médio e Fundamental',
+        href: '/paineis/inep/',
+      },
+      {
         id: 'educacao-superior', label: 'Educação Superior', href: '/paineis/educacao-superior/',
       },
       {
         id: 'educacao-mestrado-doutorado',
         label: 'Mestrado e Doutorado',
         href: '/paineis/mestrado-doutorado/',
-      },
-      {
-        id: 'educacao-escolas',
-        label: 'Censo Escolar — Ensino Médio e Fundamental',
-        href: '/paineis/inep/',
       },
     ],
   },
