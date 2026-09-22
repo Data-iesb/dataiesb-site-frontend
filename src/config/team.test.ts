@@ -1,3 +1,7 @@
+import { createHash } from 'node:crypto'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
 import { describe, expect, it } from 'vitest'
 
 import { portalTeamMembers } from './team'
@@ -24,6 +28,17 @@ describe('portalTeamMembers', () => {
     expect(portalTeamMembers.filter((member) => member.photoUrl)).toHaveLength(16)
     expect(portalTeamMembers.find((member) => member.id === 'roberto-diniz')).not.toHaveProperty('photoUrl')
     expect(portalTeamMembers.find((member) => member.id === 'kaike-armond-costa')).not.toHaveProperty('photoUrl')
+  })
+
+  it('does not reuse the same photo for different members', () => {
+    const hashes = portalTeamMembers.flatMap((member) => {
+      if (!member.photoUrl) return []
+
+      const photo = readFileSync(join(process.cwd(), 'public', member.photoUrl))
+      return [createHash('sha256').update(photo).digest('hex')]
+    })
+
+    expect(new Set(hashes).size).toBe(hashes.length)
   })
 
   it('includes the registered profile links without publishing registration data', () => {
