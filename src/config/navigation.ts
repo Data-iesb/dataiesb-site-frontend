@@ -105,4 +105,8 @@ export const navigationGroups: readonly NavigationGroup[] = [
       { id: 'contato', label: 'Contato', href: '/contato/' },
     ],
   },
+  {
+    label: 'Exemplos de Aplicações com ferramentas de IA - AWS',
+    items: [],
+  },
 ]

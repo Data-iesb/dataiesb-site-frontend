@@ -15,6 +15,7 @@ describe('navigationGroups', () => {
       'Estudos e Publicações',
       'Trabalhos Acadêmicos',
       'Institucional',
+      'Exemplos de Aplicações com ferramentas de IA - AWS',
     ])
 
     const labels = navigationGroups.flatMap((group) => group.items.map((item) => item.label))
@@ -39,6 +40,11 @@ describe('navigationGroups', () => {
     expect(labels).toContain('Dissertações de Mestrado (Geo)')
     expect(labels).not.toContain('Aqui Tem Funasa')
     expect(labels).not.toContain('Gestão de Convênios')
+
+    expect(navigationGroups.at(-1)).toEqual({
+      label: 'Exemplos de Aplicações com ferramentas de IA - AWS',
+      items: [],
+    })
   })
 
   it('keeps academic work entries visible without navigation until their pages are published', () => {
