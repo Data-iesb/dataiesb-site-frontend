@@ -33,6 +33,23 @@ describe('parseNewsResponse', () => {
       },
     ])
   })
+
+  it('uses the Athena name in news content received from Ghost', () => {
+    const [post] = parseNewsResponse({
+      posts: [{
+        title: '*Aurya*: a assistente de IA',
+        slug: 'aurya-a-assistente-de-ia',
+        excerpt: 'Conheça a Aurya.',
+        html: '<p>A Aurya responde perguntas.</p>',
+      }],
+    })
+
+    expect(post).toMatchObject({
+      title: 'Athena: a assistente de IA',
+      excerpt: 'Conheça a Athena.',
+      html: '<p>A Athena responde perguntas.</p>',
+    })
+  })
 })
 
 describe('parseReportsResponse', () => {

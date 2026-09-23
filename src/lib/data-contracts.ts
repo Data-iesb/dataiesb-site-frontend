@@ -10,6 +10,8 @@ const optionalString = (value: unknown) => {
   return normalized || undefined
 }
 
+const useAthenaName = (value: string) => value.replace(/\bAurya\b/g, 'Athena')
+
 export function parseNewsResponse(input: unknown): NewsPost[] {
   if (!isRecord(input) || !Array.isArray(input.posts)) {
     throw new Error('Resposta inválida do serviço de notícias')
@@ -17,17 +19,18 @@ export function parseNewsResponse(input: unknown): NewsPost[] {
 
   return input.posts.flatMap((entry) => {
     if (!isRecord(entry)) return []
-    const title = asString(entry.title).replace(/\*+/g, '')
+    const title = useAthenaName(asString(entry.title).replace(/\*+/g, ''))
     const slug = asString(entry.slug)
+    const html = optionalString(entry.html)
     if (!title || !slug) return []
 
     return [{
       title,
       slug,
-      excerpt: asString(entry.excerpt),
+      excerpt: useAthenaName(asString(entry.excerpt)),
       publishedAt: asString(entry.published_at),
       featureImage: optionalString(entry.feature_image),
-      html: optionalString(entry.html),
+      html: html ? useAthenaName(html) : undefined,
     }]
   })
 }

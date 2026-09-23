@@ -17,6 +17,9 @@ export const portalTeamMembers: readonly TeamMember[] = [
     id: 'jose-roberto-steiner-de-moura', name: 'José Roberto Steiner de Moura', role: 'Professor Coordenador do Projeto', category: professorCategory, linkedin: 'https://www.linkedin.com/in/roberto-steiner', lattes: 'http://lattes.cnpq.br/0843344698115019', github: 'https://github.com/jrsmoura',
   },
   {
+    id: 'ivan-sasha-viana-stemler', name: 'Ivan Sasha Viana Stemler', role: 'Professor Colaborador do Projeto', category: professorCategory, photoUrl: '/img/team/ivan-stemler.webp', linkedin: 'https://www.linkedin.com/in/sashastemler/', lattes: 'http://lattes.cnpq.br/0431403577503497',
+  },
+  {
     id: 'roberto-diniz', name: 'Roberto Diniz', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, linkedin: 'https://www.linkedin.com/in/s33ding/',
   },
   {
