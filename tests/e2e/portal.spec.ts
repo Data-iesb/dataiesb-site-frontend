@@ -127,15 +127,21 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
 
   await expect(page.getByRole('img', { name: 'Logotipo DATA IESB' })).toBeVisible()
   const professorCategory = page.locator('.team-category').filter({ hasText: 'Professores Coordenadores do Projeto' })
-  await expect(professorCategory.locator('.team-card')).toHaveCount(4)
+  await expect(professorCategory.locator('.team-card')).toHaveCount(5)
   expect(await professorCategory.locator('.team-card h4').allTextContents()).toEqual([
     'Sérgio da Costa Côrtes',
     'Simone de Araújo Góes Assis',
     'Natália Ribeiro de Souza Evangelista',
     'José Roberto Steiner de Moura',
+    'Ivan Sasha Viana Stemler',
   ])
   await expect(professorCategory.getByText('Professor Coordenador do Projeto', { exact: true })).toHaveCount(2)
   await expect(professorCategory.getByText('Professora Coordenadora do Projeto', { exact: true })).toHaveCount(2)
+  const ivanCard = professorCategory.locator('.team-card').filter({ hasText: 'Ivan Sasha Viana Stemler' })
+  await expect(ivanCard).toContainText('Professor Colaborador do Projeto')
+  await expect(ivanCard.getByRole('img', { name: 'Foto de Ivan Sasha Viana Stemler' })).toHaveAttribute('src', '/img/team/ivan-stemler.webp')
+  await expect(ivanCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/sashastemler/')
+  await expect(ivanCard.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/0431403577503497')
   const studentCategory = page.locator('.team-category').filter({ hasText: 'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)' })
   await expect(studentCategory.locator('.team-card')).toHaveCount(16)
   expect(await studentCategory.locator('.team-card h4').allTextContents()).toEqual([
