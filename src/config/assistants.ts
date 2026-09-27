@@ -53,6 +53,16 @@ export const assistants: readonly AssistantDefinition[] = [
       'O que conta como atividade complementar?',
     ],
     agent: 'iesb',
+    materials: [
+      {
+        label: 'Guia de Extensão Curricularizada',
+        href: '/pdfs/guia-de-extensao-curricularizada.pdf',
+      },
+      {
+        label: 'Guia de Atividades Complementares',
+        href: '/pdfs/guia-de-atividades-complementares.pdf',
+      },
+    ],
   },
   {
     id: 'athena-professores',
