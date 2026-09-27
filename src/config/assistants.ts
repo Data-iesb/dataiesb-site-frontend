@@ -1,11 +1,3 @@
-export type AssistantMode = Readonly<{
-  id: string
-  title: string
-  description: string
-  welcome: string
-  suggestions: readonly string[]
-}>
-
 export type AssistantMaterial = Readonly<{
   label: string
   href: string
@@ -16,9 +8,10 @@ export type AssistantDefinition = Readonly<{
   title: string
   eyebrow: string
   description: string
+  welcome?: string
   suggestions: readonly string[]
   agent?: string
-  modes?: readonly AssistantMode[]
+  mode?: 'professor' | 'aluno'
   materials?: readonly AssistantMaterial[]
 }>
 
@@ -62,13 +55,22 @@ export const assistants: readonly AssistantDefinition[] = [
     agent: 'iesb',
   },
   {
-    id: 'athena-educacional',
-    title: 'Athena Educacional',
+    id: 'athena-professores',
+    title: 'Athena Professores',
     eyebrow: 'Material didático',
     description:
-      'Ajuda professores a montar listas de exercícios adaptadas para alunos com mais dificuldade e tutora os alunos passo a passo, sem entregar a resposta pronta.',
-    suggestions: [],
+      'Monta listas de exercícios graduais, com exemplo resolvido e gabarito comentado, apoiando o professor no planejamento de aulas.',
+    welcome:
+      'Olá! Sou a Athena Professores. Posso montar listas de exercícios adaptadas para alunos com mais dificuldade, com explicações passo a passo e nível progressivo. Me diga o tópico que você quer trabalhar.',
+    suggestions: [
+      'Monte uma lista bem fácil sobre introdução à inteligência artificial',
+      'Crie exercícios com exemplo resolvido sobre tipos de aprendizado de máquina',
+      'Quero um gabarito comentado sobre aplicações de inteligência artificial',
+      'Crie uma lista gradual sobre a história e a evolução da IA',
+      'Monte exercícios contextualizados sobre os impactos sociais da inteligência artificial',
+    ],
     agent: 'educacional',
+    mode: 'professor',
     materials: [
       {
         label: '01. Introdução à inteligência artificial',
@@ -87,36 +89,40 @@ export const assistants: readonly AssistantDefinition[] = [
         href: '/pdfs/04-tecnologia-da-inteligencia.pdf',
       },
     ],
-    modes: [
+  },
+  {
+    id: 'athena-alunos',
+    title: 'Athena Alunos',
+    eyebrow: 'Material didático',
+    description:
+      'Tutoria guiada que faz perguntas e dá dicas até o aluno chegar à resposta, sem entregá-la pronta.',
+    welcome:
+      'Olá! Sou a Athena Alunos e vou te ajudar a estudar. Vou te guiar com perguntas, sem entregar a resposta pronta, assim você aprende de verdade. Qual assunto vamos estudar hoje?',
+    suggestions: [
+      'Quero entender o que é inteligência artificial',
+      'Não entendi a diferença entre IA e aprendizado de máquina',
+      'Como a inteligência artificial funciona na prática?',
+      'Me ajude a revisar as aplicações de inteligência artificial',
+      'Quais são os impactos da inteligência artificial na sociedade?',
+    ],
+    agent: 'educacional',
+    mode: 'aluno',
+    materials: [
       {
-        id: 'professor',
-        title: 'Sou professor',
-        description:
-          'Monta listas de exercícios graduais sobre o conteúdo indexado, com exemplo resolvido e gabarito comentado.',
-        welcome:
-          'Olá! Sou a Athena Educacional. Posso montar listas de exercícios adaptadas para alunos com mais dificuldade, com explicações passo a passo e nível progressivo. Me diga o tópico que você quer trabalhar.',
-        suggestions: [
-          'Monte uma lista bem fácil sobre introdução à inteligência artificial',
-          'Crie exercícios com exemplo resolvido sobre tipos de aprendizado de máquina',
-          'Quero um gabarito comentado sobre aplicações de inteligência artificial',
-          'Crie uma lista gradual sobre a história e a evolução da IA',
-          'Monte exercícios contextualizados sobre os impactos sociais da inteligência artificial',
-        ],
+        label: '01. Introdução à inteligência artificial',
+        href: '/pdfs/01-introducao-a-inteligencia-artificial.pdf',
       },
       {
-        id: 'aluno',
-        title: 'Quero estudar',
-        description:
-          'Tutoria guiada: te faz perguntas e dá dicas até você chegar na resposta, sem entregá-la pronta.',
-        welcome:
-          'Olá! Sou a Athena Educacional e vou te ajudar a estudar. Vou te guiar com perguntas, sem entregar a resposta pronta — assim você aprende de verdade. Qual assunto vamos estudar hoje?',
-        suggestions: [
-          'Quero entender o que é inteligência artificial',
-          'Não entendi a diferença entre IA e aprendizado de máquina',
-          'Como a inteligência artificial funciona na prática?',
-          'Me ajude a revisar as aplicações de inteligência artificial',
-          'Quais são os impactos da inteligência artificial na sociedade?',
-        ],
+        label: '02. Inteligência Artificial',
+        href: '/pdfs/02-inteligencia-artificial.pdf',
+      },
+      {
+        label: '03. A sociedade e o avanço da inteligência artificial',
+        href: '/pdfs/03-a-sociedade-e-o-avanco-da-inteligencia-artificial.pdf',
+      },
+      {
+        label: '04. Tecnologia da inteligência',
+        href: '/pdfs/04-tecnologia-da-inteligencia.pdf',
       },
     ],
   },

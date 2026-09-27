@@ -34,7 +34,7 @@ test('all public routes render from the static export', async ({ page }) => {
   const routes = [
     '/', '/noticias/', '/aplicacoes/', '/aplicacoes/visualizar/?id=1',
     '/quem-somos/', '/parceiros/', '/contato/',
-    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/aurya-iesb/', '/assistentes/athena-educacional/', '/assistentes/iara-sus/',
+    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/aurya-iesb/', '/assistentes/athena-professores/', '/assistentes/athena-alunos/', '/assistentes/iara-sus/',
   ]
   for (const route of routes) {
     const response = await page.goto(route)
@@ -82,7 +82,8 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/assistentes/aurya-sus/', 'Athena SUS — DATA IESB'],
     ['/assistentes/aurya-pos-graduacao/', 'Athena Pós-Graduação — DATA IESB'],
     ['/assistentes/aurya-iesb/', 'Athena IESB — DATA IESB'],
-    ['/assistentes/athena-educacional/', 'Athena Educacional — DATA IESB'],
+    ['/assistentes/athena-professores/', 'Athena Professores — DATA IESB'],
+    ['/assistentes/athena-alunos/', 'Athena Alunos — DATA IESB'],
     ['/assistentes/iara-sus/', 'Athena SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
@@ -323,11 +324,18 @@ test('the Athena hub lists assistants and opens the selected native chat', async
     '/assistentes/aurya-iesb/',
   )
 
-  const educacionalCard = page.locator('.application-card').filter({ hasText: 'Athena Educacional' })
-  await expect(educacionalCard).toContainText('Material didático')
-  await expect(educacionalCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
+  const professoresCard = page.locator('.application-card').filter({ hasText: 'Athena Professores' })
+  await expect(professoresCard).toContainText('Material didático')
+  await expect(professoresCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
     'href',
-    '/assistentes/athena-educacional/',
+    '/assistentes/athena-professores/',
+  )
+
+  const alunosCard = page.locator('.application-card').filter({ hasText: 'Athena Alunos' })
+  await expect(alunosCard).toContainText('Material didático')
+  await expect(alunosCard.getByRole('link', { name: 'Conversar' })).toHaveAttribute(
+    'href',
+    '/assistentes/athena-alunos/',
   )
 
   await iesbCard.getByRole('link', { name: 'Conversar' }).click()
@@ -335,25 +343,21 @@ test('the Athena hub lists assistants and opens the selected native chat', async
   await expect(page.getByRole('heading', { name: /ATHENA IESB/ })).toBeVisible()
 })
 
-test('the Athena Educacional chat offers the professor and student modes', async ({ page }) => {
-  await page.goto('/assistentes/athena-educacional/')
+test('the Athena Professores and Athena Alunos chats open in fixed mode', async ({ page }) => {
+  await page.goto('/assistentes/athena-professores/')
 
-  await expect(page.getByRole('heading', { name: /ATHENA EDUCACIONAL/ })).toBeVisible()
-  const pickerHeading = page.getByRole('heading', { name: 'Como você quer usar a Athena Educacional?' })
-  await expect(pickerHeading).toBeVisible()
-
-  await page.getByRole('button', { name: /Sou professor/ }).click()
-  await expect(pickerHeading).toHaveCount(0)
-  await expect(page.getByRole('button', { name: /Trocar modo \(Sou professor\)/ })).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Enviar pergunta' })).toBeDisabled()
+  await expect(page.getByRole('heading', { name: /ATHENA PROFESSORES/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Como você quer usar a Athena Educacional?' })).toHaveCount(0)
+  await expect(page.getByRole('button', { name: /Monte uma lista bem fácil sobre introdução à inteligência artificial/ })).toBeVisible()
 
   const material = page.getByRole('link', { name: /01\. Introdução à inteligência artificial/ })
   await expect(material).toHaveAttribute('href', '/pdfs/01-introducao-a-inteligencia-artificial.pdf')
   await expect(material).toHaveAttribute('target', '_blank')
 
-  await page.getByRole('button', { name: /Trocar modo/ }).click()
-  await expect(pickerHeading).toBeVisible()
-  await expect(page.getByRole('button', { name: /Quero estudar/ })).toBeVisible()
+  await page.goto('/assistentes/athena-alunos/')
+
+  await expect(page.getByRole('heading', { name: /ATHENA ALUNOS/ })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Quero entender o que é inteligência artificial/ })).toBeVisible()
 })
 
 test('the native Athena SUS chat renders and answers locally', async ({ page }, testInfo) => {
