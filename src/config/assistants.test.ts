@@ -25,6 +25,10 @@ describe('assistants', () => {
       eyebrow: 'Guias IESB',
       agent: 'iesb',
     })
+    expect(assistants[2].materials?.map((material) => material.href)).toEqual([
+      '/pdfs/guia-de-extensao-curricularizada.pdf',
+      '/pdfs/guia-de-atividades-complementares.pdf',
+    ])
     expect(assistants[3]).toMatchObject({
       title: 'Athena Professores',
       eyebrow: 'Material didático',

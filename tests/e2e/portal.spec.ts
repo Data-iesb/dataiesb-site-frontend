@@ -341,6 +341,10 @@ test('the Athena hub lists assistants and opens the selected native chat', async
   await iesbCard.getByRole('link', { name: 'Conversar' }).click()
   await expect(page).toHaveURL(/\/assistentes\/aurya-iesb\/$/)
   await expect(page.getByRole('heading', { name: /ATHENA IESB/ })).toBeVisible()
+
+  const guia = page.getByRole('link', { name: 'Guia de Extensão Curricularizada' })
+  await expect(guia).toHaveAttribute('href', '/pdfs/guia-de-extensao-curricularizada.pdf')
+  await expect(guia).toHaveAttribute('target', '_blank')
 })
 
 test('the Athena Professores and Athena Alunos chats open in fixed mode', async ({ page }) => {
