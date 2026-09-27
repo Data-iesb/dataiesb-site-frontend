@@ -8,7 +8,8 @@ describe('assistants', () => {
       'aurya-sus',
       'aurya-pos-graduacao',
       'aurya-iesb',
-      'athena-educacional',
+      'athena-professores',
+      'athena-alunos',
     ])
     expect(assistants[0]).toMatchObject({
       title: 'Athena SUS',
@@ -25,11 +26,19 @@ describe('assistants', () => {
       agent: 'iesb',
     })
     expect(assistants[3]).toMatchObject({
-      title: 'Athena Educacional',
+      title: 'Athena Professores',
       eyebrow: 'Material didático',
       agent: 'educacional',
+      mode: 'professor',
     })
-    expect(assistants[3].modes?.map((mode) => mode.id)).toEqual(['professor', 'aluno'])
+    expect(assistants[4]).toMatchObject({
+      title: 'Athena Alunos',
+      eyebrow: 'Material didático',
+      agent: 'educacional',
+      mode: 'aluno',
+    })
+    expect(assistants[3].welcome).toContain('Athena Professores')
+    expect(assistants[4].welcome).toContain('Athena Alunos')
     expect(assistants[3].materials?.map((material) => material.href)).toEqual([
       '/pdfs/01-introducao-a-inteligencia-artificial.pdf',
       '/pdfs/02-inteligencia-artificial.pdf',
@@ -37,14 +46,7 @@ describe('assistants', () => {
       '/pdfs/04-tecnologia-da-inteligencia.pdf',
     ])
     for (const assistant of assistants) {
-      if (assistant.modes?.length) {
-        for (const mode of assistant.modes) {
-          expect(mode.suggestions.length).toBeGreaterThan(0)
-          expect(mode.welcome.length).toBeGreaterThan(0)
-        }
-      } else {
-        expect(assistant.suggestions.length).toBeGreaterThan(0)
-      }
+      expect(assistant.suggestions.length).toBeGreaterThan(0)
     }
   })
 
@@ -52,7 +54,8 @@ describe('assistants', () => {
     expect(getAssistantById('aurya-sus')?.title).toBe('Athena SUS')
     expect(getAssistantById('aurya-pos-graduacao')?.title).toBe('Athena Pós-Graduação')
     expect(getAssistantById('aurya-iesb')?.title).toBe('Athena IESB')
-    expect(getAssistantById('athena-educacional')?.title).toBe('Athena Educacional')
+    expect(getAssistantById('athena-professores')?.title).toBe('Athena Professores')
+    expect(getAssistantById('athena-alunos')?.title).toBe('Athena Alunos')
     expect(getAssistantById('inexistente')).toBeUndefined()
   })
 })
