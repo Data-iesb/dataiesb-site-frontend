@@ -16,6 +16,7 @@ describe('DashboardEmbed', () => {
     render(<DashboardEmbed dashboard={dashboard} />)
 
     expect(screen.getByRole('status')).toHaveTextContent('Carregando painel')
+    expect(screen.getByText('Visualização incorporada')).toBeInTheDocument()
     const frame = screen.getByTitle(`Painel interativo: ${dashboard.title}`)
     expect(frame).toHaveAttribute('src', dashboard.sourceUrl)
     expect(frame).toHaveAttribute('tabindex', '-1')
@@ -24,6 +25,7 @@ describe('DashboardEmbed', () => {
 
     fireEvent.load(frame)
     expect(screen.getByRole('status')).toHaveTextContent('Preparando dados do painel')
+    expect(screen.getByText('Preparando painel DATA IESB')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Exibir agora' })).toBeInTheDocument()
     expect(frame).toHaveClass('is-preparing')
 
@@ -31,7 +33,9 @@ describe('DashboardEmbed', () => {
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
     expect(frame).toHaveClass('is-revealed')
     expect(frame).toHaveAttribute('tabindex', '-1')
-    expect(screen.getByText('Painel exibido · disponibilidade externa não confirmada')).toBeInTheDocument()
+    expect(screen.queryByText('Painel exibido · disponibilidade externa não confirmada')).not.toBeInTheDocument()
+    expect(screen.queryByText('Visualização incorporada')).not.toBeInTheDocument()
+    expect(screen.queryByText('Preparando painel DATA IESB')).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Abrir painel' })).toBeInTheDocument()
   })
 

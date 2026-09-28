@@ -73,10 +73,10 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
       {!dashboard.hideToolbar && (
         <div className="dashboard-toolbar">
           <span>
-            {state === 'revealed'
-              ? 'Painel exibido · disponibilidade externa não confirmada'
-              : state === 'preparing'
-                ? 'Preparando painel DATA IESB'
+            {state === 'preparing'
+              ? 'Preparando painel DATA IESB'
+              : state === 'revealed'
+                ? null
                 : 'Visualização incorporada'}
           </span>
           <div>
