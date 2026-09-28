@@ -111,6 +111,7 @@ test('AIH uses the healthy official dashboard behind the branded preparation scr
   await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/base-sus/')
   await expect(frame).toHaveClass(/is-preparing/)
   await expect(page.getByRole('status')).toContainText('Preparando dados do painel')
+  await expect(page.locator('.dashboard-toolbar')).toContainText('Preparando painel DATA IESB')
   await page.getByRole('button', { name: 'Exibir agora' }).click()
   await expect(frame).toHaveClass(/is-revealed/)
   await expect(page.locator('.dashboard-toolbar')).toHaveText(/Recarregar painel\s+Abrir painel/)

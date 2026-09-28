@@ -72,7 +72,14 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
       <h1 className="sr-only">{dashboard.title}</h1>
       {!dashboard.hideToolbar && (
         <div className="dashboard-toolbar">
-          <div style={{ marginLeft: 'auto' }}>
+          <span>
+            {state === 'preparing'
+              ? 'Preparando painel DATA IESB'
+              : state === 'revealed'
+                ? null
+                : 'Visualização incorporada'}
+          </span>
+          <div>
             <button type="button" onClick={reload}><RefreshCw size={15} /> Recarregar painel</button>
             <a href={dashboard.sourceUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink size={15} /> Abrir painel
