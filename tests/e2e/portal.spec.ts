@@ -113,9 +113,8 @@ test('AIH uses the healthy official dashboard behind the branded preparation scr
   await expect(page.getByRole('status')).toContainText('Preparando dados do painel')
   await page.getByRole('button', { name: 'Exibir agora' }).click()
   await expect(frame).toHaveClass(/is-revealed/)
-  await expect(page.locator('.dashboard-toolbar')).toContainText(
-    'Painel exibido · disponibilidade externa não confirmada',
-  )
+  await expect(page.locator('.dashboard-toolbar')).toHaveText(/Recarregar painel\s+Abrir painel/)
+  await expect(page.getByText('Painel exibido · disponibilidade externa não confirmada')).toHaveCount(0)
   await expect(page.getByRole('status')).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute(
     'href',

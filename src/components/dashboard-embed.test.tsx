@@ -31,7 +31,8 @@ describe('DashboardEmbed', () => {
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
     expect(frame).toHaveClass('is-revealed')
     expect(frame).toHaveAttribute('tabindex', '-1')
-    expect(screen.getByText('Painel exibido · disponibilidade externa não confirmada')).toBeInTheDocument()
+    expect(screen.queryByText('Painel exibido · disponibilidade externa não confirmada')).not.toBeInTheDocument()
+    expect(screen.queryByText('Visualização incorporada')).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Abrir painel' })).toBeInTheDocument()
   })
 
