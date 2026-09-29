@@ -108,7 +108,7 @@ test('AIH uses the healthy official dashboard behind the branded preparation scr
   await page.goto('/paineis/sus-aih/')
 
   const frame = page.locator('iframe')
-  await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/base-sus/')
+  await expect(frame).toHaveAttribute('src', 'https://funasa.dataiesb.com/aih/')
   await expect(frame).toHaveClass(/is-preparing/)
   await expect(page.getByRole('status')).toContainText('Preparando dados do painel')
   await expect(page.locator('.dashboard-toolbar')).toContainText('Preparando painel DATA IESB')
@@ -119,7 +119,7 @@ test('AIH uses the healthy official dashboard behind the branded preparation scr
   await expect(page.getByRole('status')).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveAttribute(
     'href',
-    'https://funasa.dataiesb.com/base-sus/',
+    'https://funasa.dataiesb.com/aih/',
   )
 })
 
