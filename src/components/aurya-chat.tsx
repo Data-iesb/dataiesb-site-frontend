@@ -504,14 +504,6 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
             </section>
           )}
 
-          {dataSource.length > 0 && (
-            <section className="aurya-chat-source aurya-mobile-source" aria-label="Fonte dos dados">
-              {dataSource.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </section>
-          )}
-
           {materials.length > 0 && (
             <section className="aurya-mobile-suggestions aurya-mobile-materials" aria-label="Materiais da disciplina">
               <h2>MATERIAIS DA DISCIPLINA</h2>
