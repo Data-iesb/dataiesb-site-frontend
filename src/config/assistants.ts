@@ -8,6 +8,7 @@ export type AssistantDefinition = Readonly<{
   title: string
   eyebrow: string
   description: string
+  dataSource?: readonly string[]
   welcome?: string
   suggestions: readonly string[]
   agent?: string
@@ -18,10 +19,11 @@ export type AssistantDefinition = Readonly<{
 export const assistants: readonly AssistantDefinition[] = [
   {
     id: 'aurya-sus',
-    title: 'Athena SUS',
+    title: 'Athena SUS Autorizações de Internações Hospitalares (AIH)',
     eyebrow: 'Base SUS',
     description:
-      'Consulta dados hospitalares do SUS (AIH) por município de residência: procedimentos, internações, gastos e grupos cirúrgicos, clínicos e de transplantes.',
+      'Prepara respostas sobre consultas aos dados do SUS-Autorizações de Internações Hospitalares (AIH) por município de residência do paciente. Foca nas quantidades de internações e nos valores de investimentos dos SUS nos municípios. Você pode se informar sobre os Grupos e Subgrupos de Procedimentos Médicos das internações.',
+    dataSource: ['Fonte dos dados: SUS/Tabnet.', 'Extração dos dados: mensal.'],
     suggestions: [
       'Quais estados mais gastam com o SUS?',
       'Qual a evolução mensal de procedimentos e valores em 2025?',

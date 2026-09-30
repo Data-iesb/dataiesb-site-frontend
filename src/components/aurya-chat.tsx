@@ -213,6 +213,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
     useAudioRecorder((blob) => voiceBlobRef.current(blob))
 
   const materials = assistant.materials ?? []
+  const dataSource = assistant.dataSource ?? []
   const suggestions = assistant.suggestions
 
   useEffect(() => {
@@ -451,6 +452,13 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
             ))}
           </section>
         )}
+        {dataSource.length > 0 && (
+          <section className="aurya-chat-source" aria-label="Fonte dos dados">
+            {dataSource.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </section>
+        )}
         {materials.length > 0 && (
           <section className="aurya-chat-materials">
             <h2>MATERIAIS DA DISCIPLINA</h2>
@@ -492,6 +500,14 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
                   <Sparkles size={14} strokeWidth={1.5} />
                   <span>{suggestion}</span>
                 </button>
+              ))}
+            </section>
+          )}
+
+          {dataSource.length > 0 && (
+            <section className="aurya-chat-source aurya-mobile-source" aria-label="Fonte dos dados">
+              {dataSource.map((line) => (
+                <p key={line}>{line}</p>
               ))}
             </section>
           )}

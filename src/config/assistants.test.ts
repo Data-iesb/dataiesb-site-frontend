@@ -12,8 +12,9 @@ describe('assistants', () => {
       'athena-alunos',
     ])
     expect(assistants[0]).toMatchObject({
-      title: 'Athena SUS',
+      title: 'Athena SUS Autorizações de Internações Hospitalares (AIH)',
       eyebrow: 'Base SUS',
+      dataSource: ['Fonte dos dados: SUS/Tabnet.', 'Extração dos dados: mensal.'],
     })
     expect(assistants[1]).toMatchObject({
       title: 'Athena Pós-Graduação',
@@ -55,7 +56,7 @@ describe('assistants', () => {
   })
 
   it('resolves assistants by id', () => {
-    expect(getAssistantById('aurya-sus')?.title).toBe('Athena SUS')
+    expect(getAssistantById('aurya-sus')?.title).toBe('Athena SUS Autorizações de Internações Hospitalares (AIH)')
     expect(getAssistantById('aurya-pos-graduacao')?.title).toBe('Athena Pós-Graduação')
     expect(getAssistantById('aurya-iesb')?.title).toBe('Athena IESB')
     expect(getAssistantById('athena-professores')?.title).toBe('Athena Professores')
