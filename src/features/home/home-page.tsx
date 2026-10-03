@@ -4,7 +4,7 @@ import { ArrowRight, BarChart3, Bot, Database, GraduationCap, HeartPulse, Landma
 
 import { ApplicationCard, NewsCard, PageIntro, ResourceState } from '@/components/content-ui'
 import { BrazilMap } from '@/components/brazil-map'
-import { buildApplicationCatalog, getFeaturedApplications } from '@/config/catalog'
+import { buildApplicationCatalog, dashboards, getFeaturedApplications } from '@/config/catalog'
 import { siteConfig } from '@/config/site'
 import { useRemoteResource } from '@/hooks/use-remote-resource'
 import { loadNews, loadReports, loadTeam } from '@/lib/content-api'
@@ -117,7 +117,7 @@ export function HomePage() {
         <div><strong>{applications.length}</strong><span>aplicações e estudos</span></div>
         <div><strong>{news.status === 'ready' ? news.data.length : '—'}</strong><span>publicações recentes</span></div>
         <div><strong>{team.status === 'ready' ? team.data.length : '—'}</strong><span>integrantes ativos</span></div>
-        <div><strong>11</strong><span>painéis temáticos</span></div>
+        <div><strong>{dashboards.length}</strong><span>painéis temáticos</span></div>
       </section>
 
       <section className="institutional-highlights" aria-label="Diferenciais do projeto">

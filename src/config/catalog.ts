@@ -10,6 +10,18 @@ const envOr = (value: string | undefined, fallback: string) => value?.trim() || 
 
 export const dashboards: readonly DashboardDefinition[] = [
   {
+    slug: 'ideb',
+    title: 'IDEB — Índice de Desenvolvimento da Educação Básica',
+    shortTitle: 'IDEB',
+    description: 'Indicadores de aprendizagem, aprovação e desempenho por município — INEP.',
+    sourceUrl: envOr(process.env.NEXT_PUBLIC_IDEB_URL, 'https://app.dataiesb.com/ideb/'),
+    revealDelayMs: 6_000,
+    crop: {
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    },
+  },
+  {
     slug: 'educacao-superior',
     title: 'Educação Superior',
     shortTitle: 'Educação Superior',
@@ -276,6 +288,14 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Educação',
       author: 'DataIESB / FUNASA',
       href: '/paineis/inep/',
+    },
+    {
+      key: 'educacao-ideb',
+      title: dashboard('ideb').shortTitle,
+      description: dashboard('ideb').description,
+      eyebrow: 'Educação',
+      author: 'DATA IESB / INEP',
+      href: '/paineis/ideb/',
     },
     {
       key: 'meio-ambiente-queimadas',

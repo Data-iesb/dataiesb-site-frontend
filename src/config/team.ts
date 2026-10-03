@@ -20,6 +20,9 @@ export const portalTeamMembers: readonly TeamMember[] = [
     id: 'ivan-sasha-viana-stemler', name: 'Ivan Sasha Viana Stemler', role: 'Professor Colaborador do Projeto', category: professorCategory, photoUrl: '/img/team/ivan-stemler.webp', linkedin: 'https://www.linkedin.com/in/sashastemler/', lattes: 'http://lattes.cnpq.br/0431403577503497',
   },
   {
+    id: 'daniella-goulart', name: 'Daniella Goulart', role: 'Professora Colaboradora — Comunicação Social', category: professorCategory, photoUrl: '/img/team/daniella-goulart.webp',
+  },
+  {
     id: 'roberto-diniz', name: 'Roberto Diniz', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, linkedin: 'https://www.linkedin.com/in/s33ding/',
   },
   {
@@ -33,6 +36,9 @@ export const portalTeamMembers: readonly TeamMember[] = [
   },
   {
     id: 'pedro-henrique-de-oliveira-marques', name: 'Pedro Henrique de Oliveira Marques', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/pedro-marques-v2.jpg', linkedin: 'https://www.linkedin.com/in/pedro-henrique-de-oliveira-marques-76253a324/', lattes: 'https://lattes.cnpq.br/8932115738920035', github: 'https://github.com/PedroOliveiraMarques',
+  },
+  {
+    id: 'gabriel-cesar-de-franca-pereira', name: 'Gabriel César de França Pereira', role: 'Aluno — TCC 2026.2', category: studentCategory, linkedin: 'https://www.linkedin.com/in/gabrielcesar-dados/', github: 'https://github.com/gabrielp-data',
   },
   {
     id: 'mateus-de-lima-costa', name: 'Mateus de Lima Costa', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/mateus-lima-costa.webp', linkedin: 'https://www.linkedin.com/in/mateus-de-lima-costa', lattes: 'https://lattes.cnpq.br/8852621038958616', github: 'https://github.com/MateusDeLimaCosta',
@@ -66,5 +72,29 @@ export const portalTeamMembers: readonly TeamMember[] = [
   },
   {
     id: 'ana-sophia-sousa-barros', name: 'Ana Sophia Sousa Barros', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/ana-sophia.webp', linkedin: 'https://www.linkedin.com/in/anasophiadatascience/', github: 'https://github.com/anasousaiesb',
+  },
+  {
+    id: 'mirna-favacho-da-silveira', name: 'Mirna Favacho da Silveira', role: 'Aluna — Comunicação Social', category: studentCategory, photoUrl: '/img/team/mirna-silveira.webp', lattes: 'https://lattes.cnpq.br/5505045702209370',
+  },
+  {
+    id: 'caio-rosendo-jacome', name: 'Caio Rosendo Jácome', role: 'Aluno — TCC 2026.2', category: studentCategory, linkedin: 'https://www.linkedin.com/in/caio-rosendo-jácome-69037a295', lattes: 'http://lattes.cnpq.br/7522283393263788', github: 'https://github.com/caiorj2004',
+  },
+  {
+    id: 'leonardo-araujo-pereira', name: 'Leonardo Araujo Pereira', role: 'Aluno — TCC 2026.2', category: studentCategory, linkedin: 'https://www.linkedin.com/in/leoap2004/', lattes: 'https://lattes.cnpq.br/9660036516610210', github: 'https://github.com/leoarjo',
+  },
+  {
+    id: 'eduardo-goncalves-barbosa', name: 'Eduardo Gonçalves Barbosa', role: 'Aluno — TCC 2026.2', category: studentCategory, linkedin: 'https://www.linkedin.com/in/eduardo-gonçalves-barbosa/', github: 'https://github.com/zWizhard',
+  },
+  {
+    id: 'enzo-rodrigues-teixeira-de-andrade', name: 'Enzo Rodrigues Teixeira de Andrade', role: 'Aluno — TCC 2026.2', category: studentCategory, photoUrl: '/img/team/enzo-rodrigues.webp', linkedin: 'https://www.linkedin.com/in/enzo-rodrigues-879649265', github: 'https://github.com/3nzo4ndrad3',
+  },
+  {
+    id: 'leonardo-borges-silva-braga', name: 'Leonardo Borges Silva Braga', role: 'Aluno — TCC 2026.2', category: studentCategory, photoUrl: '/img/team/leonardo-borges.webp', linkedin: 'https://www.linkedin.com/in/leonardo-borges1/', github: 'https://github.com/Leo-bsb',
+  },
+  {
+    id: 'piettro-pecidor-nakashoji', name: 'Piettro Pecidor Nakashoji', role: 'Aluno — TCC 2026.2', category: studentCategory, linkedin: 'https://www.linkedin.com/in/piettro-nakashoji-031782231', github: 'https://github.com/PiettroNaka',
+  },
+  {
+    id: 'william-wallace-ribeiro-matos', name: 'William Wallace Ribeiro Matos', role: 'Aluno — TCC 2026.2', category: studentCategory, linkedin: 'https://www.linkedin.com/in/william-matos-058371210/', github: 'https://github.com/wwrmatos',
   },
 ]

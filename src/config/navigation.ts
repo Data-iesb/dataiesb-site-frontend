@@ -49,6 +49,9 @@ export const navigationGroups: readonly NavigationGroup[] = [
         href: '/paineis/inep/',
       },
       {
+        id: 'educacao-ideb', label: 'IDEB', href: '/paineis/ideb/',
+      },
+      {
         id: 'educacao-superior', label: 'Educação Superior', href: '/paineis/educacao-superior/',
       },
       {

@@ -50,6 +50,7 @@ test('all public routes render from the static export', async ({ page }) => {
     '/paineis/educacao-superior/',
     '/paineis/mestrado-doutorado/',
     '/paineis/inep/',
+    '/paineis/ideb/',
     '/paineis/queimadas/',
     '/paineis/pib/',
     '/paineis/setores-censitarios/',
@@ -91,6 +92,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/paineis/educacao-superior/', 'Educação Superior — DATA IESB'],
     ['/paineis/mestrado-doutorado/', 'Mestrado e Doutorado no Brasil — DATA IESB'],
     ['/paineis/inep/', 'Censo Escolar — Ensino Médio e Fundamental — DATA IESB'],
+    ['/paineis/ideb/', 'IDEB — Índice de Desenvolvimento da Educação Básica — DATA IESB'],
     ['/paineis/queimadas/', 'Monitoramento de Queimadas — DATA IESB'],
     ['/paineis/pib/', 'Conheça o seu Município — DATA IESB'],
     ['/paineis/setores-censitarios/', 'Setores Censitários 2022 — DATA IESB'],
@@ -128,13 +130,14 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
 
   await expect(page.getByRole('img', { name: 'Logotipo DATA IESB' })).toBeVisible()
   const professorCategory = page.locator('.team-category').filter({ hasText: 'Professores Coordenadores do Projeto' })
-  await expect(professorCategory.locator('.team-card')).toHaveCount(5)
+  await expect(professorCategory.locator('.team-card')).toHaveCount(6)
   expect(await professorCategory.locator('.team-card h4').allTextContents()).toEqual([
     'Sérgio da Costa Côrtes',
     'Simone de Araújo Góes Assis',
     'Natália Ribeiro de Souza Evangelista',
     'José Roberto Steiner de Moura',
     'Ivan Sasha Viana Stemler',
+    'Daniella Goulart',
   ])
   await expect(professorCategory.getByText('Professor Coordenador do Projeto', { exact: true })).toHaveCount(2)
   await expect(professorCategory.getByText('Professora Coordenadora do Projeto', { exact: true })).toHaveCount(2)
@@ -144,13 +147,14 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   await expect(ivanCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/sashastemler/')
   await expect(ivanCard.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/0431403577503497')
   const studentCategory = page.locator('.team-category').filter({ hasText: 'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)' })
-  await expect(studentCategory.locator('.team-card')).toHaveCount(16)
+  await expect(studentCategory.locator('.team-card')).toHaveCount(25)
   expect(await studentCategory.locator('.team-card h4').allTextContents()).toEqual([
     'Roberto Diniz',
     'Joel Carolino Farias',
     'Marco Antônio Valério Da Cunha',
     'Luca Adriano Melo Mendonça Soares',
     'Pedro Henrique de Oliveira Marques',
+    'Gabriel César de França Pereira',
     'Mateus de Lima Costa',
     'Erick Lopes Jost',
     'Arthur Souza de Melo Rosa',
@@ -162,6 +166,14 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
     'Nicole Lima Duarte',
     'Luiza Vitoria Brito Vasconcelos',
     'Ana Sophia Sousa Barros',
+    'Mirna Favacho da Silveira',
+    'Caio Rosendo Jácome',
+    'Leonardo Araujo Pereira',
+    'Eduardo Gonçalves Barbosa',
+    'Enzo Rodrigues Teixeira de Andrade',
+    'Leonardo Borges Silva Braga',
+    'Piettro Pecidor Nakashoji',
+    'William Wallace Ribeiro Matos',
   ])
 
   const card = page.locator('.team-card').filter({ hasText: 'Marco Antônio Valério Da Cunha' })
@@ -224,7 +236,7 @@ test('home preserves the institutional, service and recent-publication content',
   await expect(results).toContainText('25Membros ativos')
   await expect(page.locator('.service-card-media')).toHaveCount(3)
   await expect(page.getByRole('img', { name: 'Capa de Como Votei – Eleições por Zona Eleitoral na RIDE-DF' })).toBeVisible()
-  await expect(page.locator('#projects .application-card')).toHaveCount(12)
+  await expect(page.locator('#projects .application-card')).toHaveCount(13)
   await expect(page.locator('#projects')).not.toContainText('Mercado de trabalho')
   // Créditos de desenvolvimento e patrocínio comentados no rodapé:
   // await expect(page.getByText(/Desenvolvido por/)).toBeVisible()

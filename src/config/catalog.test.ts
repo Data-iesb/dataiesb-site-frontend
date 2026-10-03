@@ -62,6 +62,7 @@ describe('buildApplicationCatalog', () => {
       'educacao-superior',
       'educacao-mestrado-doutorado',
       'educacao-escolas',
+      'educacao-ideb',
       'meio-ambiente-queimadas',
       'municipio-pib',
       'municipio-setores',
@@ -87,6 +88,7 @@ describe('buildApplicationCatalog', () => {
       'educacao-superior',
       'educacao-mestrado-doutorado',
       'educacao-escolas',
+      'educacao-ideb',
       'meio-ambiente-queimadas',
       'municipio-pib',
       'municipio-setores',
@@ -97,6 +99,10 @@ describe('buildApplicationCatalog', () => {
 })
 
 describe('dashboard registry', () => {
+  it('integrates the IDEB panel from the address supplied for the portal', () => {
+    expect(getDashboardBySlug('ideb')?.sourceUrl).toBe('https://app.dataiesb.com/ideb/')
+  })
+
   it('integrates the CAPES panel from the approved DATA IESB host', () => {
     expect(getDashboardBySlug('mestrado-doutorado')?.sourceUrl).toBe(
       'https://app.dataiesb.com/mestrado-doutorado/',
@@ -109,7 +115,7 @@ describe('dashboard registry', () => {
     )
   })
 
-  it('locks the full reveal, crop, and mobile-scale contract for all eleven embeds', () => {
+  it('locks the full reveal, crop, and mobile-scale contract for all twelve embeds', () => {
     const zeroCrop = {
       desktop: { top: 0, left: 0, bottom: 0 },
       mobile: { top: 0, left: 0, bottom: 0 },
@@ -121,6 +127,7 @@ describe('dashboard registry', () => {
       ['educacao-superior', 6_000, undefined, zeroCrop],
       ['mestrado-doutorado', 6_000, undefined, zeroCrop],
       ['inep', 6_000, undefined, zeroCrop],
+      ['ideb', 6_000, undefined, zeroCrop],
       ['queimadas', 6_000, undefined, zeroCrop],
       ['pib', 6_000, undefined, { desktop: { top: 121, left: 0, bottom: 0 }, mobile: { top: 85, left: 0, bottom: 0 } }],
       ['setores-censitarios', 8_000, 0.8, zeroCrop],

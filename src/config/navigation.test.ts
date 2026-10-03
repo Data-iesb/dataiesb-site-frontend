@@ -34,6 +34,7 @@ describe('navigationGroups', () => {
 
     expect(navigationGroups.find((group) => group.label === 'Educação')?.items.map((item) => item.label)).toEqual([
       'Censo Escolar — Ensino Médio e Fundamental',
+      'IDEB',
       'Educação Superior',
       'Mestrado e Doutorado',
     ])
