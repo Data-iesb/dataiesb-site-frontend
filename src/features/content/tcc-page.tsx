@@ -10,7 +10,7 @@ export function TccPage() {
         description="Projetos de conclusão de curso cadastrados pelos alunos do Projeto Big Data IESB."
       />
       <section className="page-section" aria-label="Alunos de TCC">
-        <p className="tcc-section-note">Alunos cadastrados para o semestre 2026.2. Os títulos exibidos são provisórios, conforme a planilha de cadastro.</p>
+        <p className="tcc-section-note">Alunos cadastrados para o semestre 2026.2.</p>
         <div className="tcc-student-grid">
           {tccStudents.map((student) => (
             <article className={`tcc-student-card${student.photoUrl ? ' has-photo' : ''}`} key={student.id}>
