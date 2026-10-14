@@ -82,7 +82,7 @@ export const navigationGroups: readonly NavigationGroup[] = [
   {
     label: 'Trabalhos Acadêmicos',
     items: [
-      { id: 'trabalhos-tcc', label: 'Trabalhos de Conclusão de Curso (TCC)', href: '#', disabled: true },
+      { id: 'trabalhos-tcc', label: 'Trabalhos de Conclusão de Curso (TCC)', href: '/trabalhos-academicos/tcc/' },
       { id: 'trabalhos-dissertacoes-geo', label: 'Dissertações de Mestrado (Geo)', href: '#', disabled: true },
     ],
   },

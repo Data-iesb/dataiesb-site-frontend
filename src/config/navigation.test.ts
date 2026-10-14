@@ -32,9 +32,13 @@ describe('navigationGroups', () => {
     expect(labels).not.toContain('Gestão de Convênios')
   })
 
-  it('keeps academic work entries visible without navigation until their pages are published', () => {
+  it('links TCCs and keeps dissertations inactive until their page is published', () => {
     const items = navigationGroups.flatMap((group) => group.items)
-    expect(items.find((item) => item.id === 'trabalhos-tcc')).toMatchObject({ disabled: true })
+    expect(items.find((item) => item.id === 'trabalhos-tcc')).toMatchObject({
+      label: 'Trabalhos de Conclusão de Curso (TCC)',
+      href: '/trabalhos-academicos/tcc/',
+    })
+    expect(items.find((item) => item.id === 'trabalhos-tcc')).not.toHaveProperty('disabled')
     expect(items.find((item) => item.id === 'trabalhos-dissertacoes-geo')).toMatchObject({ disabled: true })
   })
 
