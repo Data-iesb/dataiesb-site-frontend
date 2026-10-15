@@ -116,7 +116,7 @@ export const dashboards: readonly DashboardDefinition[] = [
     description: 'Focos de fogo ativo, evolução temporal e distribuição territorial no Brasil — Programa Queimadas/INPE.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_QUEIMADAS_URL,
-      'https://funasa.dataiesb.com/queimadas/',
+      'https://app.dataiesb.com/queimadas/',
     ),
     revealDelayMs: 6_000,
     crop: {

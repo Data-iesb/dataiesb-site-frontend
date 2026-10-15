@@ -111,7 +111,7 @@ describe('dashboard registry', () => {
 
   it('integrates the FUNASA Queimadas panel', () => {
     expect(getDashboardBySlug('queimadas')?.sourceUrl).toBe(
-      'https://funasa.dataiesb.com/queimadas/',
+      'https://app.dataiesb.com/queimadas/',
     )
   })
 
