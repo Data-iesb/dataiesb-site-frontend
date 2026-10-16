@@ -41,6 +41,17 @@ const partners = [
     ],
   },
   {
+    name: 'Levav-IT',
+    image: '/img/partners/levav-it.png',
+    imageClass: ' is-levav',
+    paragraphs: [
+      'A Levav-IT é uma microempresa de tecnologia composta por alunos veteranos do curso de Ciência de Dados e Inteligência Artificial do IESB. Nascida dentro do ambiente acadêmico da instituição, a empresa transforma grandes volumes de dados em vantagens competitivas, com foco em sistemas de alta performance, infraestrutura cloud resiliente e implementação de inteligência artificial generativa em escala empresarial.',
+      'O nome une propósito e técnica: "Levav" vem do radical das palavras latinas que significam elevação (levare, levavit) — a ideia de erguer a infraestrutura dos clientes e elevar o padrão de seus resultados — e, em hebraico, significa coração, simbolizando a dedicação, a integridade e o cuidado humano aplicados em cada projeto.',
+      'No contexto do Projeto Big Data – IESB, a Levav-IT atua integrando cloud, dados e inteligência artificial, contribuindo com conhecimento prático em arquiteturas escaláveis na AWS, engenharia de dados, DevOps e desenvolvimento de aplicações analíticas. Por ser formada por estudantes veteranos do próprio curso, a empresa reforça o elo entre a formação acadêmica do IESB e a experiência real de mercado.',
+      'A participação da Levav-IT valoriza a dimensão empreendedora do projeto, mostrando como a qualificação oferecida pelo IESB em Ciência de Dados e Inteligência Artificial se converte em iniciativas autorais de jovens profissionais. Dessa forma, a parceria aproxima academia, tecnologia e mercado, fortalecendo a cultura de inovação e a formação prática dos estudantes.',
+    ],
+  },
+  {
     name: 'SAS',
     image: '/img/partners/sas.jpeg',
     imageClass: '',

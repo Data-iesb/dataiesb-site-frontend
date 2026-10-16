@@ -25,6 +25,11 @@ describe('Partners page', () => {
       paragraphCount: 4,
       closingText: 'desafios contemporâneos da ciência de dados aplicada à gestão pública',
     },
+    {
+      name: 'Levav-IT',
+      paragraphCount: 4,
+      closingText: 'fortalecendo a cultura de inovação e a formação prática dos estudantes',
+    },
   ])('renders the complete official narrative for $name', ({ name, paragraphCount, closingText }) => {
     render(<Page />)
 
