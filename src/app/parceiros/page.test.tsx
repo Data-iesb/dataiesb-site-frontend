@@ -27,8 +27,8 @@ describe('Partners page', () => {
     },
     {
       name: 'Levav-IT',
-      paragraphCount: 4,
-      closingText: 'fortalecendo a cultura de inovação e a formação prática dos estudantes',
+      paragraphCount: 3,
+      closingText: 'posições de liderança com autonomia',
     },
   ])('renders the complete official narrative for $name', ({ name, paragraphCount, closingText }) => {
     render(<Page />)

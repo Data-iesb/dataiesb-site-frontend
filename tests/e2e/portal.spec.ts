@@ -282,7 +282,7 @@ test('partner logos remain contained inside their visual frames', async ({ page 
   await expect(page.locator('.partner-logo.is-iesb')).toHaveCSS('background-color', 'rgb(255, 255, 255)')
 
   const logos = page.locator('.partner-logo')
-  await expect(logos).toHaveCount(5)
+  await expect(logos).toHaveCount(6)
   for (let index = 0; index < await logos.count(); index += 1) {
     const frameBox = await logos.nth(index).boundingBox()
     const imageBox = await logos.nth(index).locator('img').boundingBox()
