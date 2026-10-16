@@ -45,9 +45,9 @@ const partners = [
     image: '/img/partners/levav-it.png',
     imageClass: ' is-levav',
     paragraphs: [
-      'A Levav-IT é uma microempresa de tecnologia formada por alunos veteranos do curso de Ciência de Dados e Inteligência Artificial do IESB. Nascida no ambiente acadêmico da instituição, atua em sistemas de alta performance, infraestrutura cloud resiliente e inteligência artificial generativa em escala empresarial.',
-      'No Projeto Big Data – IESB, a empresa está presente tanto na frente técnica — arquiteturas escaláveis na AWS, engenharia de dados, DevOps e aplicações analíticas — quanto na administrativa, ajudando a organizar e conduzir as atividades.',
-      'Seu principal diferencial é desenvolver e captar pessoas: a Levav-IT capacita e orienta novos integrantes para que outros estudantes assumam posições de liderança com autonomia, ligando a formação do IESB à experiência real de mercado. Hoje a empresa se projeta para o mercado por meio de um consórcio com profissionais autônomos, que se unem para atender demandas B2B e competir em licitações públicas e privadas.',
+      'A Levav-IT é uma microempresa de tecnologia fundada por alunos veteranos do curso de Ciência de Dados e Inteligência Artificial do IESB. Nascida no ecossistema acadêmico da instituição, é especializada no desenvolvimento de sistemas de alta performance, infraestrutura cloud resiliente e soluções de Inteligência Artificial Generativa em escala empresarial.',
+      'No Projeto Big Data – IESB, a empresa atua no ecossistema técnico — com arquiteturas escaláveis em AWS, engenharia de dados, DevOps e aplicações analíticas — e na frente administrativa, estruturando e liderando as operações.',
+      'O grande diferencial da Levav-IT é o desenvolvimento de talentos: capacita e orienta novos integrantes para que assumam posições de liderança com autonomia, conectando a formação acadêmica do IESB diretamente às exigências do mercado. Atualmente, projeta-se no mercado por meio de um consórcio com profissionais autônomos, unindo forças para atender demandas B2B e disputar licitações públicas e privadas.',
     ],
   },
   {
