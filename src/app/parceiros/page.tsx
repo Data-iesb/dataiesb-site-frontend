@@ -42,7 +42,7 @@ const partners = [
   },
   {
     name: 'Levav-IT',
-    image: '/img/partners/levav-it.png',
+    image: '/img/partners/levav-it.jpeg',
     imageClass: ' is-levav',
     paragraphs: [
       'A Levav-IT é uma microempresa de tecnologia fundada por alunos veteranos do curso de Ciência de Dados e Inteligência Artificial do IESB. Nascida no ecossistema acadêmico da instituição, é especializada no desenvolvimento de sistemas de alta performance, infraestrutura cloud resiliente e soluções de Inteligência Artificial Generativa em escala empresarial.',
