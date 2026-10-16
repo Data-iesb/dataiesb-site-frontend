@@ -28,7 +28,7 @@ describe('Partners page', () => {
     {
       name: 'Levav-IT',
       paragraphCount: 3,
-      closingText: 'disputar licitações públicas e privadas',
+      closingText: 'competindo em licitações públicas e privadas',
     },
   ])('renders the complete official narrative for $name', ({ name, paragraphCount, closingText }) => {
     render(<Page />)

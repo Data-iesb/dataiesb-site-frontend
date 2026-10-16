@@ -47,7 +47,7 @@ const partners = [
     paragraphs: [
       'A Levav-IT é uma microempresa de tecnologia fundada por alunos veteranos do curso de Ciência de Dados e Inteligência Artificial do IESB. Nascida no ecossistema acadêmico da instituição, é especializada no desenvolvimento de sistemas de alta performance, infraestrutura cloud resiliente e soluções de Inteligência Artificial Generativa em escala empresarial.',
       'No Projeto Big Data – IESB, a empresa atua no ecossistema técnico — com arquiteturas escaláveis em AWS, engenharia de dados, DevOps e aplicações analíticas — e na frente administrativa, estruturando e liderando as operações.',
-      'O grande diferencial da Levav-IT é o desenvolvimento de talentos: capacita e orienta novos integrantes para que assumam posições de liderança com autonomia, conectando a formação acadêmica do IESB diretamente às exigências do mercado. Atualmente, projeta-se no mercado por meio de um consórcio com profissionais autônomos, unindo forças para atender demandas B2B e disputar licitações públicas e privadas.',
+      'O grande diferencial da Levav-IT está na formação de lideranças: a empresa orienta estudantes do IESB para atuarem com autonomia em projetos reais, conectando a academia ao mercado. Para expandir sua atuação comercial, opera em consórcio com profissionais autônomos, atendendo demandas B2B e competindo em licitações públicas e privadas.',
     ],
   },
   {
