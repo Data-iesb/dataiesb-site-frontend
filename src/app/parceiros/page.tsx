@@ -1,8 +1,40 @@
+import type { ReactNode } from 'react'
+
 import type { Metadata } from 'next'
 
 import { PageIntro } from '@/components/content-ui'
 
 export const metadata: Metadata = { title: 'Parceiros' }
+
+// Converte URLs e domínios citados no texto (ex.: https://darede.com.br,
+// www.levav.it, datai.tec.br) em links clicáveis que abrem em nova aba.
+const URL_PATTERN = /(https?:\/\/[^\s)]+|www\.[^\s)]+|[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com\.br|tec\.br|com|br|it|org|net)\b)/gi
+
+function renderWithLinks(text: string): ReactNode[] {
+  const nodes: ReactNode[] = []
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  URL_PATTERN.lastIndex = 0
+  while ((match = URL_PATTERN.exec(text)) !== null) {
+    const raw = match[0]
+    // Remove pontuação final que não faz parte da URL.
+    const trimmed = raw.replace(/[.,;:)]+$/, '')
+    const start = match.index
+    if (start > lastIndex) nodes.push(text.slice(lastIndex, start))
+    const href = trimmed.startsWith('http') ? trimmed : `https://${trimmed}`
+    nodes.push(
+      <a key={`${start}-${trimmed}`} href={href} target="_blank" rel="noopener noreferrer">
+        {trimmed}
+      </a>,
+    )
+    // Reanexa qualquer pontuação removida como texto.
+    const tail = raw.slice(trimmed.length)
+    if (tail) nodes.push(tail)
+    lastIndex = start + raw.length
+  }
+  if (lastIndex < text.length) nodes.push(text.slice(lastIndex))
+  return nodes
+}
 
 const partners = [
   {
@@ -85,7 +117,7 @@ export default function Page() {
           <div className={`partner-logo${partner.imageClass}`}><img src={partner.image} alt={`Logo ${partner.name}`} /></div>
           <div className="partner-copy">
             <h2>{partner.name}</h2>
-            {partner.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {partner.paragraphs.map((paragraph) => <p key={paragraph}>{renderWithLinks(paragraph)}</p>)}
           </div>
         </article>
       ))}</div>
