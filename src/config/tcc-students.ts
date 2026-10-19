@@ -8,8 +8,8 @@ export type TccStudent = Readonly<{
   github?: string
 }>
 
-// Names and titles follow the TCC registration sheet. A photo is set only
-// where the shared folder filename identifies the student.
+// Names and titles follow the TCC registration sheet and explicit confirmations.
+// Photos use identified filenames or a confirmed association from the student.
 export const tccStudents: readonly TccStudent[] = [
   {
     id: 'luca-adriano-melo-mendonca-soares',
@@ -83,5 +83,29 @@ export const tccStudents: readonly TccStudent[] = [
     name: 'Maycon Moriy Abe Machado',
     linkedin: 'https://www.linkedin.com/in/mayconabe/',
     github: 'https://github.com/mayconabe',
+  },
+  {
+    id: 'pedro-martins-rodrigues',
+    name: 'Pedro Martins Rodrigues',
+    photoUrl: '/img/tcc/pedro-martins-rodrigues.jpg',
+    provisionalTitle: 'Detector de Fake News',
+    linkedin: 'https://www.linkedin.com/in/pedro-martins-rodrigues-15176a326/?isSelfProfile=true',
+    lattes: 'https://wwws.cnpq.br/cvlattesweb/PKG_MENU.menu?f_cod=08ED9A3BB4C4E29E63B39E2A0A267D70',
+    github: 'https://github.com/Pedro-M-R',
+  },
+  {
+    id: 'carlos-henrique-de-brito-teles',
+    name: 'Carlos Henrique de Brito Teles',
+    provisionalTitle: 'Classificação de imagens medicas com o framework MONAI',
+    linkedin: 'https://www.linkedin.com/in/carlos-henrique-de-brito-teles-23208228a/',
+    github: 'https://github.com/carloshenrique0309',
+  },
+  {
+    id: 'joel-carolino-farias',
+    name: 'Joel Carolino Farias',
+    photoUrl: '/img/team/joel-farias.png',
+    linkedin: 'https://www.linkedin.com/in/joel-carolinof/',
+    lattes: 'http://lattes.cnpq.br/3218791434540061',
+    github: 'https://github.com/JoelFarias',
   },
 ]
