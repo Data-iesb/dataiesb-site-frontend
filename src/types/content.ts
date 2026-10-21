@@ -3,6 +3,8 @@ export type NewsPost = Readonly<{
   slug: string
   excerpt: string
   publishedAt: string
+  source?: string
+  url?: string
   featureImage?: string
   html?: string
 }>

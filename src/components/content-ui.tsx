@@ -66,12 +66,12 @@ const formatDate = (value: string) => {
 }
 
 export function NewsCard({ post, featured = false }: Readonly<{ post: NewsPost; featured?: boolean }>) {
-  const href = new URL(`${post.slug.replace(/^\/+|\/+$/g, '')}/`, `${siteConfig.ghostSiteUrl}/`).toString()
+  const href = post.url ?? new URL(`${post.slug.replace(/^\/+|\/+$/g, '')}/`, `${siteConfig.ghostSiteUrl}/`).toString()
   return (
     <article className={`content-card news-card${featured ? ' is-featured' : ''}`}>
       {post.featureImage && <img src={post.featureImage} alt="" loading="lazy" />}
       <div className="news-card-body">
-        <span className="card-eyebrow">{formatDate(post.publishedAt)}</span>
+        <span className="card-eyebrow">{post.source && `${post.source} · `}{formatDate(post.publishedAt)}</span>
         <h3>{post.title}</h3>
         <p>{post.excerpt || 'Leia a publicação completa no portal de notícias do DATA IESB.'}</p>
         <a href={href} target="_blank" rel="noopener noreferrer">
