@@ -9,6 +9,12 @@ export const navigationGroups: readonly NavigationGroup[] = [
     ],
   },
   {
+    label: 'Exemplos de Aplicações com ferramentas de IA - AWS',
+    items: [
+      { id: 'aws-quicksight', label: 'Painel QuickSight', href: '/paineis/quicksight/', highlight: true },
+    ],
+  },
+  {
     label: 'Inteligência Artificial',
     items: [
       {
@@ -106,12 +112,6 @@ export const navigationGroups: readonly NavigationGroup[] = [
       { id: 'quem-somos', label: 'Quem somos', href: '/quem-somos/' },
       { id: 'parceiros', label: 'Parceiros', href: '/parceiros/' },
       { id: 'contato', label: 'Contato', href: '/contato/' },
-    ],
-  },
-  {
-    label: 'Exemplos de Aplicações com ferramentas de IA - AWS',
-    items: [
-      { id: 'aws-quicksight', label: 'Painel QuickSight', href: '/paineis/quicksight/', highlight: true },
     ],
   },
 ]

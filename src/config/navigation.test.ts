@@ -6,6 +6,7 @@ describe('navigationGroups', () => {
   it('organizes the portal according to the professor brief without excluded FUNASA areas', () => {
     expect(navigationGroups.map((group) => group.label)).toEqual([
       'Visão geral',
+      'Exemplos de Aplicações com ferramentas de IA - AWS',
       'Inteligência Artificial',
       'Eleições',
       'SUS Assistência à Saúde',
@@ -15,7 +16,6 @@ describe('navigationGroups', () => {
       'Estudos e Publicações',
       'Trabalhos Acadêmicos',
       'Institucional',
-      'Exemplos de Aplicações com ferramentas de IA - AWS',
     ])
 
     const labels = navigationGroups.flatMap((group) => group.items.map((item) => item.label))
@@ -42,7 +42,7 @@ describe('navigationGroups', () => {
     expect(labels).not.toContain('Aqui Tem Funasa')
     expect(labels).not.toContain('Gestão de Convênios')
 
-    expect(navigationGroups.at(-1)).toEqual({
+    expect(navigationGroups.at(1)).toEqual({
       label: 'Exemplos de Aplicações com ferramentas de IA - AWS',
       items: [
         { id: 'aws-quicksight', label: 'Painel QuickSight', href: '/paineis/quicksight/', highlight: true },
