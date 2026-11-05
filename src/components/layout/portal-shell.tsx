@@ -19,6 +19,7 @@ import {
   Moon,
   Newspaper,
   School,
+  Sparkles,
   Sun,
   UsersRound,
   X,
@@ -47,6 +48,7 @@ const iconById = {
   'municipio-prefeituras': Building2,
   'como-votamos': MapPinned,
   'estudos-clusters-lisa': BookOpenText,
+  'aws-quicksight': Sparkles,
   'trabalhos-tcc': GraduationCap,
   'quem-somos': CircleUserRound,
   parceiros: UsersRound,
@@ -150,6 +152,7 @@ export function PortalShell({ children, immersive = false }: Props) {
                 <>
                   <Icon size={18} strokeWidth={1.7} aria-hidden="true" />
                   <span>{item.label}</span>
+                  {item.highlight && <span className="nav-badge" aria-hidden="true">Novo</span>}
                 </>
               )
 
@@ -175,7 +178,7 @@ export function PortalShell({ children, immersive = false }: Props) {
                 </a>
               ) : (
                 <a
-                  className={`nav-link${active ? ' is-active' : ''}`}
+                  className={`nav-link${active ? ' is-active' : ''}${item.highlight ? ' is-highlight' : ''}`}
                   href={item.href}
                   key={item.id}
                   aria-current={active ? 'page' : undefined}

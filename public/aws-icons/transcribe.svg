@@ -1,0 +1,17 @@
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Amazon Transcribe</title>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="transcribe-gradient">
+            <stop stop-color="#055F4E" offset="0%"></stop>
+            <stop stop-color="#56C0A7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="url(#transcribe-gradient)" x="0" y="0" width="64" height="64"></rect>
+        <g fill="#FFFFFF">
+            <path d="M32,14 C34.209,14 36,15.791 36,18 L36,30 C36,32.209 34.209,34 32,34 C29.791,34 28,32.209 28,30 L28,18 C28,15.791 29.791,14 32,14 Z M32,16 C30.895,16 30,16.895 30,18 L30,30 C30,31.105 30.895,32 32,32 C33.105,32 34,31.105 34,30 L34,18 C34,16.895 33.105,16 32,16 Z M24,28 L24,30 C24,34.418 27.582,38 32,38 C36.418,38 40,34.418 40,30 L40,28 L42,28 L42,30 C42,35.185 38.053,39.449 33,39.95 L33,44 L39,44 L39,46 L25,46 L25,44 L31,44 L31,39.95 C25.947,39.449 22,35.185 22,30 L22,28 L24,28 Z"></path>
+            <rect x="12" y="50" width="16" height="2"></rect>
+            <rect x="32" y="50" width="20" height="2"></rect>
+        </g>
+    </g>
+</svg>

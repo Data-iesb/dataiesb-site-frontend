@@ -1,0 +1,20 @@
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Amazon QuickSight</title>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="quicksight-gradient">
+            <stop stop-color="#2E27AD" offset="0%"></stop>
+            <stop stop-color="#527FFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="url(#quicksight-gradient)" x="0" y="0" width="64" height="64"></rect>
+        <g fill="#FFFFFF">
+            <path d="M14,44 L50,44 L50,46 L12,46 C11.448,46 11,45.552 11,45 L11,16 L13,16 L14,16 L14,44 Z"></path>
+            <rect x="19" y="30" width="5" height="11"></rect>
+            <rect x="28" y="22" width="5" height="19"></rect>
+            <rect x="37" y="26" width="5" height="15"></rect>
+            <rect x="46" y="18" width="5" height="23"></rect>
+            <path d="M44.293,14.293 C44.683,13.902 45.317,13.902 45.707,14.293 C46.098,14.683 46.098,15.317 45.707,15.707 L34.414,27 L28.707,21.293 C28.317,20.902 27.683,20.902 27.293,21.293 L18.707,29.879 L17.293,28.465 L25.879,19.879 C27.049,18.709 28.951,18.709 30.121,19.879 L34.414,24.172 L44.293,14.293 Z"></path>
+        </g>
+    </g>
+</svg>

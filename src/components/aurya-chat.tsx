@@ -1,6 +1,6 @@
 'use client'
 
-import { Bot, FileText, Loader2, Mic, Plus, RefreshCw, Send, Sparkles, Square, Volume2, VolumeX } from 'lucide-react'
+import { Bot, FileText, Loader2, Mic, Plus, RefreshCw, Repeat, Send, Sparkles, Square, Volume2, VolumeX } from 'lucide-react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -8,6 +8,8 @@ import { siteConfig } from '@/config/site'
 import { synthesizeSpeech, transcribeAudio } from '@/lib/aurya-audio'
 import { useAudioRecorder } from '@/hooks/use-audio-recorder'
 import type { AssistantDefinition } from '@/config/assistants'
+
+import { AwsStackBadge } from './aws-stack-badge'
 
 type ChatMessage = Readonly<{ role: 'user' | 'assistant'; content: string }>
 
@@ -188,7 +190,11 @@ const newSessionId = () =>
     ? crypto.randomUUID()
     : Math.random().toString(36).slice(2)
 
-export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefinition }>) {
+export function AuryaChat({ assistant, onChangeMode, modeLabel }: Readonly<{
+  assistant: AssistantDefinition
+  onChangeMode?: () => void
+  modeLabel?: string
+}>) {
   const [messages, setMessages] = useState<ChatMessage[]>(() => [welcome(assistant)])
   const [input, setInput] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
@@ -435,6 +441,7 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
           <span>{assistant.eyebrow}</span>
           <h2>{assistant.title}</h2>
           <p>{assistant.description}</p>
+          <AwsStackBadge dashboardSlug="athena" variant="inline" />
         </section>
         {suggestions.length > 0 && (
           <section className="aurya-chat-suggestions">
@@ -476,6 +483,11 @@ export function AuryaChat({ assistant }: Readonly<{ assistant: AssistantDefiniti
         <header className="aurya-chat-topbar">
           <img className="atena-logo" src="/img/atena.png" alt="Athena — Deusa do Conhecimento" width={44} height={44} />
           <h1><span>Athena AI /</span> {assistant.title.toUpperCase()}</h1>
+          {onChangeMode && (
+            <button type="button" className="aurya-mode-switch" aria-label={`Trocar modo (${modeLabel})`} onClick={() => void resetChat().then(onChangeMode)}>
+              <Repeat size={13} strokeWidth={1.5} /> <span className="aurya-mode-switch-label">Trocar modo</span>
+            </button>
+          )}
           <button type="button" onClick={() => void resetChat()}>
             <RefreshCw size={13} strokeWidth={1.5} /> Reiniciar
           </button>

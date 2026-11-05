@@ -110,6 +110,8 @@ export const navigationGroups: readonly NavigationGroup[] = [
   },
   {
     label: 'Exemplos de Aplicações com ferramentas de IA - AWS',
-    items: [],
+    items: [
+      { id: 'aws-quicksight', label: 'Painel QuickSight', href: '/paineis/quicksight/', highlight: true },
+    ],
   },
 ]

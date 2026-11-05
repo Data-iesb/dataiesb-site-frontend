@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { PortalShell } from '@/components/layout/portal-shell'
 
 import './globals.css'
+import './aws-extras.css'
 
 export const metadata: Metadata = {
   title: { default: 'DATA IESB — Ciência de Dados Aplicada', template: '%s — DATA IESB' },

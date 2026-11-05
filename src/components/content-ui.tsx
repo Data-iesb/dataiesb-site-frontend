@@ -39,10 +39,14 @@ export function ResourceState({ status, error, retry, emptyMessage }: Readonly<{
   )
 }
 
+function PoweredByAws() {
+  return <span className="powered-by-aws"><img src="/aws-icons/powered-by-aws.png" alt="Powered by AWS" width={96} height={48} loading="lazy" /></span>
+}
+
 export function ApplicationCard({ item }: Readonly<{ item: ApplicationCatalogItem }>) {
   return (
     <article className="content-card application-card">
-      {item.imageUrl && <img className="application-card-image" src={item.imageUrl} alt={`Capa de ${item.title}`} loading="lazy" />}
+      {item.imageUrl && <figure className="application-card-image-wrap media-with-aws"><img className="application-card-image" src={item.imageUrl} alt={`Capa de ${item.title}`} loading="lazy" /><PoweredByAws /></figure>}
       <div className="application-card-body">
       <span className="card-eyebrow">{item.eyebrow}</span>
       <h3>{item.title}</h3>
@@ -69,7 +73,7 @@ export function NewsCard({ post, featured = false }: Readonly<{ post: NewsPost; 
   const href = post.url ?? new URL(`${post.slug.replace(/^\/+|\/+$/g, '')}/`, `${siteConfig.ghostSiteUrl}/`).toString()
   return (
     <article className={`content-card news-card${featured ? ' is-featured' : ''}`}>
-      {post.featureImage && <img src={post.featureImage} alt="" loading="lazy" />}
+      {post.featureImage && <figure className="news-card-image-wrap media-with-aws"><img src={post.featureImage} alt="" loading="lazy" /><PoweredByAws /></figure>}
       <div className="news-card-body">
         <span className="card-eyebrow">{post.source && `${post.source} · `}{formatDate(post.publishedAt)}</span>
         <h3>{post.title}</h3>

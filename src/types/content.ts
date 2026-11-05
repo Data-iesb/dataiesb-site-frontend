@@ -37,6 +37,7 @@ export type NavigationItem = Readonly<{
   href: string
   external?: boolean
   disabled?: boolean
+  highlight?: boolean
 }>
 
 export type NavigationGroup = Readonly<{

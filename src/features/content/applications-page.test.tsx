@@ -40,6 +40,7 @@ describe('ApplicationsPage', () => {
     expect(screen.getByRole('link', { name: /Visualizar Setores Censitários 2022/ })).toHaveAttribute('href', '/paineis/setores-censitarios/')
     expect(screen.getByRole('link', { name: /Visualizar Painel das Prefeituras/ })).toHaveAttribute('href', '/paineis/prefeituras/')
     expect(screen.getByRole('link', { name: /Visualizar Clusters LISA/ })).toHaveAttribute('href', '/paineis/clusters-lisa/')
+    expect(screen.getByRole('link', { name: /Visualizar Painel QuickSight/ })).toHaveAttribute('href', '/paineis/quicksight/')
   })
 
   it('describes an empty dynamic catalog without denying the static SUS dashboards', () => {
@@ -54,6 +55,6 @@ describe('ApplicationsPage', () => {
 
     expect(screen.getByText('Ainda não há outras aplicações publicadas.')).toBeInTheDocument()
     expect(screen.queryByText('Nenhuma aplicação disponível neste momento.')).not.toBeInTheDocument()
-    expect(screen.getAllByRole('article')).toHaveLength(12)
+    expect(screen.getAllByRole('article')).toHaveLength(13)
   })
 })

@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Como Votei: mapa eleitoral interativo da RIDE-DF - DataIESB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--color-base:#1f1f1f;--color-surface:#252525;--color-text-primary:#e0e0e0;--color-text-secondary:#999;--color-accent:#E30613;--color-border:rgba(255,255,255,.1)}
+body{font-family:'Inter',sans-serif;background:var(--color-base);color:var(--color-text-primary);line-height:1.8;margin:0}
+article{max-width:720px;margin:0 auto;padding:4rem 2rem}
+h1{font-size:2.4rem;font-weight:700;margin-bottom:.5rem;letter-spacing:-0.02em}
+h2{color:var(--color-accent);font-size:1.4rem;margin:2rem 0 .8rem;font-weight:600}
+h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
+p{margin-bottom:1rem;color:var(--color-text-secondary)}
+ul{margin:0 0 1.5rem 1.5rem;color:var(--color-text-secondary)}
+li{margin-bottom:.5rem}
+li strong{color:var(--color-text-primary)}
+a{color:var(--color-accent);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;border-radius:8px}
+article>img{animation:imgFloat 6s ease-in-out infinite;box-shadow:0 10px 40px rgba(227,6,19,.15)}
+@keyframes imgFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.01)}}
+.meta{color:var(--color-text-secondary);font-size:.9rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--color-border)}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:3rem;padding:10px 20px;border:1px solid var(--color-border);border-radius:6px;color:var(--color-text-secondary);font-size:.9rem;transition:border-color .2s,color .2s}
+.back:hover{border-color:var(--color-accent);color:var(--color-accent);text-decoration:none}
+</style>
+</head><body><article><img src="https://d28lvm9jkyfotx.cloudfront.net/img/como-votei-feature.png" style="width:100%;max-height:400px;object-fit:contain;border-radius:12px;margin-bottom:32px;background:#151515;"><h1><span style="color:#E30613">Como Votei</span>: mapa eleitoral interativo da RIDE-DF</h1><p class="meta">2026-06-19</p><div><!--kg-card-begin: html--><p>O <strong>DataIESB</strong> acaba de publicar o painel <strong>Como Votei</strong> — uma ferramenta interativa que permite a qualquer pessoa explorar os resultados eleitorais por zona eleitoral na <strong>RIDE-DF</strong> (Região Integrada de Desenvolvimento do Distrito Federal e Entorno).</p><h2>O que é</h2><p>O painel cruza dados oficiais do <strong>Tribunal Superior Eleitoral (TSE)</strong> com a malha de setores censitários do <strong>IBGE (Censo 2022)</strong>, permitindo visualizar como cada zona eleitoral votou nas eleições de 2002 a 2022.</p><h2>O que você pode fazer</h2><ul><li><strong>Clicar no mapa</strong> para selecionar uma zona eleitoral do DF ou um município da RIDE</li><li><strong>Ver o ranking dos 10 candidatos mais votados</strong> naquela zona, com gráfico de barras</li><li><strong>Filtrar por ano</strong> (2002 a 2022), <strong>turno</strong> (1º ou 2º) e <strong>cargo</strong> (Presidente, Governador, Senador, Deputados)</li><li><strong>Alternar entre visão resumida</strong> (municípios + zonas do DF) e <strong>visão detalhada</strong> (8.400+ setores censitários)</li></ul><h2>Dados utilizados</h2><ul><li><strong>TSE</strong> — Votos nominais por candidato e zona eleitoral em todas as eleições gerais desde 2002</li><li><strong>IBGE</strong> — Setores censitários da RIDE (Censo 2022) e polígonos dos municípios do entorno</li><li><strong>33 municípios da RIDE + 21 zonas eleitorais do DF</strong> mapeados</li></ul><h2>Tecnologia</h2><p>O projeto foi desenvolvido com Python (Dash + GeoPandas + Plotly), roda em Kubernetes (Amazon EKS) e faz parte da infraestrutura de painéis públicos do DataIESB.</p><h2>Acesse</h2><p>O painel está disponível gratuitamente:<br><a href="https://app.dataiesb.com/votei/?ref=ghost.dataiesb.com">👉 app.dataiesb.com/votei</a></p><!--kg-card-end: html--></div><a href="/" class="back">← Voltar para DataIESB</a></article></body></html>
