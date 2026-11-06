@@ -28,11 +28,13 @@ const reports: PublicReport[] = [
 ]
 
 describe('isAllowedEmbedUrl', () => {
-  it('allows only HTTPS dashboards from the two approved hosts', () => {
+  it('allows only HTTPS dashboards from approved hosts', () => {
     expect(isAllowedEmbedUrl('https://app.dataiesb.com/votei/')).toBe(true)
     expect(isAllowedEmbedUrl('https://funasa.dataiesb.com/ambulatorio/')).toBe(true)
+    expect(isAllowedEmbedUrl(getDashboardBySlug('quicksight')!.sourceUrl)).toBe(true)
     expect(isAllowedEmbedUrl('http://app.dataiesb.com/votei/')).toBe(false)
     expect(isAllowedEmbedUrl('https://app.dataiesb.com.evil.example/votei/')).toBe(false)
+    expect(isAllowedEmbedUrl('https://us-east-1.quicksight.aws.amazon.com.evil.example/')).toBe(false)
     expect(isAllowedEmbedUrl('javascript:alert(1)')).toBe(false)
   })
 })
@@ -68,9 +70,14 @@ describe('buildApplicationCatalog', () => {
       'municipio-setores',
       'municipio-prefeituras',
       'estudos-clusters-lisa',
+      'aws-quicksight',
     ])
     expect(new Set(result.map((item) => item.href)).size).toBe(result.length)
     expect(result.find((item) => item.key === 'sus-aih')?.title).toBe('SUS – AIH – Brasil')
+    expect(result.find((item) => item.key === 'aws-quicksight')).toMatchObject({
+      href: '/paineis/quicksight/',
+      imageUrl: '/aws-icons/quicksight.svg',
+    })
   })
 
   it('features Como Votei and every integrated panel without unrelated reports', () => {
@@ -94,6 +101,7 @@ describe('buildApplicationCatalog', () => {
       'municipio-setores',
       'municipio-prefeituras',
       'estudos-clusters-lisa',
+      'aws-quicksight',
     ])
   })
 })
@@ -115,7 +123,14 @@ describe('dashboard registry', () => {
     )
   })
 
-  it('locks the full reveal, crop, and mobile-scale contract for all twelve embeds', () => {
+  it('restores the exact published QuickSight dashboard and its immediate reveal', () => {
+    expect(getDashboardBySlug('quicksight')).toMatchObject({
+      sourceUrl: 'https://us-east-1.quicksight.aws.amazon.com/sn/account/adm-students-iesb/embed/share/accounts/248189947068/dashboards/cc1517f6-360b-49fb-9a3a-4cec5dc0d010',
+      revealDelayMs: 0,
+    })
+  })
+
+  it('locks the full reveal, crop, and mobile-scale contract for all thirteen embeds', () => {
     const zeroCrop = {
       desktop: { top: 0, left: 0, bottom: 0 },
       mobile: { top: 0, left: 0, bottom: 0 },
@@ -133,6 +148,7 @@ describe('dashboard registry', () => {
       ['setores-censitarios', 8_000, 0.8, zeroCrop],
       ['prefeituras', 9_000, undefined, { desktop: { top: 96, left: 0, bottom: 0 }, mobile: { top: 112, left: 0, bottom: 0 } }],
       ['clusters-lisa', 9_000, undefined, zeroCrop],
+      ['quicksight', 0, undefined, zeroCrop],
     ] as const
 
     for (const [slug, revealDelayMs, mobileScale, crop] of contracts) {

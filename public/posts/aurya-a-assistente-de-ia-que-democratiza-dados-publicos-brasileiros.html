@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Athena: a assistente de IA que democratiza dados públicos brasileiros - DataIESB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--color-base:#1f1f1f;--color-surface:#252525;--color-text-primary:#e0e0e0;--color-text-secondary:#999;--color-accent:#E30613;--color-border:rgba(255,255,255,.1)}
+body{font-family:'Inter',sans-serif;background:var(--color-base);color:var(--color-text-primary);line-height:1.8;margin:0}
+article{max-width:720px;margin:0 auto;padding:4rem 2rem}
+h1{font-size:2.4rem;font-weight:700;margin-bottom:.5rem;letter-spacing:-0.02em}
+h2{color:var(--color-accent);font-size:1.4rem;margin:2rem 0 .8rem;font-weight:600}
+h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
+p{margin-bottom:1rem;color:var(--color-text-secondary)}
+ul{margin:0 0 1.5rem 1.5rem;color:var(--color-text-secondary)}
+li{margin-bottom:.5rem}
+li strong{color:var(--color-text-primary)}
+a{color:var(--color-accent);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;border-radius:8px}
+article>img{animation:imgFloat 6s ease-in-out infinite;box-shadow:0 10px 40px rgba(227,6,19,.15)}
+@keyframes imgFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.01)}}
+.meta{color:var(--color-text-secondary);font-size:.9rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--color-border)}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:3rem;padding:10px 20px;border:1px solid var(--color-border);border-radius:6px;color:var(--color-text-secondary);font-size:.9rem;transition:border-color .2s,color .2s}
+.back:hover{border-color:var(--color-accent);color:var(--color-accent);text-decoration:none}
+</style>
+</head><body><article><img src="https://dataiesb.com/img/aurya-feature.png" style="width:100%;max-height:400px;object-fit:contain;border-radius:12px;margin-bottom:32px;background:#151515;"><h1><span style="color:#E30613">Athena</span>: a assistente de IA que democratiza dados públicos brasileiros</h1><p class="meta">2026-06-05</p><div><p>Imagine poder perguntar — em linguagem natural — quantas escolas existem em seu município, qual a taxa de internação por dengue no DF, ou como o Censo 2022 impactou sua região. Essa é a proposta da <strong>Athena</strong>, a assistente de Inteligência Artificial desenvolvida pelo DataIESB.</p><h2 id="o-que-%C3%A9-a-aurya">O que é a Athena</h2><p>A Athena é um chatbot inteligente que conecta o usuário a bases de dados públicas brasileiras. Por meio de processamento de linguagem natural alimentado por modelos de IA da <strong>Amazon Bedrock</strong>, ela interpreta perguntas do dia a dia e retorna respostas estruturadas com dados oficiais.</p><h2 id="bases-de-dados-dispon%C3%ADveis">Bases de dados disponíveis</h2><p>A assistente atualmente opera sobre quatro grandes domínios:</p><ul><li><strong>Educação</strong> — Censo Escolar, ENEM, dados do Ensino Superior</li><li><strong>Saúde</strong> — SUS, Autorizações de Internação Hospitalar (AIH), dados ambulatoriais</li><li><strong>Demografia</strong> — IBGE, Censo 2022, indicadores populacionais</li><li><strong>Segurança</strong> — Dados de trânsito e ocorrências</li></ul><h2 id="como-funciona">Como funciona</h2><p>O usuário seleciona um tema e faz uma pergunta. A Athena usa IA generativa para entender a intenção, consulta as bases de dados armazenadas no data lake do DataIESB (infraestrutura AWS com Athena e S3) e retorna a resposta com visualizações e métricas relevantes.</p><h2 id="tecnologia-por-tr%C3%A1s">Tecnologia por trás</h2><p>A arquitetura combina:</p><ul><li><strong>Amazon Bedrock</strong> — Modelos de linguagem para interpretação e geração de respostas</li><li><strong>AWS Athena</strong> — Consultas SQL sobre dados no data lake</li><li><strong>Amazon S3</strong> — Armazenamento do data lake com dados públicos processados</li><li><strong>Interface conversacional</strong> — Frontend interativo com visualização de nós temáticos</li></ul><h2 id="acesso-gratuito">Acesso gratuito</h2><p>A Athena está disponível gratuitamente para qualquer pessoa em <a href="https://aurya.dataiesb.com/?ref=ghost.dataiesb.com">athena.dataiesb.com</a>. Não é necessário cadastro — basta acessar, escolher um tema e perguntar.</p><h2 id="impacto">Impacto</h2><p>A ferramenta democratiza o acesso a dados que antes exigiam conhecimento técnico em consultas SQL ou navegação por portais governamentais complexos. Estudantes, pesquisadores, jornalistas e gestores públicos podem obter respostas imediatas sobre a realidade brasileira.</p><p>Desenvolvida inteiramente pelo <strong>DataIESB</strong> com patrocínio da <strong>Amazon Web Services</strong>.</p></div><a href="/" class="back">← Voltar para DataIESB</a></article></body></html>

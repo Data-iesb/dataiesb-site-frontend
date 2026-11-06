@@ -1,3 +1,5 @@
+import { ExternalLink } from 'lucide-react'
+
 import { PageIntro } from '@/components/content-ui'
 import { tccStudents } from '@/config/tcc-students'
 
@@ -19,6 +21,13 @@ export function TccPage() {
                 <p className="tcc-student-role">Aluno de TCC</p>
                 <h2>{student.name}</h2>
                 {student.provisionalTitle && <p className="tcc-student-title">{student.provisionalTitle}</p>}
+                {(student.linkedin || student.lattes || student.github) && (
+                  <div className="member-links tcc-student-links">
+                    {student.linkedin && <a href={student.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ExternalLink size={13} aria-hidden="true" /></a>}
+                    {student.lattes && <a href={student.lattes} target="_blank" rel="noopener noreferrer">Lattes <ExternalLink size={13} aria-hidden="true" /></a>}
+                    {student.github && <a href={student.github} target="_blank" rel="noopener noreferrer">GitHub <ExternalLink size={13} aria-hidden="true" /></a>}
+                  </div>
+                )}
               </div>
             </article>
           ))}

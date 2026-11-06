@@ -3,6 +3,8 @@ export type NewsPost = Readonly<{
   slug: string
   excerpt: string
   publishedAt: string
+  source?: string
+  url?: string
   featureImage?: string
   html?: string
 }>
@@ -35,6 +37,7 @@ export type NavigationItem = Readonly<{
   href: string
   external?: boolean
   disabled?: boolean
+  highlight?: boolean
 }>
 
 export type NavigationGroup = Readonly<{

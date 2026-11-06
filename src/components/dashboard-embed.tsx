@@ -7,6 +7,8 @@ import { useEffect, useState, useSyncExternalStore } from 'react'
 import { isAllowedEmbedUrl } from '@/config/catalog'
 import type { DashboardDefinition } from '@/types/content'
 
+import { AwsStackBadge } from './aws-stack-badge'
+
 type Props = Readonly<{
   dashboard: DashboardDefinition
   timeoutMs?: number
@@ -18,7 +20,8 @@ const subscribeToClient = () => () => undefined
 export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
   const mounted = useSyncExternalStore(subscribeToClient, () => true, () => false)
   const [attempt, setAttempt] = useState(0)
-  const [state, setState] = useState<EmbedState>('loading')
+  const instantReveal = (dashboard.revealDelayMs ?? 0) <= 0
+  const [state, setState] = useState<EmbedState>(instantReveal ? 'revealed' : 'loading')
   const allowed = isAllowedEmbedUrl(dashboard.sourceUrl)
 
   useEffect(() => {
@@ -38,7 +41,7 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
 
   const reload = () => {
     setAttempt((value) => value + 1)
-    setState('loading')
+    setState(instantReveal ? 'revealed' : 'loading')
   }
 
   if (!allowed) {
@@ -124,9 +127,10 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
           referrerPolicy="strict-origin-when-cross-origin"
           sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
           tabIndex={-1}
-          onLoad={() => setState((dashboard.revealDelayMs ?? 0) > 0 ? 'preparing' : 'revealed')}
-          onError={() => setState('error')}
+          onLoad={() => setState(instantReveal ? 'revealed' : 'preparing')}
+          onError={() => setState(instantReveal ? 'revealed' : 'error')}
         />
+        <AwsStackBadge dashboardSlug={dashboard.slug} />
       </div>
     </section>
   )

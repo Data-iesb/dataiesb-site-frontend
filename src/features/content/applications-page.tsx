@@ -15,6 +15,7 @@ export function ApplicationsPage() {
     { id: 'catalogo-meio-ambiente', eyebrow: 'Dados ambientais', title: 'Meio Ambiente' },
     { id: 'catalogo-municipio', eyebrow: 'Território', title: 'Conhecendo os nossos municípios' },
     { id: 'catalogo-estudos', eyebrow: 'Análise espacial', title: 'Estudos e Publicações' },
+    { id: 'catalogo-aws', eyebrow: 'Inteligência artificial', title: 'Exemplos de Aplicações com ferramentas de IA - AWS' },
   ] as const
 
   return (

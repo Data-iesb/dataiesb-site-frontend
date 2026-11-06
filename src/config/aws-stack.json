@@ -1,0 +1,113 @@
+{
+  "default": {
+    "services": [
+      {
+        "id": "eks",
+        "name": "Amazon EKS",
+        "role": "Mantém o painel sempre no ar e organiza os programas que fazem ele funcionar.",
+        "iconKey": "eks",
+        "url": "https://aws.amazon.com/pt/eks/"
+      },
+      {
+        "id": "codebuild",
+        "name": "AWS CodeBuild",
+        "role": "Monta e publica novas versões do painel automaticamente, sem trabalho manual.",
+        "iconKey": "codebuild",
+        "url": "https://aws.amazon.com/pt/codebuild/"
+      },
+      {
+        "id": "rds",
+        "name": "Amazon RDS",
+        "role": "Guarda os dados do painel de forma segura e organizada.",
+        "iconKey": "rds",
+        "url": "https://aws.amazon.com/pt/rds/"
+      },
+      {
+        "id": "iam",
+        "name": "AWS IAM",
+        "role": "Controla quem pode acessar cada parte, mantendo tudo protegido.",
+        "iconKey": "iam",
+        "url": "https://aws.amazon.com/pt/iam/"
+      },
+      {
+        "id": "elb",
+        "name": "Elastic Load Balancing",
+        "role": "Distribui os acessos para o painel abrir rápido para todo mundo.",
+        "iconKey": "elb",
+        "url": "https://aws.amazon.com/pt/elasticloadbalancing/"
+      }
+    ],
+    "openSource": [
+      "Kubernetes",
+      "PostgreSQL",
+      "Python / pandas"
+    ]
+  },
+  "overrides": {
+    "quicksight": {
+      "services": [
+        {
+          "id": "quicksight",
+          "name": "Amazon QuickSight",
+          "role": "Cria e publica este painel interativo com gráficos e análises visuais.",
+          "iconKey": "quicksight",
+          "url": "https://aws.amazon.com/pt/quicksight/"
+        },
+        {
+          "id": "rds",
+          "name": "Amazon RDS",
+          "role": "Guarda os dados que alimentam o painel de forma segura e organizada.",
+          "iconKey": "rds",
+          "url": "https://aws.amazon.com/pt/rds/"
+        }
+      ],
+      "openSource": [
+        "PostgreSQL"
+      ]
+    },
+    "athena": {
+      "services": [
+        {
+          "id": "bedrock",
+          "name": "Amazon Bedrock",
+          "role": "Modelo de IA generativa que entende as perguntas e escreve as respostas da Athena.",
+          "iconKey": "bedrock",
+          "url": "https://aws.amazon.com/pt/bedrock/"
+        },
+        {
+          "id": "transcribe",
+          "name": "Amazon Transcribe",
+          "role": "Converte a sua fala em texto quando você pergunta por voz.",
+          "iconKey": "transcribe",
+          "url": "https://aws.amazon.com/pt/transcribe/"
+        },
+        {
+          "id": "polly",
+          "name": "Amazon Polly",
+          "role": "Transforma a resposta em áudio com voz natural para você ouvir.",
+          "iconKey": "polly",
+          "url": "https://aws.amazon.com/pt/polly/"
+        },
+        {
+          "id": "s3",
+          "name": "Amazon S3",
+          "role": "Guarda os áudios e materiais usados pela assistente.",
+          "iconKey": "s3",
+          "url": "https://aws.amazon.com/pt/s3/"
+        },
+        {
+          "id": "eks",
+          "name": "Amazon EKS",
+          "role": "Mantém a API da Athena sempre no ar.",
+          "iconKey": "eks",
+          "url": "https://aws.amazon.com/pt/eks/"
+        }
+      ],
+      "openSource": [
+        "LangChain",
+        "Python",
+        "FastAPI"
+      ]
+    }
+  }
+}

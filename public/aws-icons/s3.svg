@@ -1,0 +1,17 @@
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Amazon S3</title>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="s3-gradient">
+            <stop stop-color="#1B660F" offset="0%"></stop>
+            <stop stop-color="#6CAE3E" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="url(#s3-gradient)" x="0" y="0" width="64" height="64"></rect>
+        <g fill="#FFFFFF">
+            <path d="M32,12 C24,12 18,13.5 18,16 L18,48 C18,50.5 24,52 32,52 C40,52 46,50.5 46,48 L46,16 C46,13.5 40,12 32,12 Z M44,48 C44,48.9 39.3,50 32,50 C24.7,50 20,48.9 20,48 L20,19.6 C22.5,20.9 27.3,21.6 32,21.6 C36.7,21.6 41.5,20.9 44,19.6 L44,48 Z M32,19.6 C24.7,19.6 20,18.5 20,17.6 C20,16.7 24.7,15.6 32,15.6 C39.3,15.6 44,16.7 44,17.6 C44,18.5 39.3,19.6 32,19.6 Z"></path>
+            <path d="M32,30 C27.3,30 22.5,30.7 20,32 L20,34.2 C22.5,32.9 27.3,32.2 32,32.2 C36.7,32.2 41.5,32.9 44,34.2 L44,32 C41.5,30.7 36.7,30 32,30 Z"></path>
+            <path d="M32,38 C27.3,38 22.5,38.7 20,40 L20,42.2 C22.5,40.9 27.3,40.2 32,40.2 C36.7,40.2 41.5,40.9 44,42.2 L44,40 C41.5,38.7 36.7,38 32,38 Z"></path>
+        </g>
+    </g>
+</svg>

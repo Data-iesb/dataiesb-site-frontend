@@ -10,6 +10,16 @@ afterEach(() => {
 })
 
 describe('DashboardEmbed', () => {
+  it('shows the QuickSight iframe immediately and keeps it visible when reloaded', () => {
+    const dashboard = getDashboardBySlug('quicksight')!
+    render(<DashboardEmbed dashboard={dashboard} />)
+
+    expect(screen.getByTitle(`Painel interativo: ${dashboard.title}`)).toHaveClass('is-revealed')
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Recarregar painel' }))
+    expect(screen.getByTitle(`Painel interativo: ${dashboard.title}`)).toHaveClass('is-revealed')
+  })
+
   it('keeps a DATA IESB preparation screen until the dashboard reveal delay expires', () => {
     vi.useFakeTimers()
     const dashboard = getDashboardBySlug('sus-aih')!

@@ -25,6 +25,8 @@ test.beforeEach(async ({ page }) => {
   await page.route('**/dataiesb-auth/public-reports', (route) => route.fulfill({ json: reportsPayload }))
   await page.route('**/prod/team', (route) => route.fulfill({ json: teamPayload }))
   await page.route('https://images.example.org/**', (route) => route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" />' }))
+  await page.route('https://d28lvm9jkyfotx.cloudfront.net/img/paineis/**', (route) => route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" />' }))
+  await page.route('https://us-east-1.quicksight.aws.amazon.com/**', (route) => route.fulfill({ contentType: 'text/html', body: '<main><h1>Painel QuickSight</h1></main>' }))
   await page.route('https://aurya.dataiesb.com/**', (route) => route.fulfill({ contentType: 'text/html', body: '<main><h1>Aurya</h1></main>' }))
   await page.route('https://app.dataiesb.com/**', (route) => route.fulfill({ contentType: 'text/html', body: '<main><h1>Painel DATA IESB</h1></main>' }))
   await page.route('https://funasa.dataiesb.com/**', (route) => route.fulfill({ contentType: 'text/html', body: '<main><h1>Painel SUS</h1></main>' }))
@@ -34,7 +36,7 @@ test('all public routes render from the static export', async ({ page }) => {
   const routes = [
     '/', '/noticias/', '/aplicacoes/', '/aplicacoes/visualizar/?id=1',
     '/quem-somos/', '/parceiros/', '/contato/',
-    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/aurya-iesb/', '/assistentes/athena-professores/', '/assistentes/athena-alunos/', '/assistentes/iara-sus/',
+    '/assistentes/', '/assistentes/aurya-sus/', '/assistentes/aurya-pos-graduacao/', '/assistentes/aurya-iesb/', '/assistentes/athena-professores/', '/assistentes/athena-alunos/', '/assistentes/athena-educacional/', '/assistentes/iara-sus/',
   ]
   for (const route of routes) {
     const response = await page.goto(route)
@@ -67,6 +69,34 @@ test('all public routes render from the static export', async ({ page }) => {
   }
 })
 
+test('restored news images are included in the static export', async ({ request }) => {
+  for (const file of ['aurya-feature.png', 'reboot-feature.png', 'datai-feature.png']) {
+    const response = await request.head(`/img/${file}`)
+    expect(response.ok(), file).toBeTruthy()
+    expect(response.headers()['content-type'], file).toContain('image/png')
+  }
+})
+
+test('legacy news links remain available with the Athena name', async ({ request }) => {
+  const articles = [
+    '/posts/aurya-a-assistente-de-ia-que-democratiza-dados-publicos-brasileiros.html',
+    '/posts/como-votei-mapa-eleitoral-interativo-da-ride-df.html',
+    '/posts/datai-a-primeira-empresa-junior-de-ia-do-brasil.html',
+    '/posts/reboot-iesb-2026-o-evento-que-vai-reiniciar-sua-visao-sobre-ia.html',
+  ]
+  for (const article of articles) {
+    const response = await request.get(article)
+    expect(response.ok(), article).toBeTruthy()
+    if (article.includes('/aurya-')) {
+      const html = await response.text()
+      expect(html).toContain('<title>Athena:')
+      expect(html).not.toMatch(/\bAurya\b/)
+      expect(html).toContain('/img/aurya-feature.png')
+    }
+  }
+  expect((await request.get('/news.html')).ok()).toBeTruthy()
+})
+
 test('the Eleições menu opens Como Votamos in the report viewer', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'The desktop sidebar is not rendered on mobile.')
   await page.goto('/')
@@ -77,6 +107,48 @@ test('the Eleições menu opens Como Votamos in the report viewer', async ({ pag
   await expect(page.getByRole('link', { name: 'Abrir painel' })).toHaveCount(0)
 })
 
+test('QuickSight opens from the AWS examples group with its AWS information', async ({ page }, testInfo) => {
+  await page.goto('/')
+  if (testInfo.project.name === 'mobile') await page.getByRole('button', { name: 'Abrir menu' }).click()
+  const navigation = testInfo.project.name === 'mobile'
+    ? page.getByRole('dialog', { name: 'Menu móvel' })
+    : page.locator('.portal-sidebar')
+  const examples = navigation.getByRole('region', { name: 'Exemplos de Aplicações com ferramentas de IA - AWS' })
+  const link = examples.getByRole('link', { name: 'Painel QuickSight' })
+  await expect(link).toHaveAttribute('href', '/paineis/quicksight/')
+  await link.click()
+  await expect(page).toHaveURL(/\/paineis\/quicksight\/$/)
+  await expect(page.locator('iframe')).toBeVisible()
+  await expect(page.locator('iframe')).toHaveAttribute('src', /us-east-1\.quicksight\.aws\.amazon\.com/)
+  const badge = page.getByRole('button', { name: 'Construído com AWS' })
+  await badge.click()
+  await expect(page.getByRole('dialog', { name: 'Stack AWS utilizada neste painel' }).getByText('Amazon QuickSight')).toBeVisible()
+})
+
+test('the legacy Athena Educacional link keeps both working modes', async ({ page }) => {
+  const socketUrls: string[] = []
+  await page.routeWebSocket(/\/ws\//, (socket) => {
+    socketUrls.push(socket.url())
+    socket.onMessage(() => socket.send(JSON.stringify({ answer: 'Resposta simulada.' })))
+  })
+
+  await page.goto('/assistentes/athena-educacional/')
+  await page.getByRole('button', { name: /Sou professor/ }).click()
+  await page.getByLabel('Digite sua pergunta').fill('Pergunta de teste do professor')
+  await page.getByRole('button', { name: 'Enviar pergunta' }).click()
+  await expect(page.getByText('Resposta simulada.')).toBeVisible()
+  expect(new URL(socketUrls[0]).searchParams.get('agent')).toBe('educacional')
+  expect(new URL(socketUrls[0]).searchParams.get('mode')).toBe('professor')
+
+  await page.getByRole('button', { name: 'Trocar modo (Sou professor)' }).click()
+  await page.getByRole('button', { name: /Quero estudar/ }).click()
+  await page.getByLabel('Digite sua pergunta').fill('Pergunta de teste do aluno')
+  await page.getByRole('button', { name: 'Enviar pergunta' }).click()
+  await expect(page.getByText('Resposta simulada.')).toBeVisible()
+  expect(new URL(socketUrls[1]).searchParams.get('agent')).toBe('educacional')
+  expect(new URL(socketUrls[1]).searchParams.get('mode')).toBe('aluno')
+})
+
 test('each embedded experience exposes a descriptive browser title', async ({ page }) => {
   const dashboards = [
     ['/assistentes/', 'Athena — DATA IESB'],
@@ -85,6 +157,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/assistentes/aurya-iesb/', 'Athena IESB — DATA IESB'],
     ['/assistentes/athena-professores/', 'Athena Professores — DATA IESB'],
     ['/assistentes/athena-alunos/', 'Athena Alunos — DATA IESB'],
+    ['/assistentes/athena-educacional/', 'Athena Educacional — DATA IESB'],
     ['/assistentes/iara-sus/', 'Athena SUS — DATA IESB'],
     ['/paineis/sus-aih/', 'Internações hospitalares (AIH) — DATA IESB'],
     ['/paineis/producao-ambulatorial/', 'Produção ambulatorial — DATA IESB'],
@@ -98,6 +171,7 @@ test('each embedded experience exposes a descriptive browser title', async ({ pa
     ['/paineis/setores-censitarios/', 'Setores Censitários 2022 — DATA IESB'],
     ['/paineis/prefeituras/', 'Painel das Prefeituras — DATA IESB'],
     ['/paineis/clusters-lisa/', 'Clusters LISA — DATA IESB'],
+    ['/paineis/quicksight/', 'Painel QuickSight — Big Data IESB — DATA IESB'],
   ] as const
 
   for (const [route, title] of dashboards) {
@@ -236,7 +310,9 @@ test('home preserves the institutional, service and recent-publication content',
   await expect(results).toContainText('25Membros ativos')
   await expect(page.locator('.service-card-media')).toHaveCount(3)
   await expect(page.getByRole('img', { name: 'Capa de Como Votei – Eleições por Zona Eleitoral na RIDE-DF' })).toBeVisible()
-  await expect(page.locator('#projects .application-card')).toHaveCount(13)
+  await expect(page.locator('#projects .application-card')).toHaveCount(14)
+  await expect(page.locator('#projects').getByRole('link', { name: 'Visualizar Painel QuickSight' })).toHaveAttribute('href', '/paineis/quicksight/')
+  await expect(page.getByRole('img', { name: 'Capa de Painel QuickSight' })).toHaveAttribute('src', '/aws-icons/quicksight.svg')
   await expect(page.locator('#projects')).not.toContainText('Mercado de trabalho')
   // Créditos de desenvolvimento e patrocínio comentados no rodapé:
   // await expect(page.getByText(/Desenvolvido por/)).toBeVisible()

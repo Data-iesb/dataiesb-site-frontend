@@ -4,9 +4,11 @@ import type {
   PublicReport,
 } from '@/types/content'
 
-const ALLOWED_EMBED_HOSTS = new Set(['app.dataiesb.com', 'funasa.dataiesb.com'])
+const ALLOWED_EMBED_HOSTS = new Set(['app.dataiesb.com', 'funasa.dataiesb.com', 'us-east-1.quicksight.aws.amazon.com'])
 
 const envOr = (value: string | undefined, fallback: string) => value?.trim() || fallback
+const thumbnailBase = envOr(process.env.NEXT_PUBLIC_PANEL_THUMBNAIL_BASE, 'https://d28lvm9jkyfotx.cloudfront.net/img/paineis')
+const thumbnail = (slug: string) => `${thumbnailBase}/${slug}.png`
 
 export const dashboards: readonly DashboardDefinition[] = [
   {
@@ -185,6 +187,21 @@ export const dashboards: readonly DashboardDefinition[] = [
       mobile: { top: 0, left: 0, bottom: 0 },
     },
   },
+  {
+    slug: 'quicksight',
+    title: 'Painel QuickSight — Big Data IESB',
+    shortTitle: 'Painel QuickSight',
+    description: 'Painel interativo publicado no Amazon QuickSight pelo Big Data IESB.',
+    sourceUrl: envOr(
+      process.env.NEXT_PUBLIC_QUICKSIGHT_URL,
+      'https://us-east-1.quicksight.aws.amazon.com/sn/account/adm-students-iesb/embed/share/accounts/248189947068/dashboards/cc1517f6-360b-49fb-9a3a-4cec5dc0d010',
+    ),
+    revealDelayMs: 0,
+    crop: {
+      desktop: { top: 0, left: 0, bottom: 0 },
+      mobile: { top: 0, left: 0, bottom: 0 },
+    },
+  },
 ]
 
 export function isAllowedEmbedUrl(value: string): boolean {
@@ -252,6 +269,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'SUS Assistência à Saúde',
       author: 'DataIESB / FUNASA',
       href: '/paineis/producao-ambulatorial/',
+      imageUrl: thumbnail('sus-ambulatorial'),
     },
     {
       key: 'sus-sinan',
@@ -260,6 +278,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'SUS Assistência à Saúde',
       author: 'DataIESB / FUNASA',
       href: '/paineis/sinan-doencas-agravos/',
+      imageUrl: thumbnail('sinan-doencas-agravos'),
     },
   ]
 
@@ -271,6 +290,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Educação',
       author: 'DATA IESB / INEP',
       href: '/paineis/educacao-superior/',
+      imageUrl: thumbnail('educacao-superior'),
     },
     {
       key: 'educacao-mestrado-doutorado',
@@ -279,6 +299,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Educação',
       author: 'DATA IESB / CAPES',
       href: '/paineis/mestrado-doutorado/',
+      imageUrl: thumbnail('mestrado-doutorado'),
     },
 
     {
@@ -288,6 +309,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Educação',
       author: 'DataIESB / FUNASA',
       href: '/paineis/inep/',
+      imageUrl: thumbnail('inep'),
     },
     {
       key: 'educacao-ideb',
@@ -296,6 +318,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Educação',
       author: 'DATA IESB / INEP',
       href: '/paineis/ideb/',
+      imageUrl: thumbnail('ideb'),
     },
     {
       key: 'meio-ambiente-queimadas',
@@ -304,6 +327,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Meio Ambiente',
       author: 'DATA IESB / FUNASA / INPE',
       href: '/paineis/queimadas/',
+      imageUrl: thumbnail('queimadas'),
     },
     {
       key: 'municipio-pib',
@@ -312,6 +336,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Conhecendo os nossos municípios',
       author: 'DataIESB / FUNASA',
       href: '/paineis/pib/',
+      imageUrl: thumbnail('pib'),
     },
     {
       key: 'municipio-setores',
@@ -320,6 +345,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Conhecendo os nossos municípios',
       author: 'DataIESB / FUNASA',
       href: '/paineis/setores-censitarios/',
+      imageUrl: thumbnail('setores-censitarios'),
     },
     {
       key: 'municipio-prefeituras',
@@ -328,6 +354,7 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Conhecendo os nossos municípios',
       author: 'DataIESB / FUNASA',
       href: '/paineis/prefeituras/',
+      imageUrl: thumbnail('prefeituras'),
     },
     {
       key: 'estudos-clusters-lisa',
@@ -336,6 +363,16 @@ export function buildApplicationCatalog(reports: readonly PublicReport[]): Appli
       eyebrow: 'Estudos e Publicações',
       author: 'DataIESB / FUNASA',
       href: '/paineis/clusters-lisa/',
+      imageUrl: thumbnail('clusters-lisa'),
+    },
+    {
+      key: 'aws-quicksight',
+      title: dashboard('quicksight').shortTitle,
+      description: dashboard('quicksight').description,
+      eyebrow: 'Exemplos de Aplicações com ferramentas de IA - AWS',
+      author: 'DataIESB / Amazon QuickSight',
+      href: '/paineis/quicksight/',
+      imageUrl: '/aws-icons/quicksight.svg',
     },
   ]
 
