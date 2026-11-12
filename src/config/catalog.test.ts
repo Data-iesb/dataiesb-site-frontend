@@ -125,8 +125,11 @@ describe('dashboard registry', () => {
 
   it('restores the exact published QuickSight dashboard and its immediate reveal', () => {
     expect(getDashboardBySlug('quicksight')).toMatchObject({
-      sourceUrl: 'https://us-east-1.quicksight.aws.amazon.com/sn/account/adm-students-iesb/embed/share/accounts/248189947068/dashboards/cc1517f6-360b-49fb-9a3a-4cec5dc0d010',
+      sourceUrl: 'https://us-east-1.quicksight.aws.amazon.com/sn/embed/share/accounts/248189947068/dashboards/cc1517f6-360b-49fb-9a3a-4cec5dc0d010?directory_alias=adm-students-iesb&undoRedoDisabled=true&resetDisabled=true',
       revealDelayMs: 0,
+      hideToolbar: true,
+      eagerLoad: true,
+      iframeFocusable: true,
     })
   })
 
