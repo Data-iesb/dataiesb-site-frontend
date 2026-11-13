@@ -194,7 +194,7 @@ export const dashboards: readonly DashboardDefinition[] = [
     description: 'Painel interativo publicado no Amazon QuickSight pelo Big Data IESB.',
     sourceUrl: envOr(
       process.env.NEXT_PUBLIC_QUICKSIGHT_URL,
-      'https://us-east-1.quicksight.aws.amazon.com/sn/embed/share/accounts/248189947068/dashboards/cc1517f6-360b-49fb-9a3a-4cec5dc0d010?directory_alias=adm-students-iesb&undoRedoDisabled=true&resetDisabled=true',
+      'https://us-east-1.quicksight.aws.amazon.com/sn/embed/share/accounts/248189947068/dashboards/897fd3c1-a527-487d-83b9-94182759411d?directory_alias=adm-students-iesb&undoRedoDisabled=true&resetDisabled=true',
     ),
     revealDelayMs: 0,
     hideToolbar: true,
