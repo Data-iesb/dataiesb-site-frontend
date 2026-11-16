@@ -121,12 +121,12 @@ export function DashboardEmbed({ dashboard, timeoutMs = 30_000 }: Props) {
         <iframe
           key={attempt}
           className={`dashboard-frame is-${state}`}
-          src={mounted ? dashboard.sourceUrl : undefined}
+          src={dashboard.eagerLoad || mounted ? dashboard.sourceUrl : undefined}
           title={`Painel interativo: ${dashboard.title}`}
           allow="clipboard-read; clipboard-write; fullscreen"
           referrerPolicy="strict-origin-when-cross-origin"
           sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-          tabIndex={-1}
+          tabIndex={dashboard.iframeFocusable ? 0 : -1}
           onLoad={() => setState(instantReveal ? 'revealed' : 'preparing')}
           onError={() => setState(instantReveal ? 'revealed' : 'error')}
         />

@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { getDashboardBySlug } from '@/config/catalog'
@@ -10,14 +11,31 @@ afterEach(() => {
 })
 
 describe('DashboardEmbed', () => {
-  it('shows the QuickSight iframe immediately and keeps it visible when reloaded', () => {
+  it('shows the QuickSight iframe immediately without the portal toolbar', () => {
     const dashboard = getDashboardBySlug('quicksight')!
     render(<DashboardEmbed dashboard={dashboard} />)
 
-    expect(screen.getByTitle(`Painel interativo: ${dashboard.title}`)).toHaveClass('is-revealed')
+    const frame = screen.getByTitle(`Painel interativo: ${dashboard.title}`)
+    expect(frame).toHaveClass('is-revealed')
+    expect(frame).toHaveAttribute('src', dashboard.sourceUrl)
+    expect(frame).toHaveAttribute('tabindex', '0')
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Recarregar painel' }))
-    expect(screen.getByTitle(`Painel interativo: ${dashboard.title}`)).toHaveClass('is-revealed')
+    expect(screen.queryByRole('button', { name: 'Recarregar painel' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Abrir painel' })).not.toBeInTheDocument()
+  })
+
+  it('only QuickSight starts its iframe in the static HTML and joins the tab order', () => {
+    const quickSight = renderToStaticMarkup(
+      <DashboardEmbed dashboard={getDashboardBySlug('quicksight')!} />,
+    )
+    const otherPanel = renderToStaticMarkup(
+      <DashboardEmbed dashboard={getDashboardBySlug('sus-aih')!} />,
+    )
+
+    expect(quickSight).toContain('src="https://us-east-1.quicksight.aws.amazon.com/sn/embed/share/')
+    expect(quickSight).toContain('tabindex="0"')
+    expect(otherPanel).not.toContain('src="https://funasa.dataiesb.com/aih/"')
+    expect(otherPanel).toContain('tabindex="-1"')
   })
 
   it('keeps a DATA IESB preparation screen until the dashboard reveal delay expires', () => {

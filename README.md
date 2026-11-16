@@ -44,9 +44,9 @@ Somente URLs HTTPS de `app.dataiesb.com` e `funasa.dataiesb.com` podem ser abert
 - Painel das Prefeituras
 - Análise de Clusters LISA
 
-O recorte do iframe remove o shell duplicado dos portais de origem e segue a largura real do conteúdo para funcionar também em tablets. Como o portal não pode inspecionar o estado interno de uma origem diferente, o evento de abertura do documento inicia um período adicional de preparação, mas não garante que todas as consultas do dashboard tenham terminado. Por isso, “Recarregar painel” e “Abrir painel” permanecem sempre visíveis.
+O recorte do iframe remove o shell duplicado dos portais de origem e segue a largura real do conteúdo para funcionar também em tablets. Como o portal não pode inspecionar o estado interno de uma origem diferente, o evento de abertura do documento inicia um período adicional de preparação, mas não garante que todas as consultas do dashboard tenham terminado. Por isso, “Recarregar painel” e “Abrir painel” permanecem visíveis nos painéis com barra do portal. O QuickSight é a exceção: abre sem a barra do portal e com os botões de reset e desfazer/refazer desativados no próprio embed.
 
-O iframe sai da sequência de foco do portal: usuários de teclado acessam a versão completa por “Abrir painel”, onde todos os controles do dashboard ficam disponíveis sem o recorte visual.
+O iframe sai da sequência de foco do portal: usuários de teclado acessam a versão completa por “Abrir painel”, onde todos os controles do dashboard ficam disponíveis sem o recorte visual. No QuickSight, que não tem essa barra, o iframe permanece focável para que o teclado alcance os controles diretamente.
 
 ## Compatibilidade
 
