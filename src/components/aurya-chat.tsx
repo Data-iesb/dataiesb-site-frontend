@@ -441,7 +441,6 @@ export function AuryaChat({ assistant, onChangeMode, modeLabel }: Readonly<{
           <span>{assistant.eyebrow}</span>
           <h2>{assistant.title}</h2>
           <p>{assistant.description}</p>
-          <AwsStackBadge dashboardSlug="athena" variant="inline" />
         </section>
         {suggestions.length > 0 && (
           <section className="aurya-chat-suggestions">
@@ -477,6 +476,9 @@ export function AuryaChat({ assistant, onChangeMode, modeLabel }: Readonly<{
             ))}
           </section>
         )}
+        <div className="aurya-chat-aws-badge">
+          <AwsStackBadge dashboardSlug="athena" variant="inline" />
+        </div>
       </aside>
 
       <section className="aurya-chat-main" aria-label={`Conversa com ${assistant.title}`}>
