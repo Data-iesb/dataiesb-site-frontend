@@ -8,7 +8,7 @@ import { portalTeamMembers } from './team'
 
 describe('portalTeamMembers', () => {
   it('uses the roster registered for Projeto Big Data IESB', () => {
-    expect(portalTeamMembers).toHaveLength(31)
+    expect(portalTeamMembers).toHaveLength(24)
     expect(portalTeamMembers.map((member) => member.name)).toContain('Marco Antônio Valério Da Cunha')
     expect(portalTeamMembers.map((member) => member.name)).toContain('Sérgio da Costa Côrtes')
     expect(portalTeamMembers.map((member) => member.name)).toContain('Simone de Araújo Góes Assis')
@@ -38,7 +38,7 @@ describe('portalTeamMembers', () => {
   })
 
   it('associates available photos without hiding members that do not yet have one', () => {
-    expect(portalTeamMembers.filter((member) => member.photoUrl)).toHaveLength(22)
+    expect(portalTeamMembers.filter((member) => member.photoUrl)).toHaveLength(20)
     expect(portalTeamMembers.find((member) => member.id === 'roberto-diniz')).not.toHaveProperty('photoUrl')
     expect(portalTeamMembers.find((member) => member.id === 'kaike-armond-costa')).not.toHaveProperty('photoUrl')
     expect(portalTeamMembers.find((member) => member.id === 'ivan-sasha-viana-stemler')).toHaveProperty('photoUrl', '/img/team/ivan-stemler.webp')
@@ -56,9 +56,9 @@ describe('portalTeamMembers', () => {
   })
 
   it('includes the registered profile links without publishing registration data', () => {
-    expect(portalTeamMembers.filter((member) => member.linkedin)).toHaveLength(28)
-    expect(portalTeamMembers.filter((member) => member.github)).toHaveLength(26)
-    expect(portalTeamMembers.filter((member) => member.lattes)).toHaveLength(21)
+    expect(portalTeamMembers.filter((member) => member.linkedin)).toHaveLength(21)
+    expect(portalTeamMembers.filter((member) => member.github)).toHaveLength(19)
+    expect(portalTeamMembers.filter((member) => member.lattes)).toHaveLength(18)
     expect(portalTeamMembers.find((member) => member.id === 'arthur-souza-de-melo-rosa')).not.toHaveProperty('lattes')
   })
 
@@ -66,8 +66,7 @@ describe('portalTeamMembers', () => {
     const expectedPhotos = {
       'daniella-goulart': '/img/team/daniella-goulart.webp',
       'mirna-favacho-da-silveira': '/img/team/mirna-silveira.webp',
-      'enzo-rodrigues-teixeira-de-andrade': '/img/team/enzo-rodrigues.webp',
-      'leonardo-borges-silva-braga': '/img/team/leonardo-borges.webp',
+      'luca-adriano-melo-mendonca-soares': '/img/team/luca-soares.webp',
       'igor-dos-santos-conceicao-de-andrade-filho': '/img/team/igor-andrade.webp',
       'samuel-tavares-rego': '/img/team/samuel-tavares.webp',
       'nicole-lima-duarte': '/img/team/nicole-duarte.webp',
@@ -77,9 +76,17 @@ describe('portalTeamMembers', () => {
       expect(portalTeamMembers.find((member) => member.id === id)?.photoUrl).toBe(photoUrl)
     }
     expect(new Set(portalTeamMembers.map((member) => member.id)).size).toBe(portalTeamMembers.length)
-    expect(portalTeamMembers.find((member) => member.id === 'leonardo-araujo-pereira')).not.toHaveProperty('photoUrl')
+    const removedTccOnlyIds = new Set([
+      'caio-rosendo-jacome',
+      'leonardo-araujo-pereira',
+      'eduardo-goncalves-barbosa',
+      'enzo-rodrigues-teixeira-de-andrade',
+      'leonardo-borges-silva-braga',
+      'piettro-pecidor-nakashoji',
+      'william-wallace-ribeiro-matos',
+    ])
+    expect(portalTeamMembers.some((member) => removedTccOnlyIds.has(member.id))).toBe(false)
     expect(portalTeamMembers.find((member) => member.id === 'daniella-goulart')).not.toHaveProperty('lattes')
-    expect(portalTeamMembers.find((member) => member.id === 'leonardo-borges-silva-braga')).not.toHaveProperty('lattes')
     expect(portalTeamMembers.some((member) => member.name.includes('Helga'))).toBe(false)
   })
 })

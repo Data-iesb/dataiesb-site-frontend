@@ -221,7 +221,7 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   await expect(ivanCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/sashastemler/')
   await expect(ivanCard.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/0431403577503497')
   const studentCategory = page.locator('.team-category').filter({ hasText: 'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)' })
-  await expect(studentCategory.locator('.team-card')).toHaveCount(25)
+  await expect(studentCategory.locator('.team-card')).toHaveCount(18)
   expect(await studentCategory.locator('.team-card h4').allTextContents()).toEqual([
     'Roberto Diniz',
     'Joel Carolino Farias',
@@ -241,14 +241,9 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
     'Luiza Vitoria Brito Vasconcelos',
     'Ana Sophia Sousa Barros',
     'Mirna Favacho da Silveira',
-    'Caio Rosendo Jácome',
-    'Leonardo Araujo Pereira',
-    'Eduardo Gonçalves Barbosa',
-    'Enzo Rodrigues Teixeira de Andrade',
-    'Leonardo Borges Silva Braga',
-    'Piettro Pecidor Nakashoji',
-    'William Wallace Ribeiro Matos',
   ])
+  const lucaCard = studentCategory.locator('.team-card').filter({ hasText: 'Luca Adriano Melo Mendonça Soares' })
+  await expect(lucaCard.getByRole('img', { name: 'Foto de Luca Adriano Melo Mendonça Soares' })).toHaveAttribute('src', '/img/team/luca-soares.webp')
 
   const card = page.locator('.team-card').filter({ hasText: 'Marco Antônio Valério Da Cunha' })
   await expect(card).toContainText('Integrante do Projeto Big Data IESB')
@@ -548,7 +543,7 @@ test('tcc page lists registered students, verified photos, and application links
 
   const photos = page.locator('.tcc-student-photo')
   const photoCount = await photos.count()
-  expect(photoCount).toBe(11)
+  expect(photoCount).toBe(12)
   for (let i = 0; i < photoCount; i++) {
     await expect(photos.nth(i)).toBeVisible()
     const loaded = await photos.nth(i).evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)

@@ -15,6 +15,7 @@ export const tccStudents: readonly TccStudent[] = [
   {
     id: 'luca-adriano-melo-mendonca-soares',
     name: 'Luca Adriano Melo Mendonça Soares',
+    photoUrl: '/img/team/luca-soares.webp',
     linkedin: 'https://www.linkedin.com/in/luca-adriano-melo-mendon%C3%A7a-soares/',
     lattes: 'https://wwws.cnpq.br/cvlattesweb/PKG_MENU.menu?f_cod=BE1A5C9DBC5E47300871648E1A6AF4EF',
     github: 'https://github.com/LucaSoares66/',

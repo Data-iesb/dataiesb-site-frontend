@@ -21,7 +21,7 @@ describe('tccStudents', () => {
       return [createHash('sha256').update(photo).digest('hex')]
     })
 
-    expect(hashes).toHaveLength(11)
+    expect(hashes).toHaveLength(12)
     expect(new Set(hashes).size).toBe(hashes.length)
   })
 
@@ -69,8 +69,9 @@ describe('tccStudents', () => {
       expect(byId.get(id)?.appUrl).toBe(appUrl)
     }
 
+    expect(byId.get('luca-adriano-melo-mendonca-soares')?.photoUrl).toBe('/img/team/luca-soares.webp')
+
     const withoutPhoto = [
-      'luca-adriano-melo-mendonca-soares',
       'eduardo-goncalves-barbosa',
       'carlos-henrique-de-brito-teles',
       'cesar-eustaquio-da-fonseca-filho',
