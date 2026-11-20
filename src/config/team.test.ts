@@ -8,7 +8,7 @@ import { portalTeamMembers } from './team'
 
 describe('portalTeamMembers', () => {
   it('uses the roster registered for Projeto Big Data IESB', () => {
-    expect(portalTeamMembers).toHaveLength(24)
+    expect(portalTeamMembers).toHaveLength(23)
     expect(portalTeamMembers.map((member) => member.name)).toContain('Marco Antônio Valério Da Cunha')
     expect(portalTeamMembers.map((member) => member.name)).toContain('Sérgio da Costa Côrtes')
     expect(portalTeamMembers.map((member) => member.name)).toContain('Simone de Araújo Góes Assis')
@@ -56,8 +56,8 @@ describe('portalTeamMembers', () => {
   })
 
   it('includes the registered profile links without publishing registration data', () => {
-    expect(portalTeamMembers.filter((member) => member.linkedin)).toHaveLength(21)
-    expect(portalTeamMembers.filter((member) => member.github)).toHaveLength(19)
+    expect(portalTeamMembers.filter((member) => member.linkedin)).toHaveLength(20)
+    expect(portalTeamMembers.filter((member) => member.github)).toHaveLength(18)
     expect(portalTeamMembers.filter((member) => member.lattes)).toHaveLength(18)
     expect(portalTeamMembers.find((member) => member.id === 'arthur-souza-de-melo-rosa')).not.toHaveProperty('lattes')
   })
@@ -77,6 +77,7 @@ describe('portalTeamMembers', () => {
     }
     expect(new Set(portalTeamMembers.map((member) => member.id)).size).toBe(portalTeamMembers.length)
     const removedTccOnlyIds = new Set([
+      'gabriel-cesar-de-franca-pereira',
       'caio-rosendo-jacome',
       'leonardo-araujo-pereira',
       'eduardo-goncalves-barbosa',

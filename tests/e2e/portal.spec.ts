@@ -221,14 +221,13 @@ test('team page uses the registered Projeto Big Data IESB roster and available p
   await expect(ivanCard.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/sashastemler/')
   await expect(ivanCard.getByRole('link', { name: 'Lattes' })).toHaveAttribute('href', 'http://lattes.cnpq.br/0431403577503497')
   const studentCategory = page.locator('.team-category').filter({ hasText: 'Alunos Cientistas de Dados e Analistas de Inteligência Artificial (IA)' })
-  await expect(studentCategory.locator('.team-card')).toHaveCount(18)
+  await expect(studentCategory.locator('.team-card')).toHaveCount(17)
   expect(await studentCategory.locator('.team-card h4').allTextContents()).toEqual([
     'Roberto Diniz',
     'Joel Carolino Farias',
     'Marco Antônio Valério Da Cunha',
     'Luca Adriano Melo Mendonça Soares',
     'Pedro Henrique de Oliveira Marques',
-    'Gabriel César de França Pereira',
     'Mateus de Lima Costa',
     'Erick Lopes Jost',
     'Arthur Souza de Melo Rosa',

@@ -38,9 +38,6 @@ export const portalTeamMembers: readonly TeamMember[] = [
     id: 'pedro-henrique-de-oliveira-marques', name: 'Pedro Henrique de Oliveira Marques', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/pedro-marques-v2.jpg', linkedin: 'https://www.linkedin.com/in/pedro-henrique-de-oliveira-marques-76253a324/', lattes: 'https://wwws.cnpq.br/cvlattesweb/PKG_MENU.menu?f_cod=6B5368A2912A280C7B2D721ED16E7342', github: 'https://github.com/PedroOliveiraMarques',
   },
   {
-    id: 'gabriel-cesar-de-franca-pereira', name: 'Gabriel César de França Pereira', role: 'Aluno — TCC 2026.2', category: studentCategory, linkedin: 'https://www.linkedin.com/in/gabrielcesar-dados/', github: 'https://github.com/gabrielp-data',
-  },
-  {
     id: 'mateus-de-lima-costa', name: 'Mateus de Lima Costa', role: 'Integrante do Projeto Big Data IESB', category: studentCategory, photoUrl: '/img/team/mateus-lima-costa.webp', linkedin: 'https://www.linkedin.com/in/mateus-de-lima-costa', lattes: 'https://lattes.cnpq.br/8852621038958616', github: 'https://github.com/MateusDeLimaCosta',
   },
   {
