@@ -526,3 +526,32 @@ test('contact flow is validated without sending a real message', async ({ page }
   await expect(page.getByRole('status')).toContainText('Mensagem enviada')
   expect(submitted).toBe(true)
 })
+
+test('tcc page lists registered students, verified photos, and application links', async ({ page }) => {
+  await page.goto('/trabalhos-academicos/tcc/')
+
+  const cards = page.locator('.tcc-student-card')
+  await expect(cards).toHaveCount(16)
+  await expect(cards.filter({ hasText: 'Marley Abe Silva' })).toBeVisible()
+  await expect(cards.filter({ hasText: 'Cesar Eustaquio da Fonseca Filho' })).toBeVisible()
+  await expect(cards.filter({ hasText: 'Matheus Lima Ribeiro' })).toBeVisible()
+
+  const expectedAppLinks = [
+    'https://tccwilliam.dataiesb.com/',
+    'https://tcccarlos.dataiesb.com/',
+    'https://tccjoel.dataiesb.com/',
+    'https://observatorio.163-176-169-135.sslip.io/',
+  ]
+  for (const href of expectedAppLinks) {
+    await expect(page.locator(`.tcc-student-links a[href="${href}"]`)).toHaveText(/Aplicação/)
+  }
+
+  const photos = page.locator('.tcc-student-photo')
+  const photoCount = await photos.count()
+  expect(photoCount).toBe(11)
+  for (let i = 0; i < photoCount; i++) {
+    await expect(photos.nth(i)).toBeVisible()
+    const loaded = await photos.nth(i).evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)
+    expect(loaded).toBe(true)
+  }
+})
